@@ -24,6 +24,7 @@
     "lint": "tslint --project . \"src/**/*.ts\"",
     "check": "npm run lint && npm run test:unit",
     "test:unit": "jest --forceExit --coverage --verbose --detectOpenHandles --passWithNoTests",
+    "test:ci": "npm run test:unit -- --coverageReporters=text-lcov | coveralls",
     "test:unit:watch": "jest --watch",
     "prepublishOnly": "npm run check && npm run build"
   },
@@ -35,12 +36,13 @@
     "@types/jest": "^23",
     "@types/lodash": "^4.14.120",
     "@types/node": "^8",
+    "coveralls": "^3.0.3",
     "ioredis": "^4.6.3",
     "jest": "^24.3.1",
     "ts-jest": "^23",
     "tslint": "^5.13.1",
+    "tslint-config-unional": "^0.10.0",
     "typedoc": "^0.14.2",
-    "typescript": "^3.3.3",
-    "tslint-config-unional": "^0.10.0"
+    "typescript": "^3.3.3"
   }
 }
