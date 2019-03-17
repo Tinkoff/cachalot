@@ -1,0 +1,18 @@
+if: tag IS blank
+
+cache:
+  directories:
+  - node_modules
+
+language: node_js
+node_js:
+- '10'
+- '8'
+- '6'
+
+script:
+- npm run build
+- npm run check
+
+install:
+- npm ci

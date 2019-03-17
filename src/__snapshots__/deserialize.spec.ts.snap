@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`deserizalize throws parse error on invalid json string 1`] = `"Unexpected token e in JSON at position 1"`;
+
+exports[`deserizalize throws parse error on invalid json string 2`] = `"Unexpected end of JSON input"`;

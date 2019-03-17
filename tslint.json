@@ -1,0 +1,12 @@
+{
+  "extends": ["tslint-config-unional"],
+  "rules": {
+    "brace-style": [
+      true,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ]
+  }
+}
