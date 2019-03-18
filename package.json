@@ -1,6 +1,6 @@
 {
   "name": "cachalot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cache manager for nodejs with support different cache strategies",
   "keywords": [
     "cache",
