@@ -15,7 +15,13 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "repository": "https://github.com/TinkoffCreditSystems/cachalot.git",
+  "repository": {
+    "type": "git",
+    "repository": "https://github.com/TinkoffCreditSystems/cachalot.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "docs": "typedoc --out docs/api src/ --ignoreCompilerErrors --mode file --hideGenerator --includes docs/assets",
