@@ -15,7 +15,7 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "repository": "ssh://git@stash.tcsbank.ru:7999/pfa/libs-server-cache-manager.git",
+  "repository": "https://github.com/TinkoffCreditSystems/cachalot.git",
   "scripts": {
     "clean": "rm -rf dist",
     "docs": "typedoc --out docs/api src/ --ignoreCompilerErrors --mode file --hideGenerator --includes docs/assets",
