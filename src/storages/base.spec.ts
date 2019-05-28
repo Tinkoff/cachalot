@@ -86,6 +86,52 @@ describe('BaseStorage', () => {
     expect(value.expiresIn).toEqual(expect.any(Number));
   });
 
+  it('set sets key to storage adapter with dynamic tags', async () => {
+    await storage.set('test', '123', { getTags: (result) => [result]});
+
+    const value = JSON.parse(testInterface.internalStorage['cache-test']);
+
+    expect(value).toMatchObject({
+      key: 'test',
+      permanent: true,
+      value: '"123"'
+    });
+    expect(value.tags).toMatchObject([{ name: '123'}]);
+    expect(value.expiresIn).toEqual(expect.any(Number));
+  });
+
+  it('set sets key to storage adapter with concatenated dynamic tags and simple tags', async () => {
+    await storage.set('test', '123', { tags: ['tag1'], getTags: (result) => [result]});
+
+    const value = JSON.parse(testInterface.internalStorage['cache-test']);
+
+    expect(value).toMatchObject({
+      key: 'test',
+      permanent: true,
+      value: '"123"'
+    });
+    expect(value.tags).toMatchObject([{ name: 'tag1'}, { name: '123'}]);
+    expect(value.expiresIn).toEqual(expect.any(Number));
+  });
+
+  it('set throws if dynamic tags Fn returns non-array value', async () => {
+    await expect(storage.set('test', '123', { getTags: (result) => result})).rejects.toThrow();
+  });
+
+  it('set sets object key to storage adapter with dynamic tags', async () => {
+    await storage.set('test', { id: 'uuid' }, { getTags: ({ id }) => [id]});
+
+    const value = JSON.parse(testInterface.internalStorage['cache-test']);
+
+    expect(value).toMatchObject({
+      key: 'test',
+      permanent: true,
+      value: '{"id":"uuid"}'
+    });
+    expect(value.tags).toMatchObject([{ name: 'uuid'}]);
+    expect(value.expiresIn).toEqual(expect.any(Number));
+  });
+
   it('set sets key to storage adapter with given options', async () => {
     await storage.set('test', '123', { expiresIn: 0 });
 
