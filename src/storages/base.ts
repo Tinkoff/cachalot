@@ -147,7 +147,13 @@ export class BaseStorage implements Storage {
    */
   public async set(key: string, value: StorageRecordValue, options: WriteOptions = {}): Promise<any> {
     const tags: string[] = options.tags || [];
-    const record = createRecord(key, value, tags.map(createTag), options);
+    const dynamicTags = isFunction(options.getTags) ? options.getTags(value) : [];
+
+    if (!Array.isArray(dynamicTags)) {
+      throw new TypeError(`getTags should return an array of strings, got ${typeof dynamicTags}`);
+    }
+
+    const record = createRecord(key, value, tags.concat(dynamicTags).map(createTag), options);
 
     await this.adapter.set(
       this.createKey(key),

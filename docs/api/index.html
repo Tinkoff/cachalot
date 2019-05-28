@@ -64,44 +64,47 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="pfa-cache-manager">PFA Cache Manager</h1>
-				<p><a href="https://gitlab-rnd.tcsbank.ru/pfa/libs-server-cache-manager/commits/master"><img src="https://gitlab-rnd.tcsbank.ru/pfa/libs-server-cache-manager/badges/master/pipeline.svg" alt="pipeline status"></a>
-				<a href="https://gitlab-rnd.tcsbank.ru/pfa/libs-server-cache-manager/commits/master"><img src="https://gitlab-rnd.tcsbank.ru/pfa/libs-server-cache-manager/badges/master/coverage.svg" alt="coverage report"></a></p>
-				<p>Библиотека предназначена для кеширования результатов выполнения запросов. Из особенностей:</p>
+				<h1 id="cachalot">Cachalot</h1>
+				<p><a href="https://travis-ci.org/TinkoffCreditSystems/cachalot"><img src="https://img.shields.io/travis/TinkoffCreditSystems/cachalot/master.svg?style=flat-square" alt="Build status"></a>
+					<a href="https://coveralls.io/github/TinkoffCreditSystems/cachalot"><img src="https://img.shields.io/coveralls/github/TinkoffCreditSystems/cachalot.svg?style=flat-square" alt="Coveralls github"></a>
+					<a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/written_in-typescript-blue.svg?style=flat-square" alt="Written in typescript"></a>
+				<a href="https://www.npmjs.com/package/cachalot"><img src="https://img.shields.io/npm/v/cachalot.svg?style=flat-square" alt="npm"></a></p>
+				<p>The library is designed to cache query results. Features:</p>
 				<ul>
-					<li>Реализует популярные стратегии кэширования (Read-Through, Write-Through, Refresh-Ahead), а также позволяет их комбинировать</li>
-					<li>Определяет интерфейс адаптера, что позволяет использовать его с любыми key-value storage для которых написан соответствующий адаптер</li>
-					<li>Поставляется с адаптером для Redis</li>
-					<li>Позволяет использовать префиксы для ключей, автоматическое хэширование</li>
-					<li>Позволяет передать логгер который будет использоваться для вывода информационных сообщений и ошибок</li>
-					<li>Поддерживает различные стратегии поведения ожидания записи из кэша (тяжелые запросы), подробнее ниже</li>
+					<li>Implements popular caching strategies (Read-Through, Write-Through, Refresh-Ahead), and also allows them to be combined</li>
+					<li>Defines an adapter interface that allows you to use it with any key-value storage for which the corresponding adapter is written</li>
+					<li>Comes with adapter for redis</li>
+					<li>Allows to use prefixes for keys, automatic hashing</li>
+					<li>Allows to pass in a logger that will be used to display informational messages and errors</li>
+					<li>Supports various behaviors of cache write waiting (heavy queries), more details below.</li>
 				</ul>
 				<h3 id="getting-started">Getting started</h3>
-				<p>Для иниализации instance Cache требуется:</p>
+				<p>To initialize Cache instance, you need:</p>
 				<ul>
-					<li>StorageAdapter (в примере ниже - адаптер для соединения с redis). RedisStorageAdapter принимает в качестве аргумента instance ioredis клиента.</li>
-					<li><p>Объект настроек. В опциях доступны следующие параметры:</p>
+					<li>StorageAdapter (in the example below, an adapter for connecting to redis). RedisStorageAdapter takes as an argument the instance of ioredis client.</li>
+					<li><p>Settings object. The options are the following options:</p>
 						<ul>
-							<li>prefix - превфикс используемый CacheManager для хранения ключей. По сути - это неймспейс для конкретного CacheManager</li>
-							<li><p>logger - instance логгера. Должен отвечать имплементировать интерфейс:</p>
+							<li><p>prefix - prefix used by CacheManager for storing keys. In essence, this is the namespace for a specific CacheManager.</p>
+							</li>
+							<li><p>logger - instance of logger. Must implement following interface:</p>
 								<pre><code class="language-typescript"><span class="hljs-keyword">interface</span> Logger {
-  info(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
-  trace(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
-  warn(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
-  error(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
+ info(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
+ trace(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
+ warn(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
+ error(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
 }</code></pre>
 							</li>
-							<li>expiresIn - время, через которое ключи теряют актуальность (мс)</li>
+							<li>expiresIn - the time after which the keys lose relevance (ms)</li>
 						</ul>
 					</li>
 				</ul>
-				<h5 id="-">Пример использования:</h5>
-				<p>Инициализация:</p>
-				<pre><code class="language-typescript"><span class="hljs-comment">// cache-manager.ts</span>
+				<h5 id="example-of-use-">Example of use:</h5>
+				<p>Initialization:</p>
+				<pre><code class="language-typescript"><span class="hljs-comment">// cache.ts</span>
 
 <span class="hljs-keyword">import</span> Redis <span class="hljs-keyword">from</span> <span class="hljs-string">'ioredis'</span>;
-<span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
 <span class="hljs-keyword">import</span> Cache, { RedisStorageAdapter } <span class="hljs-keyword">from</span> <span class="hljs-string">'cachalot'</span>;
+<span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
 
 <span class="hljs-keyword">const</span> redis = <span class="hljs-keyword">new</span> Redis();
 
@@ -109,66 +112,67 @@
   adapter: <span class="hljs-keyword">new</span> RedisStorageAdapter(redis),
   logger,
 });</code></pre>
-				<p>Основных методов работы с Cache три, их поведение зависит от выбранной стратегии кэширования:</p>
-				<p><code>get</code> получает данные из кэша</p>
+				<p>There are three main methods of working with Cache; their behavior depends on the chosen caching strategy:</p>
+				<p><code>get</code> gets cache data</p>
 				<pre><code class="language-typescript"><span class="hljs-comment">// get-something.ts</span>
-<span class="hljs-keyword">import</span> { cache } <span class="hljs-keyword">from</span> <span class="hljs-string">'./cache-manager'</span>
+<span class="hljs-keyword">import</span> { cache } <span class="hljs-keyword">from</span> <span class="hljs-string">'./cache'</span>
 
-<span class="hljs-keyword">const</span> cacheKey = <span class="hljs-string">'something:id100'</span>; <span class="hljs-comment">// ключ по которому осуществляется запись и доступ к значению</span>
+<span class="hljs-keyword">const</span> cacheKey = <span class="hljs-string">'something:id100'</span>; <span class="hljs-comment">// key that records and accesses the value</span>
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSomething</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> cache.get(
       cacheKey,
-      <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> executor(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>), <span class="hljs-comment">// executor - функция, возвращающая промис. Выполняется если не удалось получить валидную запись из кэша</span>
-      { tags: [cacheKey, <span class="hljs-string">'something'</span>] }, <span class="hljs-comment">// на каждую запись можно "повесить" теги. По любому из них запись можно инвалидировать</span>
+      <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> executor(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>), <span class="hljs-comment">// executor is a function that returns promise. Run if failed to get valid cache entry</span>
+      { tags: [cacheKey, <span class="hljs-string">'something'</span>] }, <span class="hljs-comment">// you can associate tags with any cache record. You can later invalidate record with any of them.</span>
     );
 }</code></pre>
-				<p><code>get</code> сам проверит теги и сравнит их версии с текущей датой, по необходимости выполнит executor и вернет его значение.
-				Опции для <code>get</code>:</p>
+				<p><code>get</code> will check the tags and compare their versions with the current date, runs an executor if necessary and returns result.
+				Options for <code>get</code>:</p>
 				<ul>
-					<li>expiresIn?: number; - Число секунд после которых значения ключа считается устарешим</li>
-					<li>tags?: string[] - Теги - ключи по которым cache-manager проверяет валидность той или иной записи. Если значение тега в кэше + время инвалидации &lt; текушее время то тег будет считаться невалидным и запись необходимо будет получить с помощью executor</li>
+					<li>expiresIn?: number; - The number of milliseconds after which key values are considered expired</li>
+					<li>tags?: string[] - Tags - keys for which checks the validity of a particular record. If the tag value in the cache + invalidation time is &lt;the current time, then the tag will be considered invalid and the record will need to be obtained using the executor</li>
+					<li>getTags?: (executorResult) =&gt; string[] function which extracts tags from executor result. These tags will be merged with tags given in option below.</li>
 				</ul>
-				<p>Следующий метод - touch - служит для инвалидации тегов. Вызов этого метода с одним из тегов сделает все записи в кэше с этим тегом невалидными.
-				Может использоваться как для инвалидации одной записи (например создав уникальный id), так и группы записей.</p>
-				<p>Пример:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { cache } <span class="hljs-keyword">from</span> <span class="hljs-string">'./cache-manager'</span>
+				<p>The next method, &quot;touch&quot;, serves to invalidate tags. Calling this method with one of the tags will make all records in the cache with this tag invalid.
+				It can be used both to invalidate a single record (for example, by creating a unique id) or a group of records.</p>
+				<p>Example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { cache } <span class="hljs-keyword">from</span> <span class="hljs-string">'./cache'</span>
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createSomething</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">await</span> cache.touch([<span class="hljs-string">'something'</span>]) <span class="hljs-comment">// инвалидирует все записи с тегом something</span>
+  <span class="hljs-keyword">await</span> cache.touch([<span class="hljs-string">'something'</span>]) <span class="hljs-comment">// invalidates all entries with the tag "something"</span>
 }</code></pre>
-				<p>Последний метод - <code>set</code>, используется в стратегиях Write-Through для обновления записей</p>
-				<p>Отметим - что <code>touch</code> не имеет смысла при использовании Write-Through в чистом виде, также как и нет смысла использовать set в стратегиях Refresh-Ahead и Read-Through</p>
+				<p>The latter method is <code>set</code>, used in write-through strategies to update entries.</p>
+				<p>Note that <code>touch</code> does not make sense when using Write-Through in its pure form, just as there is no point in using set in the Refresh-Ahead and Read-Through strategies</p>
 				<h2 id="locked-key-retrieve-strategies">Locked key retrieve strategies</h2>
-				<p>Cache manager позволяет задать стратегию поведения <code>get</code> в случае если запись в кэше заблокирована (для обновления). Доступные стратегии:</p>
-				<p><code>waitForResult</code> - <code>get</code> будет ожидать когда результат появится в кэше и блокировка снимется. Хорошо использовать при тяжелых запросах и средней нагрузке
-				. При высоких нагрузках может приводить к появлению спайков из-за выстраивающихся в очередь запросов. Эта стратегия используется по умолчанию</p>
-				<p><code>runExecutor</code> - <code>get</code> будет сразу вызывать executor и возвращать его результат. Хорошо в случаях когда запросы легкие. Минус этой стратегии в временном увеличении нагрузки на БД в момент обновления записи. В будущей мажорной версии cache-manager эта стратегия будет использоваться по умолчанию</p>
-				<p>Для каждой записи стратегию можно задать индивидуально. Для этого ее имя нужно передать в опциях readThrough</p>
+				<p>Cachalot allows you to set a strategy for <code>get</code> behavior if the cache entry is locked (for updating). Available strategies:</p>
+				<p><code>waitForResult</code> -<code>get</code> will wait for the result to appear in the cache and the lock will be removed. Good to use with heavy demands and average load
+				. Under high loads, spikes can occur due to queuing requests.</p>
+				<p><code>runExecutor</code> -<code>get</code> will immediately call the executor and return its result. Good in cases where requests are light. The disadvantage of
+				this strategy is a temporary increase in the load on the database at the time of updating the record. This strategy is used by default.</p>
+				<p>For each entry, the strategy can be set individually. To do this, its name must be passed in the readThrough options.</p>
 				<pre><code class="language-typescript">cache.get(<span class="hljs-string">'something:id100'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> executor(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>), {
     tags: [cacheKey, <span class="hljs-string">'something'</span>],
     lockedKeyRetrieveStrategy: <span class="hljs-string">'runExecutor'</span>
   },
 );</code></pre>
 				<h3 id="cache-managers">Cache Managers</h3>
-				<p>Для всех примеров выше используется стратегия Refresh-Ahead. Эта стратегия используется по умолчанию, но есть возможность подключить и другие стратегии из кэш менеджера.
-					Разные стратегии кэширования реализуют разные классы &quot;менеджеры&quot;. У каждого менеджера есть строковый идентификатор.
-					При регистрации стратегии он получается вызовом статического метода getName класса менеджера. Далее тот же идентификатор можно использовать
-				в вызовах get и set чтобы сообщить экземпляру Cache какому менеджеру делегировать вызов.</p>
+				<p>For all the examples above, the Refresh-Ahead strategy is used. This strategy is used by default, but it is possible to connect other strategies from cachalot.
+					Different caching strategies implement different classes of &quot;managers&quot;. Each manager has a string identifier.
+					When registering a strategy, it is obtained by calling the getName static method of the manager class. Further, the same identifier can be used
+				in get and set calls to tell the Cache instance to which manager to delegate the call.</p>
 				<h4 id="refresh-ahead">Refresh-Ahead</h4>
-				<p>В стратегии Refresh-Ahead Cache позволяет разработчику настроить кэш для автоматической и асинхронной перезагрузки (обновления) любой недавно доступной записи в кэше из загрузчика кеша до истечения срока его действия. В результате после того, как часто используемая запись вошла в кэш, приложение не будет ощущать влияние чтения на потенциально медленное хранилище кеша, когда запись перезагружается из-за истечения срока действия. Асинхронное обновление запускается только при доступе к объекту, достаточно близкому к его времени истечения - если к объекту обращаются после его истечения, Cache выполнит синхронное чтение из хранилища кеша, чтобы обновить его значение.</p>
-				<p>Время опережающего обновления выражается в процентах от времени истечения срока действия записи. Например, предположим, что время истечения для записей в кэше установлено на 60 секунд, а коэффициент опережающего обновления установлен на 0,5. Если доступ к кешированному объекту осуществляется через 60 секунд, Cache выполнит синхронное чтение из хранилища кеша, чтобы обновить его значение. Однако, если запрос выполняется для записи, которая старше 30, но менее 60 секунд, возвращается текущее значение в кеше, и Cache планирует асинхронную перезагрузку из хранилища кеша.</p>
-				<p>Обновление с опережением особенно полезно, если к объектам обращается большое количество пользователей. Значения в кеше остаются свежими, и задержка, которая может возникнуть в результате чрезмерной перезагрузки из хранилища кеша, исключается.</p>
-				<p>По умолчанию в Cache уже определен менеджер RefreshAhead с настройками по умолчанию. Однако можно его и переопределить. Для этого достаточно зарегистрировать <code>RefreshAheadManager</code> заново</p>
+				<p>The Refresh-Ahead Cache strategy allows the developer to configure the cache to automatically and asynchronously reload (refresh) any recently available cache entry from the cache loader before it expires. As a result, after a frequently used entry entered the cache, the application will not sense the effect of reading on the potentially slow cache storage when the entry is reloaded due to expiration. An asynchronous update is launched only when accessing an object close enough to its expiration time — if the object is accessed after it has expired, Cache will perform a synchronous read from the cache storage to update its value.</p>
+				<p>The refresh ahead factor is expressed as a percentage of the record expiration time. For example, suppose that the expiration time for entries in the cache is set to 60 seconds, and refresh ahead factor is set to 0.5. If the cached object is accessed after 60 seconds, Cache will perform a synchronous read from the cache storage to update its value. However, if the request is made for a record that is older than 30, but less than 60 seconds, the current value in the cache is returned, and Cache plans an asynchronous reboot from the cache storage.</p>
+				<p>An advanced update is especially useful if objects are accessed by a large number of users. The values ​​in the cache remain fresh, and the delay that may result from an excessive reload from the cache storage is eliminated.</p>
+				<p>By default, RefreshAhead is already defined in Cache with default settings. However, you can override it. To do this, simply register <code>RefreshAheadManager</code> again</p>
 				<pre><code class="language-typescript">cache.registerManager(RefreshAheadManager, <span class="hljs-literal">null</span>, {
   refreshAheadFactor: <span class="hljs-number">0.5</span>,
 });</code></pre>
-				<p>Эта стратегия используется по умолчанию</p>
 				<h4 id="read-through">Read-Through</h4>
-				<p>Когда приложение запрашивает в кэше запись, например, ключ X, а X еще не находится в кэше, Cache автоматически вызовет executor который загрузит X из базового источника данных. Если X существует в источнике данных, executor загрузит его, вернет его в Cache, затем Cache поместит его в кэш для будущего использования и, наконец, вернет X к коду приложения, который его запросил. Это называется сквозным кэшированием (Read-Through). Функциональность кэширования с опережением (Refresh-Ahead) может дополнительно повысить производительность чтения (за счет уменьшения предполагаемой задержки).</p>
+				<p>When an application requests an entry in the cache, for example, the X key, and X is not yet in the cache, Cache will automatically call executor, which loads X from the underlying data source. If X exists in the data source, executor loads it, returns it to Cache, then Cache puts it in the cache for future use and finally returns X to the application code that requested it. This is called read-through caching. Advanced caching functionality (Refresh-Ahead) can further improve read performance (by reducing the estimated latency).</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Redis <span class="hljs-keyword">from</span> <span class="hljs-string">'ioredis'</span>;
 <span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
-<span class="hljs-keyword">import</span> Cache, { RedisStorageAdapter, ReadThroughManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'cachalot'</span>; <span class="hljs-comment">// конструктор адаптера для редиса</span>
+<span class="hljs-keyword">import</span> Cache, { RedisStorageAdapter, ReadThroughManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'cachalot'</span>; <span class="hljs-comment">// constructor adapter for redis</span>
 
 <span class="hljs-keyword">const</span> redis = <span class="hljs-keyword">new</span> Redis();
 
@@ -186,9 +190,9 @@ cache.registerManager(ReadThroughManager);
   },
 );</code></pre>
 				<h4 id="write-through">Write-Through</h4>
-				<p>При сквозной записи (Write-Through) get не вызывает никакой логики по валидации кэша, тегов, итд. Запись считается невалидной только в том случае если она отсутсвует в кэше как таковая. В этой стратегии, когда приложение обновляет часть данных в кеше (то есть вызывает set (...), чтобы изменить запись в кэше), операция не будет завершена (то есть, set не будет возвращаться), пока Cache прошел через нижележащую БД и успешно сохранил данные в базовом источнике данных. Это вовсе не улучшает производительность записи, так как вы все еще имеете дело с задержкой записи в источник данных..</p>
+				<p>With Write-Through, get causes no validation logic for the cache, tags, and so on. A record is considered invalid only if it is not in the cache as such. In this strategy, when an application updates a portion of the data in the cache (that is, calls set (...) to change the cache entry), the operation will not complete (that is, set will not return) until the Cache has passed through the underlying database and successfully saved data to the underlying data source. This does not improve write performance at all, since you are still dealing with a delay in writing to the data source.</p>
 				<h4 id="read-through-write-through">Read-Through + Write-Through</h4>
-				<p>Возможно также комбинировать различные стратегии, наиболее распространенный вариант это Read-Through + Write-Through.</p>
+				<p>It is also possible to combine different strategies, the most common option is Read-Through + Write-Through.</p>
 				<pre><code class="language-typescript"><span class="hljs-comment">// ...</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> cache = <span class="hljs-keyword">new</span> Cache({
   adapter: <span class="hljs-keyword">new</span> RedisStorageAdapter(redisClient),
@@ -198,22 +202,30 @@ cache.registerManager(ReadThroughManager);
 cache.registerManager(ReadThroughManager);
 cache.registerManager(WriteThroughManager);
 
-<span class="hljs-comment">// создаст перманентную запись</span>
+<span class="hljs-comment">// creates permanent record</span>
 cache.set(<span class="hljs-string">'something:id100'</span>, <span class="hljs-string">'hello'</span>, {
   tags: [<span class="hljs-string">'something:id100'</span>, <span class="hljs-string">'something'</span>],
   manager: WriteThroughManager.getName()
 });
 
-<span class="hljs-comment">// прочитает запись</span>
+<span class="hljs-comment">// gets the record</span>
 <span class="hljs-keyword">const</span> x = <span class="hljs-keyword">await</span> cache.get(<span class="hljs-string">'something:id100'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> executor(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>), {
     tags: [<span class="hljs-string">'something:id100'</span>, <span class="hljs-string">'something'</span>],
     manager: ReadThroughManager.getName(),
   },
 );</code></pre>
-				<p>Полезные ссылки:</p>
-				<p><a href="https://ruhighload.com/post/%D0%9A%D1%8D%D1%88%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85">Кэширование данных</a></p>
-				<p><a href="http://highload.guide/blog/web-caching-memcached.html">Web, кэширование и memcached</a></p>
-				<p><a href="https://ruhighload.com/index.php/2009/12/02/keshyrovanie-tyajelyh-zaprosov-memcache/">Тяжелое кэширование</a></p>
+				<h2 id="license">License</h2>
+				<p><code>`</code>
+				Copyright 2019 Tinkoff Bank</p>
+				<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+					you may not use this file except in compliance with the License.
+				You may obtain a copy of the License at</p>
+				<p>   <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+				<p>Unless required by applicable law or agreed to in writing, software
+					distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+					WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+					See the License for the specific language governing permissions and
+				limitations under the License.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -388,9 +400,6 @@ cache.set(<span class="hljs-string">'something:id100'</span>, <span class="hljs-
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#default_request_timeout" class="tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#mockmanager" class="tsd-kind-icon">Mock<wbr>Manager</a>
-					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#tags_versions_alias" class="tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS</a>
 					</li>
@@ -414,6 +423,9 @@ cache.set(<span class="hljs-string">'something:id100'</span>, <span class="hljs-
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#mock" class="tsd-kind-icon">mock</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#mockmanager" class="tsd-kind-icon">mock<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#storage" class="tsd-kind-icon">storage</a>

@@ -1,6 +1,6 @@
 {
   "name": "cachalot",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Cache manager for nodejs with support different cache strategies",
   "keywords": [
     "cache",
@@ -38,17 +38,17 @@
     "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "@types/ioredis": "^4.0.9",
-    "@types/jest": "^23",
-    "@types/lodash": "^4.14.120",
+    "@types/ioredis": "^4.0.10",
+    "@types/jest": "^24.0.13",
+    "@types/lodash": "^4.14.132",
     "@types/node": "^8",
     "coveralls": "^3.0.3",
-    "ioredis": "^4.6.3",
-    "jest": "^24.3.1",
-    "ts-jest": "^23",
-    "tslint": "^5.13.1",
+    "ioredis": "^4.9.5",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
     "tslint-config-unional": "^0.10.0",
     "typedoc": "^0.14.2",
-    "typescript": "^3.3.3"
+    "typescript": "^3.4.5"
   }
 }

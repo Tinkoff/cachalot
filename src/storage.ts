@@ -97,6 +97,10 @@ export interface WriteOptions extends ExpireOptions {
    * the record will need to be obtained using the executor
    */
   tags?: string[];
+  /**
+   * getTags allows to detect tags for record depending on executor result
+   */
+  getTags?: (executorResult: any) => string[];
 }
 
 export type ReadWriteOptions = ReadOptions & WriteOptions;
