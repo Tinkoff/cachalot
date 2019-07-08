@@ -131,4 +131,17 @@ describe('ReadThroughManager', () => {
 
     expect(result).toEqual({ test: 123 });
   });
+
+  it('get returns result from executor if storage methods throws errors', async () => {
+    const testStorage = new TestStorage(internalStorage);
+
+    testStorage.get.mockImplementation(async () => { throw new Error('Operation timeout after 200'); });
+
+    const testManager: any = new ReadThroughManager({
+      storage: testStorage,
+      logger
+    });
+
+    await expect(testManager.get('test', async () => ({ test: 123 }))).resolves.toEqual({ test: 123 });
+  });
 });
