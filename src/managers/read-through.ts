@@ -25,7 +25,15 @@ class ReadThroughManager extends BaseManager {
   public async get<E extends Executor>(key: string, executor: E, options: ReadWriteOptions = {}):
     Promise<ValueOfExecutor<E>> {
     const executorContext = { key, executor, options };
-    const record = await this.storage.get(key);
+    let record: StorageRecord | null = null;
+
+    try {
+      record = await this.storage.get(key);
+    } catch (e) {
+      this.logger.error('Failed to get value from storage, falling back to executor', e);
+
+      return executor();
+    }
 
     if (await this.isRecordValid(record)) {
       this.logger.trace('hit', key);
