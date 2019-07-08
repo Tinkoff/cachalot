@@ -251,6 +251,23 @@ describe('RefreshAheadManager', () => {
     expect(result).toEqual({ test: 123 });
   });
 
+  it('get returns result from executor if storage methods throws errors', async () => {
+    const testStorage = new TestStorage(internalStorage);
+
+    testStorage.get.mockImplementation(async () => { throw new Error('Operation timeout after 200'); });
+
+    const testManager: any = new RefreshAheadManager({
+      storage: testStorage,
+      prefix: 'cache',
+      hashKeys: false,
+      expiresIn: 10000,
+      logger,
+      refreshAheadFactor: 0.5
+    });
+
+    await expect(testManager.get('test', async () => ({ test: 123 }))).resolves.toEqual({ test: 123 });
+  });
+
   it('isRecordExpireSoon returns false if record is null', () => {
     expect(manager.isRecordExpireSoon(null)).toEqual(false);
   });

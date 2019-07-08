@@ -7,7 +7,7 @@ import { withTimeout } from '../../with-timeout';
  * Hash prefix, used in set, get commands
  */
 export const CACHE_PREFIX = 'cache';
-export const DEFAULT_OPERATION_TIMEOUT = 200;
+export const DEFAULT_OPERATION_TIMEOUT = 150;
 export const DEFAULT_LOCK_EXPIRES = 20000;
 
 export type CommandArgument = string | number;
