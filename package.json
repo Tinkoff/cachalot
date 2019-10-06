@@ -34,7 +34,6 @@
     "test:ci": "npm run test:unit -- --coverageReporters=text-lcov | coveralls",
     "test:unit:watch": "jest --watch",
     "prepublishOnly": "npm run check && npm run build",
-    "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

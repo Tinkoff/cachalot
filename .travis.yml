@@ -1,21 +1,21 @@
-if: tag IS blank
-
 cache:
   directories:
   - node_modules
+  - dist
 
 language: node_js
+
 node_js:
-- '10'
-- '8'
+  - '10'
+  - '8'
 
 script:
-- npm run test:ci
-- npm run build
-- npm run check
+  - npm run test:ci
+  - npm run build
+  - npm run check
 
 install:
-- npm ci
+  - npm ci
 
 jobs:
   include:
@@ -25,4 +25,4 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-        - npx semantic-release
+          - npx semantic-release
