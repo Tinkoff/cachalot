@@ -1,3 +1,6 @@
+#### [1.1.2]
+- Fixed potential vulnerability by updating lodash
+
 #### [1.1.1]
 - run executor after storage throws an error
 - change default operation timeout to 150

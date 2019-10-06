@@ -1,0 +1,10 @@
+{
+  "analyzeCommits": ["@semantic-release/commit-analyzer"],
+  "verifyConditions": ["@semantic-release/changelog"],
+  "prepare": ["@semantic-release/changelog", "@semantic-release/npm", [
+    "@semantic-release/git", {
+        "message": "chore(release): ${nextRelease.version} ${nextRelease.notes}"
+    }]
+  ],
+  "generateNotes": ["@semantic-release/release-notes-generator"]
+}
