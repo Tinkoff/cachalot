@@ -23,6 +23,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
+    "cz": "git-cz",
     "clean": "rm -rf dist",
     "docs": "typedoc --out docs/api src/ --ignoreCompilerErrors --mode file --hideGenerator --includes docs/assets",
     "build": "tsc",
@@ -32,10 +33,12 @@
     "test:unit": "jest --forceExit --coverage --verbose --detectOpenHandles --passWithNoTests",
     "test:ci": "npm run test:unit -- --coverageReporters=text-lcov | coveralls",
     "test:unit:watch": "jest --watch",
-    "prepublishOnly": "npm run check && npm run build"
+    "prepublishOnly": "npm run check && npm run build",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@types/ioredis": "^4.0.12",
@@ -43,12 +46,19 @@
     "@types/lodash": "^4.14.135",
     "@types/node": "^8",
     "coveralls": "^3.0.4",
+    "cz-conventional-changelog": "^3.0.2",
     "ioredis": "^4.11.1",
     "jest": "^24.8.0",
+    "semantic-release": "^15.13.24",
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-config-unional": "^0.10.0",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.15.0",
     "typescript": "^3.5.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

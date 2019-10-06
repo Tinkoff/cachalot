@@ -1,5 +1,3 @@
-# Changelog
-
 #### [1.1.1]
 - run executor after storage throws an error
 - change default operation timeout to 150
