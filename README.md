@@ -18,9 +18,9 @@ The library is designed to cache query results. Features:
 To initialize Cache instance, you need:
 * StorageAdapter (in the example below, an adapter for connecting to redis). RedisStorageAdapter takes as an argument the instance of ioredis client.
 * Settings object. The options are the following options:
-   
+  
    - prefix - prefix used by CacheManager for storing keys. In essence, this is the namespace for a specific CacheManager.
-   
+  
    - logger - instance of logger. Must implement following interface:
 
     ```typescript
@@ -73,7 +73,7 @@ function getSomething() {
 `get` will check the tags and compare their versions with the current date, runs an executor if necessary and returns result.
 Options for `get`:
 - expiresIn?: number; - The number of milliseconds after which key values are considered expired
-- tags?: string[] - Tags - keys for which checks the validity of a particular record. If the tag value in the cache + invalidation time is <the current time, then the tag will be considered invalid and the record will need to be obtained using the executor
+- tags?: string[] | (() => string[]) - Tags - keys for which checks the validity of a particular record. If the tag value in the cache + invalidation time is <the current time, then the tag will be considered invalid and the record will need to be obtained using the executor. Can be calculated lazy.
 - getTags?: (executorResult) => string[] function which extracts tags from executor result. These tags will be merged with tags given in option below.
 
 The next method, "touch", serves to invalidate tags. Calling this method with one of the tags will make all records in the cache with this tag invalid.
