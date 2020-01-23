@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.2.0...v1.2.1) (2020-01-23)
+
+
+### Bug Fixes
+
+* protect merged static and dynamic tags from being duplicated ([dabd053](https://github.com/TinkoffCreditSystems/cachalot/commit/dabd053))
+
 # [1.2.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.1.2...v1.2.0) (2020-01-23)
 
 
