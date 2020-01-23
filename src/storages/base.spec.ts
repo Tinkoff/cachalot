@@ -1,6 +1,6 @@
-import timeout from '../timeout';
-import { ConnectionStatus } from '../connection-status';
 import TestStorageAdapter from '../adapters/test';
+import { ConnectionStatus } from '../connection-status';
+import timeout from '../timeout';
 import { BaseStorage, TAGS_VERSIONS_ALIAS } from './base';
 
 const testInterface = {
@@ -302,5 +302,20 @@ describe('BaseStorage', () => {
         params: [1, 1]
       }
     ]);
+  });
+
+  it('set creates record with static tags calculated by function', async () => {
+    await storage.set('test', 'test', { tags: () => ['tag'] });
+
+    const value = JSON.parse(testInterface.internalStorage['cache-test']);
+
+    expect(value).toMatchObject({
+      key: 'test',
+      permanent: true,
+      value: '"test"'
+    });
+
+    expect(value.tags).toMatchObject([{ name: 'tag' }]);
+    expect(value.expiresIn).toEqual(expect.any(Number));
   });
 });

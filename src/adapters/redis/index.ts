@@ -1,4 +1,4 @@
-import { KeyType, Redis } from 'ioredis';
+import { Redis } from 'ioredis';
 import { ConnectionStatus } from '../../connection-status';
 import { StorageAdapter } from '../../storage-adapter';
 import { withTimeout } from '../../with-timeout';
@@ -70,14 +70,13 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Use set command to set hash value in radish
    */
   public async set(key: string, value: string, expiresIn?: number): Promise<boolean> {
-    const commands: [KeyType, CommandArgument] = [`${CACHE_PREFIX}:${key}`, value];
+    const cacheKey = `${CACHE_PREFIX}:${key}`;
 
-    if (expiresIn) {
-      commands.push('PX', expiresIn);
-    }
+    const setPromise = expiresIn ?
+      this.redisInstance.set(cacheKey, value, 'PX', expiresIn) :
+      this.redisInstance.set(cacheKey, value);
 
-    return Boolean(await withTimeout(
-      this.redisInstance.set(...commands), this.options.operationTimeout));
+    return Boolean(await withTimeout(setPromise, this.options.operationTimeout));
   }
 
   /**

@@ -96,7 +96,7 @@ export interface WriteOptions extends ExpireOptions {
    * If the tag value is in the cache and invalidation time < current time, the tag will be considered invalid and
    * the record will need to be obtained using the executor
    */
-  tags?: string[];
+  tags?: string[] | (() => string[]);
   /**
    * getTags allows to detect tags for record depending on executor result
    */

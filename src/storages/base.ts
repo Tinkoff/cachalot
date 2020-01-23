@@ -146,7 +146,12 @@ export class BaseStorage implements Storage {
    * set creates new record with provided options and sets it to storage using the adapter.
    */
   public async set(key: string, value: StorageRecordValue, options: WriteOptions = {}): Promise<any> {
-    const tags: string[] = options.tags || [];
+    let tags: string[] = [];
+    if (isFunction(options.tags)) {
+      tags = options.tags();
+    } else if (options.tags !== undefined) {
+      tags = options.tags;
+    }
     const dynamicTags = isFunction(options.getTags) ? options.getTags(value) : [];
 
     if (!Array.isArray(dynamicTags)) {
