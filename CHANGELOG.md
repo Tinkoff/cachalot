@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.1.2...v1.2.0) (2020-01-23)
+
+
+### Features
+
+* Static tags can be lazy calculated ([6965862](https://github.com/TinkoffCreditSystems/cachalot/commit/6965862))
+
 #### [1.1.2]
 - Fixed potential vulnerability by updating lodash
 
@@ -12,4 +19,4 @@
 
 #### [1.0.1]
 - update package.json information
-- version bump 
+- version bump
