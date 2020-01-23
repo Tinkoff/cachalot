@@ -100,8 +100,8 @@ describe('BaseStorage', () => {
     expect(value.expiresIn).toEqual(expect.any(Number));
   });
 
-  it('set sets key to storage adapter with concatenated dynamic tags and simple tags', async () => {
-    await storage.set('test', '123', { tags: ['tag1'], getTags: (result) => [result]});
+  it('set sets key to storage adapter with uniq array of concatenated dynamic tags and simple tags', async () => {
+    await storage.set('test', '123', { tags: ['tag1', '123'], getTags: (result) => [result]});
 
     const value = JSON.parse(testInterface.internalStorage['cache-test']);
 

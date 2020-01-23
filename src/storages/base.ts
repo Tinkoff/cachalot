@@ -1,5 +1,6 @@
 import { createHash } from 'crypto';
 import isFunction from 'lodash/isFunction';
+import uniq from 'lodash/uniq';
 import { WriteOptions, Storage, StorageRecord, StorageRecordTag, StorageRecordValue } from '../storage';
 import { StorageAdapter } from '../storage-adapter';
 import serialize from '../serialize';
@@ -158,7 +159,7 @@ export class BaseStorage implements Storage {
       throw new TypeError(`getTags should return an array of strings, got ${typeof dynamicTags}`);
     }
 
-    const record = createRecord(key, value, tags.concat(dynamicTags).map(createTag), options);
+    const record = createRecord(key, value, uniq(tags.concat(dynamicTags)).map(createTag), options);
 
     await this.adapter.set(
       this.createKey(key),
