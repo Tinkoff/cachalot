@@ -80,10 +80,26 @@ export class RedisStorageAdapter implements StorageAdapter {
   }
 
   /**
+   * Set multiple values to redis storage
+   */
+  public async mset(values: Map<string, any>): Promise<void> {
+    await withTimeout(this.redisInstance.mset(values), this.options.operationTimeout);
+  }
+
+  /**
    * The get command method provided by the adapter. Use get command to get key value from redis
    */
   public async get(key: string): Promise<string | null> {
     return withTimeout(this.redisInstance.get(`${CACHE_PREFIX}:${key}`), this.options.operationTimeout);
+  }
+
+  /**
+   * The mget command method provided by the adapter.
+   * Use mget command to get multiple values from redis
+   */
+  public async mget(keys: string[]): Promise<(string | null)[]> {
+    const cacheKeys = keys.map(key => `${CACHE_PREFIX}:${key}`);
+    return withTimeout(this.redisInstance.mget(...cacheKeys), this.options.operationTimeout);
   }
 
   /**

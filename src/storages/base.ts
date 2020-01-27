@@ -1,13 +1,13 @@
 import { createHash } from 'crypto';
 import isFunction from 'lodash/isFunction';
 import uniq from 'lodash/uniq';
-import { WriteOptions, Storage, StorageRecord, StorageRecordTag, StorageRecordValue } from '../storage';
-import { StorageAdapter } from '../storage-adapter';
-import serialize from '../serialize';
+import { ConnectionStatus } from '../connection-status';
 import deserialize from '../deserialize';
 import createRecord from '../record';
 import createTag from '../record/create-tag';
-import { ConnectionStatus } from '../connection-status';
+import serialize from '../serialize';
+import { Storage, StorageRecord, StorageRecordTag, StorageRecordValue, WriteOptions } from '../storage';
+import { StorageAdapter } from '../storage-adapter';
 
 export const TAGS_VERSIONS_ALIAS = 'cache-tags-versions';
 
@@ -93,8 +93,8 @@ export class BaseStorage implements Storage {
    * Creates new set of tag records and updates them.
    */
   public async setTagVersions(tags: StorageRecordTag[]): Promise<any> {
-    return Promise.all(tags.map(async (tag: StorageRecordTag) =>
-      this.adapter.set(this.createTagKey(tag.name), `${tag.version}`)));
+    const values = new Map(tags.map(tag => [this.createTagKey(tag.name), `${tag.version}`]));
+    return this.adapter.mset(values);
   }
 
   /**
@@ -137,10 +137,12 @@ export class BaseStorage implements Storage {
    * version.
    */
   public async getTags(tagNames: string[]): Promise<StorageRecordTag[]> {
-    return Promise.all(tagNames.map(async tagName => ({
+    const existingTags = await this.adapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
+
+    return tagNames.map((tagName, index) => ({
       name: tagName,
-      version: Number(await this.adapter.get(this.createTagKey(tagName))) || 0
-    })));
+      version: Number(existingTags[index]) || 0
+    }));
   }
 
   /**
