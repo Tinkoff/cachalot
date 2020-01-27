@@ -71,6 +71,19 @@ class TestStorageAdapter implements StorageAdapter {
 
     return !!this.testInterface.internalStorage[`${key}_lock`];
   }
+
+  async mset(values:  Map<string, any>): Promise<void> {
+    this.checkConnection();
+    values.forEach((value, key) => {
+      this.testInterface.internalStorage[key] = value;
+    });
+  }
+
+  async mget(keys: string[]): Promise<(string | null)[]> {
+    this.checkConnection();
+
+    return keys.map(key => this.testInterface.internalStorage[key] ?? null);
+  }
 }
 
 export default TestStorageAdapter;

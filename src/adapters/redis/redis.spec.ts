@@ -159,4 +159,22 @@ describe('Redis adapter', () => {
 
     expect(instance).toBeInstanceOf(RedisStorageAdapter);
   });
+
+  it('mset sets values', async () => {
+    (mock as any).mset = jest.fn().mockImplementation();
+    const values = new Map([['some1', 'value1'], ['some2', 'value2']]);
+    await adapter.mset(values);
+
+    expect((mock as any).mset).toHaveBeenCalledTimes(1);
+    expect((mock as any).mset).toHaveBeenCalledWith(values);
+  });
+
+  it('mget gets values', async () => {
+    const values = new Map([['some1', 'value1'], ['some2', 'value2']]);
+    (mock as any).mget = jest.fn().mockImplementation(() => Array.from(values.values()));
+    await adapter.mget(Array.from(values.keys()));
+
+    expect((mock as any).mget).toHaveBeenCalledTimes(1);
+    expect((mock as any).mget).toHaveBeenCalledWith('cache:some1', 'cache:some2');
+  });
 });

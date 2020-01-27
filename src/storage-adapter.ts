@@ -36,10 +36,21 @@ export interface StorageAdapter {
   set(key: string, value: string, expiresIn?: number): Promise<boolean>;
 
   /**
-   * get - возвращает значение для ключа key
-   * Если запись отсутствует, возвращает null
+   * mset - stores values to the storage
+   */
+  mset(values:  Map<string, any>): Promise<void>;
+
+  /**
+   * get - returns value by key
+   * Returns null if record does not exist
    */
   get(key: string): Promise<string | null>;
+
+  /**
+   * mget - returns values by keys
+   * Returns null for records that do not exist
+   */
+  mget(keys: string[]): Promise<(string | null)[]>;
 
   /**
    * Removes the entry with the key key from storage
