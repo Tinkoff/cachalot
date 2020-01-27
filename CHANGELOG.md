@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.2.1...v1.3.0) (2020-01-27)
+
+
+### Features
+
+* Multiple get and set are now using for read/write tags. ([71d60a3](https://github.com/TinkoffCreditSystems/cachalot/commit/71d60a3))
+
 ## [1.2.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.2.0...v1.2.1) (2020-01-23)
 
 
