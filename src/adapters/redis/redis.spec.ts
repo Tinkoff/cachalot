@@ -166,7 +166,7 @@ describe('Redis adapter', () => {
     await adapter.mset(values);
 
     expect((mock as any).mset).toHaveBeenCalledTimes(1);
-    expect((mock as any).mset).toHaveBeenCalledWith(values);
+    expect((mock as any).mset).toHaveBeenCalledWith(new Map([['cache:some1', 'value1'], ['cache:some2', 'value2']]));
   });
 
   it('mget gets values', async () => {

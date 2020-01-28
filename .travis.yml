@@ -5,8 +5,12 @@ node_js:
   - '10'
   - '8'
 
+services:
+  - redis-server
+
 script:
   - npm run test:ci
+  - npm run test:integration
   - npm run build
   - npm run check
 

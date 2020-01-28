@@ -33,6 +33,7 @@
     "test": "npm run test:unit",
     "test:unit": "jest --coverage --verbose --passWithNoTests",
     "test:ci": "npm run test:unit -- --coverageReporters=text-lcov | coveralls",
+    "test:integration": "jest --config ./integration/jest.config.js --forceExit --detectOpenHandles",
     "test:unit:watch": "jest --watch",
     "prepublishOnly": "npm run check && npm run build",
     "semantic-release": "semantic-release"
@@ -43,12 +44,14 @@
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
     "@semantic-release/git": "^7.0.16",
+    "@types/faker": "^4.1.9",
     "@types/ioredis": "^4.14.4",
     "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.149",
     "@types/node": "^8",
     "coveralls": "^3.0.4",
     "cz-conventional-changelog": "^3.0.2",
+    "faker": "^4.1.0",
     "ioredis": "^4.14.1",
     "jest": "^24.8.0",
     "semantic-release": "^15.13.24",

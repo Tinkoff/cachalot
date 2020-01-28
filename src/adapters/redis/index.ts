@@ -83,7 +83,11 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Set multiple values to redis storage
    */
   public async mset(values: Map<string, any>): Promise<void> {
-    await withTimeout(this.redisInstance.mset(values), this.options.operationTimeout);
+    const data = new Map<string, any>();
+    for (const [key, value] of values.entries()) {
+      data.set(`${CACHE_PREFIX}:${key}`, value);
+    }
+    await withTimeout(this.redisInstance.mset(data), this.options.operationTimeout);
   }
 
   /**
