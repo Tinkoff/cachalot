@@ -7,7 +7,7 @@ let redis: RedisType;
 let adapter: RedisStorageAdapter;
 
 function delay(duration: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, duration));
+  return new Promise((resolve) => setTimeout(resolve, duration + 1));
 }
 
 const expireTimeout = 5;
