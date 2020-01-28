@@ -160,8 +160,8 @@ describe('Redis adapter', () => {
   describe('mset', () => {
     it('mset sets values', async () => {
       const values = new Map([
-        [faker.random.word(), faker.random.uuid()],
-        [faker.random.word(), faker.random.uuid()]
+        [faker.random.uuid(), faker.random.uuid()],
+        [faker.random.uuid(), faker.random.uuid()]
       ]);
       await adapter.mset(values);
 
@@ -178,8 +178,8 @@ describe('Redis adapter', () => {
   describe('mget', () => {
     it('mget gets values', async () => {
       const values = new Map([
-        [faker.random.word(), faker.random.uuid()],
-        [faker.random.word(), faker.random.uuid()]
+        [faker.random.uuid(), faker.random.uuid()],
+        [faker.random.uuid(), faker.random.uuid()]
       ]);
 
       for (const [key, value] of values.entries()) {
@@ -193,8 +193,8 @@ describe('Redis adapter', () => {
 
     it('mget returns null for non-existing keys', async () => {
       const values = new Map([
-        [faker.random.word(), faker.random.uuid()],
-        [faker.random.word(), faker.random.uuid()]
+        [faker.random.uuid(), faker.random.uuid()],
+        [faker.random.uuid(), faker.random.uuid()]
       ]);
 
       for (const [key, value] of values.entries()) {
@@ -202,7 +202,7 @@ describe('Redis adapter', () => {
       }
 
       const keys = Array.from(values.keys());
-      const nonExistingKey = faker.random.word();
+      const nonExistingKey = faker.random.uuid();
       keys.push(nonExistingKey);
 
       const result = await adapter.mget(keys);
