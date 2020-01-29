@@ -64,7 +64,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="cachalot">Cachalot</h1>
+				<a href="#cachalot" id="cachalot" style="color: inherit; text-decoration: none;">
+					<h1>Cachalot</h1>
+				</a>
 				<p><a href="https://travis-ci.org/TinkoffCreditSystems/cachalot"><img src="https://img.shields.io/travis/TinkoffCreditSystems/cachalot/master.svg?style=flat-square" alt="Build status"></a>
 					<a href="https://coveralls.io/github/TinkoffCreditSystems/cachalot"><img src="https://img.shields.io/coveralls/github/TinkoffCreditSystems/cachalot.svg?style=flat-square" alt="Coveralls github"></a>
 					<a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/written_in-typescript-blue.svg?style=flat-square" alt="Written in typescript"></a>
@@ -78,10 +80,13 @@
 					<li>Allows to pass in a logger that will be used to display informational messages and errors</li>
 					<li>Supports various behaviors of cache write waiting (heavy queries), more details below.</li>
 				</ul>
-				<h3 id="getting-started">Getting started</h3>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h3>Getting started</h3>
+				</a>
 				<p>To initialize Cache instance, you need:</p>
 				<ul>
-					<li>StorageAdapter (in the example below, an adapter for connecting to redis). RedisStorageAdapter takes as an argument the instance of ioredis client.</li>
+					<li><p>StorageAdapter (in the example below, an adapter for connecting to redis). RedisStorageAdapter takes as an argument the instance of ioredis client.</p>
+					</li>
 					<li><p>Settings object. The options are the following options:</p>
 						<ul>
 							<li><p>prefix - prefix used by CacheManager for storing keys. In essence, this is the namespace for a specific CacheManager.</p>
@@ -94,11 +99,14 @@
  error(...args: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span>;
 }</code></pre>
 							</li>
-							<li>expiresIn - the time after which the keys lose relevance (ms)</li>
+							<li><p>expiresIn - the time after which the keys lose relevance (ms)</p>
+							</li>
 						</ul>
 					</li>
 				</ul>
-				<h5 id="example-of-use-">Example of use:</h5>
+				<a href="#example-of-use" id="example-of-use" style="color: inherit; text-decoration: none;">
+					<h5>Example of use:</h5>
+				</a>
 				<p>Initialization:</p>
 				<pre><code class="language-typescript"><span class="hljs-comment">// cache.ts</span>
 
@@ -110,6 +118,21 @@
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> cache = <span class="hljs-keyword">new</span> Cache({
   adapter: <span class="hljs-keyword">new</span> RedisStorageAdapter(redis),
+  logger,
+});</code></pre>
+				<p>If your Redis instance uses eviction policy you need to use separate Redis instance for tags. <strong>Tags should not be evicted!</strong></p>
+				<pre><code class="language-typescript"><span class="hljs-comment">// cache-with-tags.ts</span>
+
+<span class="hljs-keyword">import</span> Redis <span class="hljs-keyword">from</span> <span class="hljs-string">'ioredis'</span>;
+<span class="hljs-keyword">import</span> Cache, { RedisStorageAdapter } <span class="hljs-keyword">from</span> <span class="hljs-string">'cachalot'</span>;
+<span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
+
+<span class="hljs-keyword">const</span> redis = <span class="hljs-keyword">new</span> Redis(); <span class="hljs-comment">// with eviction policy enabled</span>
+<span class="hljs-keyword">const</span> redisForTags = <span class="hljs-keyword">new</span> Redis(<span class="hljs-number">6380</span>);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> cache = <span class="hljs-keyword">new</span> Cache({
+  adapter: <span class="hljs-keyword">new</span> RedisStorageAdapter(redis),
+  tagsAdapter: <span class="hljs-keyword">new</span> RedisStorageAdapter(redisForTags),
   logger,
 });</code></pre>
 				<p>There are three main methods of working with Cache; their behavior depends on the chosen caching strategy:</p>
@@ -130,7 +153,7 @@
 				Options for <code>get</code>:</p>
 				<ul>
 					<li>expiresIn?: number; - The number of milliseconds after which key values are considered expired</li>
-					<li>tags?: string[] - Tags - keys for which checks the validity of a particular record. If the tag value in the cache + invalidation time is &lt;the current time, then the tag will be considered invalid and the record will need to be obtained using the executor</li>
+					<li>tags?: string[] | (() =&gt; string[]) - Tags - keys for which checks the validity of a particular record. If the tag value in the cache + invalidation time is &lt;the current time, then the tag will be considered invalid and the record will need to be obtained using the executor. Can be calculated lazy.</li>
 					<li>getTags?: (executorResult) =&gt; string[] function which extracts tags from executor result. These tags will be merged with tags given in option below.</li>
 				</ul>
 				<p>The next method, &quot;touch&quot;, serves to invalidate tags. Calling this method with one of the tags will make all records in the cache with this tag invalid.
@@ -143,7 +166,9 @@
 }</code></pre>
 				<p>The latter method is <code>set</code>, used in write-through strategies to update entries.</p>
 				<p>Note that <code>touch</code> does not make sense when using Write-Through in its pure form, just as there is no point in using set in the Refresh-Ahead and Read-Through strategies</p>
-				<h2 id="locked-key-retrieve-strategies">Locked key retrieve strategies</h2>
+				<a href="#locked-key-retrieve-strategies" id="locked-key-retrieve-strategies" style="color: inherit; text-decoration: none;">
+					<h2>Locked key retrieve strategies</h2>
+				</a>
 				<p>Cachalot allows you to set a strategy for <code>get</code> behavior if the cache entry is locked (for updating). Available strategies:</p>
 				<p><code>waitForResult</code> -<code>get</code> will wait for the result to appear in the cache and the lock will be removed. Good to use with heavy demands and average load
 				. Under high loads, spikes can occur due to queuing requests.</p>
@@ -155,12 +180,16 @@
     lockedKeyRetrieveStrategy: <span class="hljs-string">'runExecutor'</span>
   },
 );</code></pre>
-				<h3 id="cache-managers">Cache Managers</h3>
+				<a href="#cache-managers" id="cache-managers" style="color: inherit; text-decoration: none;">
+					<h3>Cache Managers</h3>
+				</a>
 				<p>For all the examples above, the Refresh-Ahead strategy is used. This strategy is used by default, but it is possible to connect other strategies from cachalot.
 					Different caching strategies implement different classes of &quot;managers&quot;. Each manager has a string identifier.
 					When registering a strategy, it is obtained by calling the getName static method of the manager class. Further, the same identifier can be used
 				in get and set calls to tell the Cache instance to which manager to delegate the call.</p>
-				<h4 id="refresh-ahead">Refresh-Ahead</h4>
+				<a href="#refresh-ahead" id="refresh-ahead" style="color: inherit; text-decoration: none;">
+					<h4>Refresh-Ahead</h4>
+				</a>
 				<p>The Refresh-Ahead Cache strategy allows the developer to configure the cache to automatically and asynchronously reload (refresh) any recently available cache entry from the cache loader before it expires. As a result, after a frequently used entry entered the cache, the application will not sense the effect of reading on the potentially slow cache storage when the entry is reloaded due to expiration. An asynchronous update is launched only when accessing an object close enough to its expiration time — if the object is accessed after it has expired, Cache will perform a synchronous read from the cache storage to update its value.</p>
 				<p>The refresh ahead factor is expressed as a percentage of the record expiration time. For example, suppose that the expiration time for entries in the cache is set to 60 seconds, and refresh ahead factor is set to 0.5. If the cached object is accessed after 60 seconds, Cache will perform a synchronous read from the cache storage to update its value. However, if the request is made for a record that is older than 30, but less than 60 seconds, the current value in the cache is returned, and Cache plans an asynchronous reboot from the cache storage.</p>
 				<p>An advanced update is especially useful if objects are accessed by a large number of users. The values ​​in the cache remain fresh, and the delay that may result from an excessive reload from the cache storage is eliminated.</p>
@@ -168,7 +197,9 @@
 				<pre><code class="language-typescript">cache.registerManager(RefreshAheadManager, <span class="hljs-literal">null</span>, {
   refreshAheadFactor: <span class="hljs-number">0.5</span>,
 });</code></pre>
-				<h4 id="read-through">Read-Through</h4>
+				<a href="#read-through" id="read-through" style="color: inherit; text-decoration: none;">
+					<h4>Read-Through</h4>
+				</a>
 				<p>When an application requests an entry in the cache, for example, the X key, and X is not yet in the cache, Cache will automatically call executor, which loads X from the underlying data source. If X exists in the data source, executor loads it, returns it to Cache, then Cache puts it in the cache for future use and finally returns X to the application code that requested it. This is called read-through caching. Advanced caching functionality (Refresh-Ahead) can further improve read performance (by reducing the estimated latency).</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> Redis <span class="hljs-keyword">from</span> <span class="hljs-string">'ioredis'</span>;
 <span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
@@ -189,9 +220,13 @@ cache.registerManager(ReadThroughManager);
     manager: <span class="hljs-string">'read-through'</span>,
   },
 );</code></pre>
-				<h4 id="write-through">Write-Through</h4>
+				<a href="#write-through" id="write-through" style="color: inherit; text-decoration: none;">
+					<h4>Write-Through</h4>
+				</a>
 				<p>With Write-Through, get causes no validation logic for the cache, tags, and so on. A record is considered invalid only if it is not in the cache as such. In this strategy, when an application updates a portion of the data in the cache (that is, calls set (...) to change the cache entry), the operation will not complete (that is, set will not return) until the Cache has passed through the underlying database and successfully saved data to the underlying data source. This does not improve write performance at all, since you are still dealing with a delay in writing to the data source.</p>
-				<h4 id="read-through-write-through">Read-Through + Write-Through</h4>
+				<a href="#read-through--write-through" id="read-through--write-through" style="color: inherit; text-decoration: none;">
+					<h4>Read-Through + Write-Through</h4>
+				</a>
 				<p>It is also possible to combine different strategies, the most common option is Read-Through + Write-Through.</p>
 				<pre><code class="language-typescript"><span class="hljs-comment">// ...</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> cache = <span class="hljs-keyword">new</span> Cache({
@@ -214,18 +249,22 @@ cache.set(<span class="hljs-string">'something:id100'</span>, <span class="hljs-
     manager: ReadThroughManager.getName(),
   },
 );</code></pre>
-				<h2 id="license">License</h2>
-				<p><code>`</code>
-				Copyright 2019 Tinkoff Bank</p>
-				<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
-					you may not use this file except in compliance with the License.
-				You may obtain a copy of the License at</p>
-				<p>   <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-				<p>Unless required by applicable law or agreed to in writing, software
-					distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
-					WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-					See the License for the specific language governing permissions and
-				limitations under the License.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<pre><code>Copyright 2019 Tinkoff Bank
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not <span class="hljs-keyword">use</span> this <span class="hljs-keyword">file</span> <span class="hljs-keyword">except</span> <span class="hljs-keyword">in</span> compliance <span class="hljs-keyword">with</span> the License.
+You may obtain a copy <span class="hljs-keyword">of</span> the License <span class="hljs-keyword">at</span>
+
+   <span class="hljs-keyword">http</span>://www.apache.org/licenses/LICENSE<span class="hljs-number">-2.0</span>
+
+Unless <span class="hljs-keyword">required</span> <span class="hljs-keyword">by</span> applicable law <span class="hljs-keyword">or</span> agreed <span class="hljs-keyword">to</span> <span class="hljs-keyword">in</span> writing, software
+<span class="hljs-keyword">distributed</span> <span class="hljs-keyword">under</span> the License <span class="hljs-keyword">is</span> <span class="hljs-keyword">distributed</span> <span class="hljs-keyword">on</span> an <span class="hljs-string">"AS IS"</span> BASIS,
+<span class="hljs-keyword">WITHOUT</span> WARRANTIES <span class="hljs-keyword">OR</span> CONDITIONS <span class="hljs-keyword">OF</span> <span class="hljs-keyword">ANY</span> KIND, either express <span class="hljs-keyword">or</span> implied.
+See the License <span class="hljs-keyword">for</span> the specific <span class="hljs-keyword">language</span> governing permissions <span class="hljs-keyword">and</span>
+limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -495,6 +534,7 @@ cache.set(<span class="hljs-string">'something:id100'</span>, <span class="hljs-
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
