@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.3.1...v1.4.0) (2020-01-29)
+
+
+### Features
+
+* Tags can be stored separately in case the main redis instance uses eviction policy. ([c25ae76](https://github.com/TinkoffCreditSystems/cachalot/commit/c25ae76))
+
 ## [1.3.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.3.0...v1.3.1) (2020-01-28)
 
 
