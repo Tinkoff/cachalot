@@ -15,6 +15,7 @@ export interface CacheWithCustomStorageOptions {
 }
 export interface CacheWithBaseStorageOptions {
   adapter: StorageAdapter;
+  tagsAdapter?: StorageAdapter;
 }
 export interface ManagerConstructor<T extends BaseManager = any> {
   new(options: ManagerOptions): T;
@@ -60,6 +61,7 @@ class Cache {
     if (isBaseStorageOptions(options)) {
       this.storage = new BaseStorage({
         adapter: options.adapter,
+        tagsAdapter: options.tagsAdapter,
         prefix: options.prefix,
         hashKeys: options.hashKeys
       });

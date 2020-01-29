@@ -318,4 +318,27 @@ describe('BaseStorage', () => {
     expect(value.tags).toMatchObject([{ name: 'tag' }]);
     expect(value.expiresIn).toEqual(expect.any(Number));
   });
+
+  it('uses separate adapter for tags', async() => {
+    const tag1 = { name: 'tag1', version: 1 };
+    const tagsTestInterface = {
+      internalStorage: {}
+    };
+    const tagsTestAdapter = new TestStorageAdapter(tagsTestInterface, true);
+    tagsTestInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`] = tag1.version;
+    storage = new BaseStorage({
+      adapter: testAdapter,
+      tagsAdapter: tagsTestAdapter,
+      prefix: 'cache',
+      hashKeys: false,
+      expiresIn: 10000
+    });
+
+    const tags = await storage.getTags([tag1.name]);
+    expect(tags).toEqual([tag1]);
+
+    const tagV2 = { ...tag1, version: 2 };
+    await storage.setTagVersions([tagV2]);
+    await expect(storage.getTags([tag1.name])).resolves.toEqual([tagV2]);
+  });
 });

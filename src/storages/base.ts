@@ -13,6 +13,7 @@ export const TAGS_VERSIONS_ALIAS = 'cache-tags-versions';
 
 export type BaseStorageOptions = {
   adapter: StorageAdapter;
+  tagsAdapter?: StorageAdapter;
   prefix?: string;
   hashKeys?: boolean;
   expiresIn?: number;
@@ -43,6 +44,7 @@ export type CommandFn = (...args: any[]) => any;
 export class BaseStorage implements Storage {
   constructor(options: BaseStorageOptions) {
     this.adapter = options.adapter;
+    this.tagsAdapter = options.tagsAdapter ?? options.adapter;
     this.prefix = options.prefix || '';
     this.hashKeys = options.hashKeys || false;
 
@@ -76,6 +78,12 @@ export class BaseStorage implements Storage {
   private adapter: StorageAdapter;
 
   /**
+   * Adapter for tags should be provided if your primary adapter uses eviction policy.
+   * This adapter should not use any eviction policy. Records should be deleted only by demand or expiration.
+   */
+  private readonly tagsAdapter: StorageAdapter;
+
+  /**
    * Gets a record using an adapter. It is expected that the adapter returns or null (value not found)
    * or serialized StorageRecord.
    */
@@ -94,7 +102,7 @@ export class BaseStorage implements Storage {
    */
   public async setTagVersions(tags: StorageRecordTag[]): Promise<any> {
     const values = new Map(tags.map(tag => [this.createTagKey(tag.name), `${tag.version}`]));
-    return this.adapter.mset(values);
+    return this.tagsAdapter.mset(values);
   }
 
   /**
@@ -137,7 +145,7 @@ export class BaseStorage implements Storage {
    * version.
    */
   public async getTags(tagNames: string[]): Promise<StorageRecordTag[]> {
-    const existingTags = await this.adapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
+    const existingTags = await this.tagsAdapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
 
     return tagNames.map((tagName, index) => ({
       name: tagName,
