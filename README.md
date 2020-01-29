@@ -51,6 +51,25 @@ export const cache = new Cache({
   logger,
 });
 ```
+If your Redis instance uses eviction policy you need to use separate Redis instance for tags. **Tags should not be evicted!**
+
+```typescript
+// cache-with-tags.ts
+
+import Redis from 'ioredis';
+import Cache, { RedisStorageAdapter } from 'cachalot';
+import logger from './logger';
+
+const redis = new Redis(); // with eviction policy enabled
+const redisForTags = new Redis(6380);
+
+export const cache = new Cache({
+  adapter: new RedisStorageAdapter(redis),
+  tagsAdapter: new RedisStorageAdapter(redisForTags),
+  logger,
+});
+```
+
 There are three main methods of working with Cache; their behavior depends on the chosen caching strategy:
 
 `get` gets cache data
