@@ -66,15 +66,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>BaseStorage is the default Storage implementation for Manager.</p>
-					</div>
-					<p>It provides functionality of get, set, touching tags, locking keys etc.
-					It also manages command execution, supporting an &quot;offline&quot; queue of commands.</p>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -108,6 +99,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="basestorage.html#hashkeys" class="tsd-kind-icon">hash<wbr>Keys</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="basestorage.html#prefix" class="tsd-kind-icon">prefix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="basestorage.html#storage" class="tsd-kind-icon">storage</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="basestorage.html#tagsadapter" class="tsd-kind-icon">tags<wbr>Adapter</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -145,7 +137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L42">storages/base.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L44">storages/base.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,15 +159,9 @@
 					<div class="tsd-signature tsd-kind-icon">adapter<span class="tsd-signature-symbol">:</span> <a href="../interfaces/storageadapter.html" class="tsd-signature-type">StorageAdapter</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L75">storages/base.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L78">storages/base.ts:78</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The adapter is an interlayer between the underlying storage and the BaseStorage class.
-							Implements the StorageAdapter interface.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="commandsqueue" class="tsd-anchor"></a>
@@ -183,14 +169,9 @@
 					<div class="tsd-signature tsd-kind-icon">commands<wbr>Queue<span class="tsd-signature-symbol">:</span> <a href="../interfaces/command.html" class="tsd-signature-type">Command</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L58">storages/base.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L61">storages/base.ts:61</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>An offline commands queue.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="hashkeys" class="tsd-anchor"></a>
@@ -198,15 +179,9 @@
 					<div class="tsd-signature tsd-kind-icon">hash<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L69">storages/base.ts:69</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L72">storages/base.ts:72</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Does it affect whether the keys are kept &quot;as is&quot; or they will be hashed. Hashing can be useful
-							for partitioning some databases.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="prefix" class="tsd-anchor"></a>
@@ -214,14 +189,9 @@
 					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L63">storages/base.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L66">storages/base.ts:66</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The prefix is used to prevent conflicts in the key names of different BaseStorage instances.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="storage" class="tsd-anchor"></a>
@@ -229,7 +199,17 @@
 					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/__mocks__/base.ts#L5">storages/__mocks__/base.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/__mocks__/base.ts#L5">storages/__mocks__/base.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="tagsadapter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> tags<wbr>Adapter</h3>
+					<div class="tsd-signature tsd-kind-icon">tags<wbr>Adapter<span class="tsd-signature-symbol">:</span> <a href="../interfaces/storageadapter.html" class="tsd-signature-type">StorageAdapter</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L84">storages/base.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -240,28 +220,22 @@
 					<a name="cachedcommand" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> cached<wbr>Command</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">cached<wbr>Command<span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><a href="../globals.html#commandfn" class="tsd-signature-type">CommandFn</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">cached<wbr>Command<span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><a href="../globals.html#commandfn" class="tsd-signature-type">CommandFn</a>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L221">storages/base.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L237">storages/base.ts:237</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>All commands wrapped with this method will be &quot;cached&quot;. This means that if there are problems with the connection
-									the response will be sent immediately and the command will be executed later when the connection is restored.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>fn: <a href="../globals.html#commandfn" class="tsd-signature-type">CommandFn</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -278,16 +252,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L186">storages/base.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L202">storages/base.ts:202</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Depending on the option, [hashKeys] generates an MD5 hash &quot;key&quot; for the storage or gives it &quot;as is&quot;.
-										The key is generated from the &quot;prefix&quot; of the storage defined at the time of the creation of
-									the BaseStorage instance and identifier passed in the key parameter string.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -308,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L192">storages/base.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L208">storages/base.ts:208</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -332,14 +299,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#del">del</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L130">storages/base.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L139">storages/base.ts:139</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Deletes record by key.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -360,14 +322,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L199">storages/base.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L215">storages/base.ts:215</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Executes commands from offline queue. Re-queues commands which was not successfully executed.</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -383,15 +340,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L81">storages/base.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L90">storages/base.ts:90</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Gets a record using an adapter. It is expected that the adapter returns or null (value not found)
-									or serialized StorageRecord.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -413,14 +364,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#getconnectionstatus">getConnectionStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L170">storages/base.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L186">storages/base.ts:186</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns current connection status of storage.</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../enums/connectionstatus.html" class="tsd-signature-type">ConnectionStatus</a></h4>
 						</li>
 					</ul>
@@ -436,15 +382,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#gettags">getTags</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L138">storages/base.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L147">storages/base.ts:147</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Retrieves actual versions of tags from storage. Tags which was not found in storage will be created with 0
-									version.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -465,14 +405,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L177">storages/base.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L193">storages/base.ts:193</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Checks if provided value is valid StorageRecord.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -494,14 +429,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#keyislocked">keyIsLocked</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L123">storages/base.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L132">storages/base.ts:132</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Checks if key is locked and returns true/false.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -523,14 +453,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#lockkey">lockKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L109">storages/base.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L118">storages/base.ts:118</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Causes the adapter to acquireLock and resolves to true if the adapter responds that the lock is successful.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -552,14 +477,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#releasekey">releaseKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L116">storages/base.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L125">storages/base.ts:125</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Releases the lock of key.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -580,14 +500,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L148">storages/base.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L159">storages/base.ts:159</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>set creates new record with provided options and sets it to storage using the adapter.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -614,14 +529,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L94">storages/base.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L103">storages/base.ts:103</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates new set of tag records and updates them.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -643,14 +553,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storage.html">Storage</a>.<a href="../interfaces/storage.html#touch">touch</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/e990f7f/src/storages/base.ts#L102">storages/base.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storages/base.ts#L111">storages/base.ts:111</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Invalidates tags given as array of strings.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -695,6 +600,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="basestorage.html#storage" class="tsd-kind-icon">storage</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="basestorage.html#tagsadapter" class="tsd-kind-icon">tags<wbr>Adapter</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="basestorage.html#cachedcommand" class="tsd-kind-icon">cached<wbr>Command</a>
@@ -762,6 +670,7 @@
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
