@@ -66,6 +66,27 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Cache is the basic class of CacheManager.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><pre><code class="language-typescript"><span class="hljs-comment">// cache.ts</span>
+<span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
+<span class="hljs-keyword">import</span> Cache, { RedisStorageAdapter } <span class="hljs-keyword">from</span> <span class="hljs-string">'cachalot'</span>;
+
+<span class="hljs-keyword">const</span> redis = <span class="hljs-keyword">new</span> Redis();
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> cache = <span class="hljs-keyword">new</span> Cache({
+  adapter: <span class="hljs-keyword">new</span> RedisStorageAdapter(redisClient),
+  logger,
+});</code></pre>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -118,7 +139,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L55">cache.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L55">src/cache.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -140,7 +161,7 @@
 					<div class="tsd-signature tsd-kind-icon">expires<wbr>In<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L87">cache.ts:87</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L87">src/cache.ts:87</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -150,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/logger.html" class="tsd-signature-type">Logger</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L86">cache.ts:86</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L86">src/cache.ts:86</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -160,7 +181,7 @@
 					<div class="tsd-signature tsd-kind-icon">managers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/manager.html" class="tsd-signature-type">Manager</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L88">cache.ts:88</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L88">src/cache.ts:88</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -170,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <a href="../interfaces/storage.html" class="tsd-signature-type">Storage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L85">cache.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L85">src/cache.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,9 +208,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L94">cache.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L94">src/cache.ts:94</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get delegates call to default or provided manager. The only thing it does by itself is checking
+									the connection status of storage. If storage is disconnected calls executor directly and returns result.</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
@@ -205,7 +232,7 @@
 									<h5>executor: <span class="tsd-signature-type">E</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../globals.html#readwriteoptions" class="tsd-signature-type">ReadWriteOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/managerselectoroptions.html" class="tsd-signature-type">ManagerSelectorOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../globals.html#readwriteoptions" class="tsd-signature-type">ReadWriteOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/managerselectoroptions.html" class="tsd-signature-type">ManagerSelectorOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#valueofexecutor" class="tsd-signature-type">ValueOfExecutor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -222,9 +249,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L151">cache.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L151">src/cache.ts:151</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns cache manager by its name</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -239,15 +271,20 @@
 					<a name="registermanager" class="tsd-anchor"></a>
 					<h3>register<wbr>Manager</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Manager<span class="tsd-signature-symbol">(</span>managerClass<span class="tsd-signature-symbol">: </span><a href="../interfaces/managerconstructor.html" class="tsd-signature-type">ManagerConstructor</a>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/manageroptions.html" class="tsd-signature-type">ManagerOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Manager<span class="tsd-signature-symbol">(</span>managerClass<span class="tsd-signature-symbol">: </span><a href="../interfaces/managerconstructor.html" class="tsd-signature-type">ManagerConstructor</a>, name<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/manageroptions.html" class="tsd-signature-type">ManagerOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L140">cache.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L140">src/cache.ts:140</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Register a new cache manager</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -257,7 +294,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> name: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/manageroptions.html" class="tsd-signature-type">ManagerOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/manageroptions.html" class="tsd-signature-type">ManagerOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -274,9 +311,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L114">cache.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L114">src/cache.ts:114</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Just like &quot;get&quot; this method delegates call to default or provided manager</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -286,7 +328,7 @@
 									<h5>value: <a href="../globals.html#storagerecordvalue" class="tsd-signature-type">StorageRecordValue</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/writeoptions.html" class="tsd-signature-type">WriteOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/managerselectoroptions.html" class="tsd-signature-type">ManagerSelectorOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/writeoptions.html" class="tsd-signature-type">WriteOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/managerselectoroptions.html" class="tsd-signature-type">ManagerSelectorOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -303,9 +345,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/cache.ts#L133">cache.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L133">src/cache.ts:133</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The touch method is intended for all cases when you need to inform the cache manager that the data for
+									any tags are updated without making a cache entry;</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-typescript"><span class="hljs-keyword">await</span> saveNews(news);
+cache.touch([<span class="hljs-string">'news'</span>]);</code></pre>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>

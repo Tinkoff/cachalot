@@ -25,7 +25,7 @@
   "scripts": {
     "cz": "git-cz",
     "clean": "rm -rf dist",
-    "docs": "typedoc --out docs/api src/ --ignoreCompilerErrors --mode file --hideGenerator --media docs/assets --exclude \"**/*+.spec.ts\"",
+    "docs": "typedoc --out docs/api src/ --mode file --gitRevision master --hideGenerator --media docs/assets --exclude \"**/*+.spec.ts\"",
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint --project . \"src/**/*.ts\"",

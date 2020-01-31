@@ -66,6 +66,15 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface adapter for class Manager. Adapter is &quot;interlayer&quot;
+							between storage methods and the manager itself. Any adapter
+						must implement all methods and properties of this interface</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -89,9 +98,13 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#acquirelock" class="tsd-kind-icon">acquire<wbr>Lock</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#addtoset" class="tsd-kind-icon">add<wbr>ToSet</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#del" class="tsd-kind-icon">del</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#deletefromset" class="tsd-kind-icon">delete<wbr>From<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#get" class="tsd-kind-icon">get</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#getsetvalues" class="tsd-kind-icon">get<wbr>Set<wbr>Values</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#intersectwithset" class="tsd-kind-icon">intersect<wbr>With<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#mget" class="tsd-kind-icon">mget</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#mset" class="tsd-kind-icon">mset</a></li>
@@ -116,9 +129,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L63">storage-adapter.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L83">src/storage-adapter.ts:83</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Locks the entry with the key key to be changed, returns true if the operation is successful, otherwise false</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -126,6 +144,37 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="addtoset" class="tsd-anchor"></a>
+					<h3>add<wbr>ToSet</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>ToSet<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L63">src/storage-adapter.ts:63</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds values to the set</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -139,13 +188,49 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L58">storage-adapter.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L78">src/storage-adapter.ts:78</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes the entry with the key key from storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="deletefromset" class="tsd-anchor"></a>
+					<h3>delete<wbr>From<wbr>Set</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>From<wbr>Set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L68">src/storage-adapter.ts:68</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Deletes values from the set</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -162,9 +247,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L47">storage-adapter.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L47">src/storage-adapter.ts:47</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>get - returns value by key
+									Returns null if record does not exist</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -185,10 +276,74 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L30">storage-adapter.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L30">src/storage-adapter.ts:30</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the current status of the storage connection.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../enums/connectionstatus.html" class="tsd-signature-type">ConnectionStatus</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getsetvalues" class="tsd-anchor"></a>
+					<h3>get<wbr>Set<wbr>Values</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Set<wbr>Values<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L58">src/storage-adapter.ts:58</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns all the members of the set value stored at key</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="intersectwithset" class="tsd-anchor"></a>
+					<h3>intersect<wbr>With<wbr>Set</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">intersect<wbr>With<wbr>Set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L73">src/storage-adapter.ts:73</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns set intersection with values</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -202,9 +357,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L73">storage-adapter.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L93">src/storage-adapter.ts:93</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if the entry with the key key is locked for changes</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -225,9 +385,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L53">storage-adapter.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L53">src/storage-adapter.ts:53</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>mget - returns values by keys
+									Returns null for records that do not exist</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -248,9 +414,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L41">storage-adapter.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L41">src/storage-adapter.ts:41</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>mset - stores values to the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -265,30 +436,35 @@
 					<a name="onconnect" class="tsd-anchor"></a>
 					<h3>on<wbr>Connect</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Connect<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Connect<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L25">storage-adapter.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L25">src/storage-adapter.ts:25</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The method should call the callback passed to it as soon as the storage is ready to execute commands.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<h5>callback: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5><span class="tsd-flag ts-flagRest">Rest</span> args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -312,9 +488,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L68">storage-adapter.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L88">src/storage-adapter.ts:88</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unlocks the record with the key key, returns true if the operation is successful, otherwise false</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -329,15 +510,21 @@
 					<a name="set" class="tsd-anchor"></a>
 					<h3>set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, expiresIn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, expiresIn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L36">storage-adapter.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L36">src/storage-adapter.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>set - sets the value for the key key in storage.
+									Returns true on success; false otherwise.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -364,9 +551,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage-adapter.ts#L20">storage-adapter.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage-adapter.ts#L20">src/storage-adapter.ts:20</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The method sends the settings from above (from BaseManager) to the adapter. Called in the BaseManager constructor if set</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -398,13 +590,25 @@
 								<a href="storageadapter.html#acquirelock" class="tsd-kind-icon">acquire<wbr>Lock</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="storageadapter.html#addtoset" class="tsd-kind-icon">add<wbr>ToSet</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="storageadapter.html#del" class="tsd-kind-icon">del</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="storageadapter.html#deletefromset" class="tsd-kind-icon">delete<wbr>From<wbr>Set</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="storageadapter.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="storageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="storageadapter.html#getsetvalues" class="tsd-kind-icon">get<wbr>Set<wbr>Values</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="storageadapter.html#intersectwithset" class="tsd-kind-icon">intersect<wbr>With<wbr>Set</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="storageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a>

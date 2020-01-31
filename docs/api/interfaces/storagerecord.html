@@ -66,6 +66,14 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Key interface in cache storage. Any adapter and other modules related to the storage of cache entries
+						must implement this interface.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -100,9 +108,14 @@
 					<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage.ts#L55">storage.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L55">src/storage.ts:55</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time in unixtime when the key was created</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="expiresin" class="tsd-anchor"></a>
@@ -110,9 +123,14 @@
 					<div class="tsd-signature tsd-kind-icon">expires<wbr>In<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage.ts#L51">storage.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L51">src/storage.ts:51</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Key lifetime in milliseconds</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="key" class="tsd-anchor"></a>
@@ -120,9 +138,14 @@
 					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage.ts#L43">storage.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L43">src/storage.ts:43</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Record key</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="permanent" class="tsd-anchor"></a>
@@ -130,9 +153,14 @@
 					<div class="tsd-signature tsd-kind-icon">permanent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage.ts#L47">storage.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L47">src/storage.ts:47</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Is the key is &quot;permanent&quot;. Permanent key is not treats as invalid when it expires</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="tags" class="tsd-anchor"></a>
@@ -140,9 +168,14 @@
 					<div class="tsd-signature tsd-kind-icon">tags<span class="tsd-signature-symbol">:</span> <a href="storagerecordtag.html" class="tsd-signature-type">StorageRecordTag</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage.ts#L63">storage.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L63">src/storage.ts:63</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Cache tags Array with pairs of tag name and version. The version is stored as unixtime.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="value" class="tsd-anchor"></a>
@@ -150,9 +183,14 @@
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <a href="../globals.html#storagerecordvalue" class="tsd-signature-type">StorageRecordValue</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/c25ae76/src/storage.ts#L59">storage.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L59">src/storage.ts:59</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Key value</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
