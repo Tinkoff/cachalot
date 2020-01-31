@@ -341,4 +341,49 @@ describe('BaseStorage', () => {
     await storage.setTagVersions([tagV2]);
     await expect(storage.getTags([tag1.name])).resolves.toEqual([tagV2]);
   });
+
+  it('getTags uses not touched cache set', async () => {
+    const notTouchedTag = 'notTouchedTag';
+    testInterface.internalStorage['not-touched-tags'] = new Set([notTouchedTag]);
+
+    const tag1 = { name: 'tag1', version: 1 };
+    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`] = tag1.version;
+
+    await expect(storage.getTags([notTouchedTag])).resolves.toEqual([{ name: notTouchedTag, version: 0 }]);
+    expect(testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`]).toEqual(tag1.version);
+  });
+
+  it('getTags correct handles empty tags list', async () => {
+    await expect(storage.getTags([])).resolves.toEqual([]);
+  });
+
+  it('set does not save not touched tags', async () => {
+    const notTouchedTag = 'notTouchedTag';
+    testInterface.internalStorage['not-touched-tags'] = new Set([notTouchedTag]);
+    await storage.set('test', 'value', { tags: [notTouchedTag] });
+
+    expect(testInterface.internalStorage['not-touched-tags']).toEqual(new Set([notTouchedTag]));
+  });
+
+  it('set saves non existing tags to not touched tags', async () => {
+    const nonExisting = 'nonExisting';
+    await storage.set('test', 'value', { tags: [nonExisting] });
+
+    expect(testInterface.internalStorage['not-touched-tags']).toEqual(new Set([nonExisting]));
+  });
+
+  it('set does not save existing tags to not touched tags', async () => {
+    const tag1 = { name: 'tag1', version: 1 };
+    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`] = tag1.version;
+
+    await storage.set('test', 'value', { tags: [tag1.name] });
+
+    expect(testInterface.internalStorage['not-touched-tags']).toBeUndefined();
+    expect(testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`]).toEqual(tag1.version);
+  });
+
+  it('setTagVersions does not call mset if values are empty', async () => {
+    await storage.setTagVersions([]);
+    expect(testInterface.internalStorage).toEqual({});
+  });
 });

@@ -25,7 +25,7 @@
   "scripts": {
     "cz": "git-cz",
     "clean": "rm -rf dist",
-    "docs": "typedoc --out docs/api src/ --ignoreCompilerErrors --mode file --hideGenerator --includes docs/assets",
+    "docs": "typedoc --out docs/api src/ --ignoreCompilerErrors --mode file --hideGenerator --media docs/assets --exclude \"**/*+.spec.ts\"",
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint --project . \"src/**/*.ts\"",
@@ -33,7 +33,7 @@
     "test": "npm run test:unit",
     "test:unit": "jest --coverage --verbose --passWithNoTests",
     "test:ci": "npm run test:unit -- --coverageReporters=text-lcov | coveralls",
-    "test:integration": "jest --config ./integration/jest.config.js --forceExit --detectOpenHandles",
+    "test:integration": "jest --config ./integration/jest.config.js --forceExit --detectOpenHandles --verbose",
     "test:unit:watch": "jest --watch",
     "prepublishOnly": "npm run check && npm run build",
     "semantic-release": "semantic-release"
@@ -44,22 +44,22 @@
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
     "@semantic-release/git": "^7.0.16",
-    "@types/faker": "^4.1.9",
-    "@types/ioredis": "^4.14.4",
-    "@types/jest": "^24.0.15",
+    "@types/ioredis": "^4.14.6",
+    "@types/jest": "^25.1.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^8",
+    "@types/uuid": "^3.4.7",
     "coveralls": "^3.0.4",
     "cz-conventional-changelog": "^3.0.2",
-    "faker": "^4.1.0",
     "ioredis": "^4.14.1",
-    "jest": "^24.8.0",
+    "jest": "^25.1.0",
     "semantic-release": "^15.13.24",
-    "ts-jest": "^24.0.2",
+    "ts-jest": "^25.1.0",
     "tslint": "^5.18.0",
     "tslint-config-unional": "^0.10.0",
-    "typedoc": "^0.15.0",
-    "typescript": "^3.7.5"
+    "typedoc": "^0.16.9",
+    "typescript": "^3.7.5",
+    "uuid": "^3.4.0"
   },
   "config": {
     "commitizen": {

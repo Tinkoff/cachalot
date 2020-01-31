@@ -11,6 +11,10 @@ import { StorageAdapter } from '../storage-adapter';
 
 export const TAGS_VERSIONS_ALIAS = 'cache-tags-versions';
 
+export const NOT_TOUCHED_TAGS_CACHE_KEY = 'not-touched-tags';
+
+const NON_EXISTING_TAG_VERSION = 0;
+
 export type BaseStorageOptions = {
   adapter: StorageAdapter;
   tagsAdapter?: StorageAdapter;
@@ -100,16 +104,25 @@ export class BaseStorage implements Storage {
   /**
    * Creates new set of tag records and updates them.
    */
-  public async setTagVersions(tags: StorageRecordTag[]): Promise<any> {
+  public async setTagVersions(tags: StorageRecordTag[]): Promise<void> {
+    if (tags.length === 0) {
+      return;
+    }
+
     const values = new Map(tags.map(tag => [this.createTagKey(tag.name), `${tag.version}`]));
     return this.tagsAdapter.mset(values);
   }
 
   /**
    * Invalidates tags given as array of strings.
+   *
+   * See [diagram](media://images/not-touched-tags-optimization/touch.png)
    */
-  public async touch(tags: string[]): Promise<any> {
-    return this.cachedCommand(this.setTagVersions.bind(this), tags.map(createTag));
+  public async touch(tags: string[]): Promise<void> {
+    await Promise.all([
+      this.cachedCommand(this.setTagVersions.bind(this), tags.map(tag => createTag(tag))),
+      this.deleteNotTouchedTags(tags)
+    ]);
   }
 
   /**
@@ -141,20 +154,27 @@ export class BaseStorage implements Storage {
   }
 
   /**
-   * Retrieves actual versions of tags from storage. Tags which was not found in storage will be created with 0
-   * version.
+   * Retrieves actual versions of tags from storage.
+   * Optimization used: first filter tag names with not touched tags set.
+   * Tags which was not found in storage will be created with 0 version.
+   *
+   * See [diagram](media://images/not-touched-tags-optimization/get_tags.png)
    */
   public async getTags(tagNames: string[]): Promise<StorageRecordTag[]> {
-    const existingTags = await this.tagsAdapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
+    const notTouchedTags = await this.filterNotTouchedTags(tagNames);
+    const tags: StorageRecordTag[] = [];
+    notTouchedTags.forEach(name => tags.push(createTag(name, NON_EXISTING_TAG_VERSION)));
 
-    return tagNames.map((tagName, index) => ({
-      name: tagName,
-      version: Number(existingTags[index]) || 0
-    }));
+    const tagsToRequest = tagNames.filter(name => !notTouchedTags.has(name));
+    const existingTags = await this.getActualTags(tagsToRequest);
+
+    return tags.concat(existingTags);
   }
 
   /**
    * set creates new record with provided options and sets it to storage using the adapter.
+   *
+   * See [diagram](media://images/not-touched-tags-optimization/touch.png)
    */
   public async set(key: string, value: StorageRecordValue, options: WriteOptions = {}): Promise<any> {
     let tags: string[] = [];
@@ -169,7 +189,9 @@ export class BaseStorage implements Storage {
       throw new TypeError(`getTags should return an array of strings, got ${typeof dynamicTags}`);
     }
 
-    const record = createRecord(key, value, uniq(tags.concat(dynamicTags)).map(createTag), options);
+    const record = createRecord(key, value, uniq(tags.concat(dynamicTags)).map(tag => createTag(tag)), options);
+
+    await this.saveNotTouchedTags(record.tags);
 
     await this.adapter.set(
       this.createKey(key),
@@ -249,5 +271,69 @@ export class BaseStorage implements Storage {
     }
 
     return fn(...args);
+  }
+
+  /**
+   * Saves only new not touched tags in tag storage.
+   */
+  private async saveNotTouchedTags(recordTags: StorageRecordTag[]): Promise<void> {
+    const allTags = recordTags.map(tag => tag.name);
+    const notTouchedTags = await this.getNotTouchedTags();
+    const unknownTags = allTags.filter(tag => !notTouchedTags.has(tag));
+
+    const gotTags = await this.getActualTags(unknownTags);
+    const nonExistingTags = gotTags.filter(tag => tag.version === NON_EXISTING_TAG_VERSION);
+
+    await this.addNotTouchedTags(nonExistingTags.map(tag => tag.name));
+  }
+
+  /**
+   * Gets actual tags from storage.
+   * It only searches tags stored as separate records.
+   */
+  private async getActualTags(tagNames: string[]): Promise<StorageRecordTag[]> {
+    if (tagNames.length === 0) {
+      return [];
+    }
+    const tags = await this.tagsAdapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
+
+    return tagNames.map((tagName, index) => createTag(tagName, Number(tags[index]) || NON_EXISTING_TAG_VERSION));
+  }
+
+  /**
+   * Returns all not touched tags from special set
+   */
+  private async getNotTouchedTags(): Promise<Set<string>> {
+    return this.tagsAdapter.getSetValues(NOT_TOUCHED_TAGS_CACHE_KEY);
+  }
+
+  /**
+   * Adds specified tags into not touched tags special set
+   */
+  private async addNotTouchedTags(tags: string[]): Promise<void> {
+    if (tags.length === 0) {
+      return;
+    }
+
+    return this.tagsAdapter.addToSet(NOT_TOUCHED_TAGS_CACHE_KEY, tags);
+  }
+
+  /**
+   * Deletes specified tags from not touched tags special set
+   */
+  private async deleteNotTouchedTags(tags: string[]): Promise<void> {
+    return this.tagsAdapter.deleteFromSet(NOT_TOUCHED_TAGS_CACHE_KEY, tags);
+  }
+
+  /**
+   * Filter specified tags with not touched tags special set.
+   * In other words it returns intersection of specified tags and special tags set in storage.
+   */
+  private async filterNotTouchedTags(tags: string[]): Promise<Set<string>> {
+    if (tags.length === 0) {
+      return new Set([]);
+    }
+
+    return this.tagsAdapter.intersectWithSet(NOT_TOUCHED_TAGS_CACHE_KEY, tags);
   }
 }
