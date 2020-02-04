@@ -112,14 +112,6 @@ export class RedisStorageAdapter implements StorageAdapter {
     return this.withTimeout(this.redisInstance.mget(...cacheKeys));
   }
 
-  /**
-   * Returns all the values of the set stored at key
-   */
-  public async getSetValues(key: string): Promise<Set<string>> {
-    const members = await this.withTimeout(this.redisInstance.smembers(cacheKey(key)));
-    return new Set(members);
-  }
-
   public async addToSet(key: string, values: string[]): Promise<void> {
     await this.withTimeout(this.redisInstance.sadd(cacheKey(key), ...values));
   }

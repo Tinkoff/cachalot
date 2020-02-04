@@ -103,7 +103,7 @@ class TestStorageAdapter implements StorageAdapter {
     }
   }
 
-  async getSetValues(key: string): Promise<Set<string>> {
+  private async getSetValues(key: string): Promise<Set<string>> {
     const set = this.testInterface.internalStorage[key];
     if (set instanceof Set) {
       return set;

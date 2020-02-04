@@ -178,18 +178,6 @@ describe('Redis adapter', () => {
     expect((mock as any).mget).toHaveBeenCalledWith('cache:some1', 'cache:some2');
   });
 
-  it('getSetValues calls smembers', async () => {
-    const key = 'key';
-    const values = ['value1', 'value2'];
-    (mock as any).smembers = jest.fn().mockImplementation(() => values);
-
-    const result = await adapter.getSetValues(key);
-    expect(result).toEqual(new Set(values));
-
-    expect((mock as any).smembers).toHaveBeenCalledTimes(1);
-    expect((mock as any).smembers).toHaveBeenCalledWith('cache:key');
-  });
-
   it('addToSet calls sadd', async () => {
     const key = 'key';
     const value = 'value';

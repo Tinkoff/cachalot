@@ -278,7 +278,7 @@ export class BaseStorage implements Storage {
    */
   private async saveNotTouchedTags(recordTags: StorageRecordTag[]): Promise<void> {
     const allTags = recordTags.map(tag => tag.name);
-    const notTouchedTags = await this.getNotTouchedTags();
+    const notTouchedTags = await this.filterNotTouchedTags(allTags);
     const unknownTags = allTags.filter(tag => !notTouchedTags.has(tag));
 
     const gotTags = await this.getActualTags(unknownTags);
@@ -298,13 +298,6 @@ export class BaseStorage implements Storage {
     const tags = await this.tagsAdapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
 
     return tagNames.map((tagName, index) => createTag(tagName, Number(tags[index]) || NON_EXISTING_TAG_VERSION));
-  }
-
-  /**
-   * Returns all not touched tags from special set
-   */
-  private async getNotTouchedTags(): Promise<Set<string>> {
-    return this.tagsAdapter.getSetValues(NOT_TOUCHED_TAGS_CACHE_KEY);
   }
 
   /**

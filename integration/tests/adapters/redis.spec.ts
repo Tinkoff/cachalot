@@ -215,23 +215,6 @@ describe('Redis adapter', () => {
     });
   });
 
-  describe('getSetValues', () => {
-    it('returns values', async () => {
-      const key = uuid();
-      const value = uuid();
-
-      await redis.sadd(`${CACHE_PREFIX}:${key}`, value);
-
-      await expect(adapter.getSetValues(key)).resolves.toEqual(new Set([value]));
-    });
-
-    it('returns empty set for unknown key', async () => {
-      const key = uuid();
-
-      await expect(adapter.getSetValues(key)).resolves.toEqual(new Set([]));
-    });
-  });
-
   describe('addToSet', () => {
     it('adds value to set', async () => {
       const key = uuid();

@@ -53,11 +53,6 @@ export interface StorageAdapter {
   mget(keys: string[]): Promise<(string | null)[]>;
 
   /**
-   * Returns all the members of the set value stored at key
-   */
-  getSetValues(key: string): Promise<Set<string>>;
-
-  /**
    * Adds values to the set
    */
   addToSet(key: string, values: string[]): Promise<void>;

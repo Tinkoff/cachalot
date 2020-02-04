@@ -31,7 +31,11 @@ describe('Base storage', () => {
       await expect(redis.smembers(`cache:${NOT_TOUCHED_TAGS_CACHE_KEY}`)).resolves.toEqual([tag]);
 
       const keys = await redis.keys('*');
-      expect(keys.sort()).toEqual([`cache:cache-${key}`, `cache:${NOT_TOUCHED_TAGS_CACHE_KEY}`]);
+      expect(keys.sort()).toEqual([
+        `cache:cache-${key}`,
+        `cache:${NOT_TOUCHED_TAGS_CACHE_KEY}`,
+        `temporary-set:["${tag}"]`
+      ]);
     });
 
     it('adds only new tag to not touched and omits existing tag', async () => {
