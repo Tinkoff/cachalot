@@ -10,12 +10,13 @@ function delay(duration: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, duration + 1));
 }
 
-const expireTimeout = 5;
+const longExpireTimeout = 50;
+const shortExpireTimeout = 50;
 
 describe('Redis adapter', () => {
   beforeAll(() => {
     redis = new Redis();
-    adapter = new RedisStorageAdapter(redis, { lockExpireTimeout: expireTimeout });
+    adapter = new RedisStorageAdapter(redis, { lockExpireTimeout: longExpireTimeout });
   });
 
   afterAll(() => {
@@ -49,8 +50,11 @@ describe('Redis adapter', () => {
       const key = uuid();
       const value = uuid();
 
-      await adapter.set(key, value, expireTimeout);
-      await delay(expireTimeout);
+      const localAdapter = new RedisStorageAdapter(redis, { lockExpireTimeout: shortExpireTimeout });
+      await localAdapter.set(key, value, shortExpireTimeout);
+
+      await delay(shortExpireTimeout);
+
       await expect(redis.get(`${CACHE_PREFIX}:${key}`)).resolves.toBeNull();
     });
   });
@@ -109,10 +113,12 @@ describe('Redis adapter', () => {
 
     it('acquireLock calls set with generated key name and in NX mode', async () => {
       const key = uuid();
-      const lockResult = await adapter.acquireLock(key);
 
+      const localAdapter = new RedisStorageAdapter(redis, { lockExpireTimeout: shortExpireTimeout });
+      const lockResult = await localAdapter.acquireLock(key);
       expect(lockResult).toEqual(true);
-      await delay(expireTimeout);
+
+      await delay(shortExpireTimeout);
 
       await (expect(redis.get(`${key}_lock`))).resolves.toBeNull();
     });
