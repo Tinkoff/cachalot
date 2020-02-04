@@ -8,7 +8,7 @@ import { ConnectionStatus } from './connection-status';
  */
 export interface Storage {
   get(key: string): Promise<StorageRecord | null>;
-  touch(tags: string[]): Promise<any>;
+  touch(tags: string[]): Promise<void>;
   lockKey(key: string): Promise<boolean>;
   releaseKey(key: string): Promise<boolean>;
   keyIsLocked(key: string): Promise<boolean>;

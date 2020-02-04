@@ -1,5 +1,7 @@
 import { Redis } from 'ioredis';
+import _, { partial } from 'lodash';
 import { ConnectionStatus } from '../../connection-status';
+import serialize from '../../serialize';
 import { StorageAdapter } from '../../storage-adapter';
 import { withTimeout } from '../../with-timeout';
 
@@ -10,12 +12,14 @@ export const CACHE_PREFIX = 'cache';
 export const DEFAULT_OPERATION_TIMEOUT = 150;
 export const DEFAULT_LOCK_EXPIRES = 20000;
 
-export type CommandArgument = string | number;
-
 export type RedisStorageAdapterOptions = {
   operationTimeout?: number;
   lockExpireTimeout?: number;
 };
+
+function cacheKey(key: string): string {
+  return `${CACHE_PREFIX}:${key}`;
+}
 
 /**
  * Redis adapter for Manager. Implements the StorageAdapter interface
@@ -34,6 +38,8 @@ export class RedisStorageAdapter implements StorageAdapter {
     this.redisInstance.on('ready', () => this.setConnectionStatus(ConnectionStatus.CONNECTED));
     this.redisInstance.on('reconnecting', () => this.setConnectionStatus(ConnectionStatus.CONNECTING));
     this.redisInstance.on('end', () => this.setConnectionStatus(ConnectionStatus.DISCONNECTED));
+
+    this.withTimeout = partial(withTimeout, _, this.options.operationTimeout);
   }
 
   /**
@@ -50,6 +56,8 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Redis connection status
    */
   private connectionStatus: ConnectionStatus = ConnectionStatus.DISCONNECTED;
+
+  private readonly withTimeout: <T>(promise: Promise<T>) => Promise<T>;
 
   /**
    * Returns the status of the connection with redis (see StorageAdapter)
@@ -70,13 +78,11 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Use set command to set hash value in radish
    */
   public async set(key: string, value: string, expiresIn?: number): Promise<boolean> {
-    const cacheKey = `${CACHE_PREFIX}:${key}`;
-
     const setPromise = expiresIn ?
-      this.redisInstance.set(cacheKey, value, 'PX', expiresIn) :
-      this.redisInstance.set(cacheKey, value);
+      this.redisInstance.set(cacheKey(key), value, 'PX', expiresIn) :
+      this.redisInstance.set(cacheKey(key), value);
 
-    return Boolean(await withTimeout(setPromise, this.options.operationTimeout));
+    return Boolean(await this.withTimeout(setPromise));
   }
 
   /**
@@ -85,16 +91,16 @@ export class RedisStorageAdapter implements StorageAdapter {
   public async mset(values: Map<string, any>): Promise<void> {
     const data = new Map<string, any>();
     for (const [key, value] of values.entries()) {
-      data.set(`${CACHE_PREFIX}:${key}`, value);
+      data.set(cacheKey(key), value);
     }
-    await withTimeout(this.redisInstance.mset(data), this.options.operationTimeout);
+    await this.withTimeout(this.redisInstance.mset(data));
   }
 
   /**
    * The get command method provided by the adapter. Use get command to get key value from redis
    */
   public async get(key: string): Promise<string | null> {
-    return withTimeout(this.redisInstance.get(`${CACHE_PREFIX}:${key}`), this.options.operationTimeout);
+    return this.withTimeout(this.redisInstance.get(cacheKey(key)));
   }
 
   /**
@@ -102,28 +108,49 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Use mget command to get multiple values from redis
    */
   public async mget(keys: string[]): Promise<(string | null)[]> {
-    const cacheKeys = keys.map(key => `${CACHE_PREFIX}:${key}`);
-    return withTimeout(this.redisInstance.mget(...cacheKeys), this.options.operationTimeout);
+    const cacheKeys = keys.map(key => cacheKey(key));
+    return this.withTimeout(this.redisInstance.mget(...cacheKeys));
+  }
+
+  public async addToSet(key: string, values: string[]): Promise<void> {
+    await this.withTimeout(this.redisInstance.sadd(cacheKey(key), ...values));
+  }
+
+  public async deleteFromSet(key: string, values: string[]): Promise<void> {
+    await this.withTimeout(this.redisInstance.srem(cacheKey(key), ...values));
+  }
+
+  /**
+   * The trick is that this method stores values to temporary set and
+   * then uses Redis to make the intersection of this set with set stored in key.
+   */
+  public async intersectWithSet(key: string, values: string[]): Promise<Set<string>> {
+    const temporarySetName = `temporary-set:${serialize(values)}`;
+    await this.withTimeout(this.redisInstance.del(temporarySetName));
+    await this.withTimeout(this.redisInstance.sadd(temporarySetName, ...values));
+    const intersection = await this.withTimeout(this.redisInstance.sinter(cacheKey(key), temporarySetName));
+
+    return new Set(intersection);
   }
 
   /**
    * The del method provided by the adapter. Uses the del command to remove the key.
    */
   public async del(key: string): Promise<void> {
-    return withTimeout(this.redisInstance.del(`${CACHE_PREFIX}:${key}`), this.options.operationTimeout);
+    await this.withTimeout(this.redisInstance.del(cacheKey(key)));
   }
 
   /**
    * Set the lock on the key
    */
   public async acquireLock(key: string): Promise<boolean> {
-    const setResult = await withTimeout(this.redisInstance.set(
+    const setResult = await this.withTimeout(this.redisInstance.set(
       `${key}_lock`,
       '',
       'PX',
       this.options.lockExpireTimeout,
       'NX'
-    ), this.options.operationTimeout);
+    ));
 
     return setResult === 'OK';
   }
@@ -132,7 +159,7 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Unlocks the key
    */
   public async releaseLock(key: string): Promise<boolean> {
-    const deletedKeys = await withTimeout(this.redisInstance.del(`${key}_lock`), this.options.operationTimeout);
+    const deletedKeys = await this.withTimeout(this.redisInstance.del(`${key}_lock`));
 
     return deletedKeys > 0;
   }
@@ -141,7 +168,7 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Checks if key is locked
    */
   public async isLockExists(key: string): Promise<boolean> {
-    const lockExists = await withTimeout(this.redisInstance.exists(`${key}_lock`), this.options.operationTimeout);
+    const lockExists = await this.withTimeout(this.redisInstance.exists(`${key}_lock`));
 
     return lockExists === 1;
   }

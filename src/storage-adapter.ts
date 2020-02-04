@@ -53,6 +53,21 @@ export interface StorageAdapter {
   mget(keys: string[]): Promise<(string | null)[]>;
 
   /**
+   * Adds values to the set
+   */
+  addToSet(key: string, values: string[]): Promise<void>;
+
+  /**
+   * Deletes values from the set
+   */
+  deleteFromSet(key: string, values: string[]): Promise<void>;
+
+  /**
+   * Returns set intersection with values
+   */
+  intersectWithSet(key: string, values: string[]): Promise<Set<string>>;
+
+  /**
    * Removes the entry with the key key from storage
    */
   del(key: string): Promise<void>;

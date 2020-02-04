@@ -6,7 +6,7 @@ module.exports = {
     },
   },
   testMatch: ['<rootDir>/tests/**/*.spec.ts'],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },

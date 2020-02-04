@@ -84,6 +84,38 @@ class TestStorageAdapter implements StorageAdapter {
 
     return keys.map(key => this.testInterface.internalStorage[key] ?? null);
   }
+
+  async addToSet(key: string, values: string[]): Promise<void> {
+    let set = this.testInterface.internalStorage[key];
+    if (set instanceof Set) {
+      values.forEach(value => set.add(value));
+    } else {
+      set = new Set(values);
+    }
+
+    this.testInterface.internalStorage[key] = set;
+  }
+
+  async deleteFromSet(key: string, values: string[]): Promise<void> {
+    const set = this.testInterface.internalStorage[key];
+    if (set instanceof Set) {
+      values.forEach(value => set.delete(value));
+    }
+  }
+
+  private async getSetValues(key: string): Promise<Set<string>> {
+    const set = this.testInterface.internalStorage[key];
+    if (set instanceof Set) {
+      return set;
+    }
+    return new Set();
+  }
+
+  async intersectWithSet(key: string, values: string[]): Promise<Set<string>> {
+    const set = await this.getSetValues(key);
+
+    return new Set(values.filter(x => set.has(x)));
+  }
 }
 
 export default TestStorageAdapter;

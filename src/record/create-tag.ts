@@ -1,6 +1,6 @@
 import { StorageRecordTag } from '../storage';
 
-export default (tagName: string): StorageRecordTag => ({
+export default (tagName: string, version?: number): StorageRecordTag => ({
   name: tagName,
-  version: Date.now()
+  version: version ?? Date.now()
 });
