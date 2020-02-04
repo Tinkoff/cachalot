@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.4.0...v1.5.0) (2020-02-04)
+
+
+### Features
+
+* Not touched tags optimization ([076e895](https://github.com/TinkoffCreditSystems/cachalot/commit/076e895))
+
 # [1.4.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.3.1...v1.4.0) (2020-01-29)
 
 
