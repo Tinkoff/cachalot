@@ -115,7 +115,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#deletefromset" class="tsd-kind-icon">delete<wbr>From<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#get" class="tsd-kind-icon">get</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#getsetvalues" class="tsd-kind-icon">get<wbr>Set<wbr>Values</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#intersectwithset" class="tsd-kind-icon">intersect<wbr>With<wbr>Set</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="redisstorageadapter.html#mget" class="tsd-kind-icon">mget</a></li>
@@ -261,7 +260,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#acquirelock">acquireLock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L154">src/adapters/redis/index.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L146">src/adapters/redis/index.ts:146</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -290,7 +289,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#addtoset">addToSet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L123">src/adapters/redis/index.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L115">src/adapters/redis/index.ts:115</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -317,7 +316,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#del">del</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L147">src/adapters/redis/index.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L139">src/adapters/redis/index.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -346,7 +345,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#deletefromset">deleteFromSet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L127">src/adapters/redis/index.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L119">src/adapters/redis/index.ts:119</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -415,35 +414,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getsetvalues" class="tsd-anchor"></a>
-					<h3>get<wbr>Set<wbr>Values</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Set<wbr>Values<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#getsetvalues">getSetValues</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L118">src/adapters/redis/index.ts:118</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns all the values of the set stored at key</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="intersectwithset" class="tsd-anchor"></a>
 					<h3>intersect<wbr>With<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -454,7 +424,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#intersectwithset">intersectWithSet</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L135">src/adapters/redis/index.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L127">src/adapters/redis/index.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -487,7 +457,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#islockexists">isLockExists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L178">src/adapters/redis/index.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L170">src/adapters/redis/index.ts:170</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -621,7 +591,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#releaselock">releaseLock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L169">src/adapters/redis/index.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L161">src/adapters/redis/index.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -685,7 +655,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L187">src/adapters/redis/index.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L179">src/adapters/redis/index.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -752,9 +722,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="redisstorageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="redisstorageadapter.html#getsetvalues" class="tsd-kind-icon">get<wbr>Set<wbr>Values</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="redisstorageadapter.html#intersectwithset" class="tsd-kind-icon">intersect<wbr>With<wbr>Set</a>
