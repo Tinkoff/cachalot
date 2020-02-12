@@ -121,7 +121,7 @@ export class BaseStorage implements Storage {
   public async touch(tags: string[]): Promise<void> {
     await Promise.all([
       this.cachedCommand(this.setTagVersions.bind(this), tags.map(tag => createTag(tag))),
-      this.deleteNotTouchedTags(tags)
+      this.cachedCommand(this.deleteNotTouchedTags.bind(this), tags)
     ]);
   }
 
@@ -256,7 +256,7 @@ export class BaseStorage implements Storage {
    * All commands wrapped with this method will be "cached". This means that if there are problems with the connection
    * the response will be sent immediately and the command will be executed later when the connection is restored.
    */
-  private async cachedCommand(fn: CommandFn, ...args: any[]): Promise<any> {
+  private async cachedCommand(fn: CommandFn, ...args: any[]): Promise<void> {
     if (!fn) {
       throw new Error('Cached function is required');
     }
@@ -264,13 +264,13 @@ export class BaseStorage implements Storage {
     const connectionStatus = this.adapter.getConnectionStatus();
 
     if (connectionStatus !== ConnectionStatus.CONNECTED) {
-      return this.commandsQueue.push({
+      this.commandsQueue.push({
         fn,
         params: args
       });
+    } else {
+      await fn(...args);
     }
-
-    return fn(...args);
   }
 
   /**
