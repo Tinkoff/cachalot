@@ -267,7 +267,7 @@ describe('BaseStorage', () => {
     const command = jest.fn();
     testAdapter.getConnectionStatus = (): ConnectionStatus => ConnectionStatus.DISCONNECTED;
 
-    await expect((storage as any).cachedCommand(command, 1, 'hello')).resolves.toEqual(1);
+    await expect((storage as any).cachedCommand(command, 1, 'hello')).resolves.toEqual(undefined);
     expect(storage.commandsQueue).toEqual([{ fn: command, params: [1, 'hello' ]}]);
   });
 
