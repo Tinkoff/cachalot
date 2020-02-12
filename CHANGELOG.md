@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.5.0...v1.5.1) (2020-02-12)
+
+
+### Bug Fixes
+
+* Queue delete not touched tags command if adapter is not connected ([ce3c8f5](https://github.com/TinkoffCreditSystems/cachalot/commit/ce3c8f5))
+
 # [1.5.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.4.0...v1.5.0) (2020-02-04)
 
 
