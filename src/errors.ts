@@ -22,3 +22,7 @@ export function OperationTimeoutError(timeout: number): Error {
 
   return customError(ERRORS.OperationTimeoutError, text);
 }
+
+export function isOperationTimeoutError(error: any): boolean {
+  return error instanceof Error && error.name === ERRORS.OperationTimeoutError;
+}
