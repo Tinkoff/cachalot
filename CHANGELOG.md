@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.5.1...v1.6.0) (2020-02-14)
+
+
+### Features
+
+* Queue "cached" commands if its execution timed out ([b024999](https://github.com/TinkoffCreditSystems/cachalot/commit/b024999))
+
 ## [1.5.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.5.0...v1.5.1) (2020-02-12)
 
 
