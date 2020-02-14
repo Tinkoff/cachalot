@@ -3,6 +3,7 @@ import isFunction from 'lodash/isFunction';
 import uniq from 'lodash/uniq';
 import { ConnectionStatus } from '../connection-status';
 import deserialize from '../deserialize';
+import { isOperationTimeoutError } from '../errors';
 import createRecord from '../record';
 import createTag from '../record/create-tag';
 import serialize from '../serialize';
@@ -30,7 +31,7 @@ export type BaseStorageOptions = {
  */
 export interface Command {
   fn: CommandFn;
-  params: any;
+  params: any[];
 }
 
 /**
@@ -234,7 +235,7 @@ export class BaseStorage implements Storage {
   /**
    * Executes commands from offline queue. Re-queues commands which was not successfully executed.
    */
-  private async executeCommandsFromQueue(): Promise<any> {
+  private async executeCommandsFromQueue(): Promise<void> {
     if (!this.commandsQueue.length) {
       return;
     }
@@ -254,7 +255,8 @@ export class BaseStorage implements Storage {
 
   /**
    * All commands wrapped with this method will be "cached". This means that if there are problems with the connection
-   * the response will be sent immediately and the command will be executed later when the connection is restored.
+   * the response will be sent immediately and the command will be executed later when the connection is restored
+   * or current execution timed out.
    */
   private async cachedCommand(fn: CommandFn, ...args: any[]): Promise<void> {
     if (!fn) {
@@ -264,13 +266,22 @@ export class BaseStorage implements Storage {
     const connectionStatus = this.adapter.getConnectionStatus();
 
     if (connectionStatus !== ConnectionStatus.CONNECTED) {
-      this.commandsQueue.push({
-        fn,
-        params: args
-      });
+      this.queueCommand(fn, args);
     } else {
-      await fn(...args);
+      try {
+        await fn(...args);
+      } catch (error) {
+        if (isOperationTimeoutError(error)) {
+          this.queueCommand(fn, args);
+        } else {
+          throw error;
+        }
+      }
     }
+  }
+
+  private queueCommand(fn: CommandFn, params: any[]): void {
+    this.commandsQueue.push({ fn, params });
   }
 
   /**

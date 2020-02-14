@@ -1,5 +1,6 @@
 import TestStorageAdapter from '../adapters/test';
 import { ConnectionStatus } from '../connection-status';
+import { OperationTimeoutError } from '../errors';
 import timeout from '../timeout';
 import { BaseStorage, TAGS_VERSIONS_ALIAS } from './base';
 
@@ -269,6 +270,22 @@ describe('BaseStorage', () => {
 
     await expect((storage as any).cachedCommand(command, 1, 'hello')).resolves.toEqual(undefined);
     expect(storage.commandsQueue).toEqual([{ fn: command, params: [1, 'hello' ]}]);
+  });
+
+  it('cachedCommand pushes command to command queue if execution timed out', async () => {
+    const error = OperationTimeoutError(1);
+    const command = jest.fn().mockRejectedValue(error);
+
+    await expect((storage as any).cachedCommand(command, 1, 'hello')).resolves.toEqual(undefined);
+    expect(storage.commandsQueue).toEqual([{ fn: command, params: [1, 'hello' ]}]);
+  });
+
+  it('cachedCommand throws if command execution fails and not timed out', async () => {
+    const error = new Error();
+    const command = jest.fn().mockRejectedValue(error);
+
+    await expect((storage as any).cachedCommand(command, 1, 'hello')).rejects.toThrowError(error);
+    expect(storage.commandsQueue.length).toEqual(0);
   });
 
   it('executeCommandsFromQueue does nothing if queue is empty', async () => {
