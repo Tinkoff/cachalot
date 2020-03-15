@@ -74,7 +74,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
           return reject(OperationError("set", err))
         }
 
-        return resolve(result)
+        resolve(result)
       }))
     }))
   }
@@ -82,7 +82,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
   /**
    * mset - stores values to the storage
    */
-  async mset(values: Map<string, any>): Promise<void> {
+  async mset(values: Map<string, string>): Promise<void> {
     await Promise.all([...values.entries()]
       .map(([key, value]) => this.set(key, value)))
   }
@@ -98,7 +98,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
           return reject(OperationError("get", err))
         }
 
-        return resolve(result)
+        return resolve(result || null)
       }))
     }))
   }
@@ -108,13 +108,15 @@ export class MemcachedStorageAdapter implements StorageAdapter {
    * Returns null for records that do not exist
    */
   async mget(keys: string[]): Promise<(string | null)[]> {
+    const cacheKeys = keys.map(cacheKey);
+
     return new Promise(((resolve, reject) => {
-      this.memcachedInstance.getMulti(keys.map(cacheKey), ((err, result) => {
+      this.memcachedInstance.getMulti(cacheKeys, ((err, result) => {
         if (err) {
           return reject(OperationError("mget", err))
         }
 
-        return resolve(result.values())
+        resolve(Object.values(result))
       }))
     }))
   }
@@ -144,7 +146,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
           return reject(OperationError("acquireLock", err))
         }
 
-        return resolve(result)
+        resolve(result)
       }))
     }))
   }
@@ -159,7 +161,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
           return reject(OperationError("releaseLock", err))
         }
 
-        return resolve(result)
+        resolve(result)
       }))
     }))
   }
@@ -174,9 +176,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
           return reject(OperationError("isLockExists", err))
         }
 
-        const exists = result !== null && result !== undefined;
-
-        return resolve(exists)
+        resolve(result !== null && result !== undefined)
       }))
     }))
   }

@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import Redis, { Redis as RedisType } from "ioredis";
-import RedisStorageAdapter, { CACHE_PREFIX } from "../../../src/adapters/RedisStorageAdapter";
-import { ConnectionStatus } from "../../../src/ConnectionStatus";
+import RedisStorageAdapter, { CACHE_PREFIX } from "../../src/adapters/RedisStorageAdapter";
+import { ConnectionStatus } from "../../src/ConnectionStatus";
 
 let redis: RedisType;
 let adapter: RedisStorageAdapter;

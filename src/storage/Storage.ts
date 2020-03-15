@@ -9,7 +9,7 @@ import { Record } from "./Record";
  */
 export interface Storage {
   get(key: string): Promise<Record | null>;
-  touch(tags: string[]): Promise<any>;
+  touch(tags: string[]): Promise<void>;
   lockKey(key: string): Promise<boolean>;
   releaseKey(key: string): Promise<boolean>;
   keyIsLocked(key: string): Promise<boolean>;

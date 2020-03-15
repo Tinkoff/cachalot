@@ -100,7 +100,7 @@ export class BaseStorage implements Storage {
   /**
    * Creates new set of tag records and updates them.
    */
-  public async setTagVersions(tags: Tag[]): Promise<any> {
+  public async setTagVersions(tags: Tag[]): Promise<void> {
     const values = new Map(tags.map(tag => [this.createTagKey(tag.name), `${tag.version}`]));
     return this.tagsAdapter.mset(values);
   }

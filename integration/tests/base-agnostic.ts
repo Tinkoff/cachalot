@@ -1,36 +1,18 @@
-import Redis from "ioredis";
 import { v4 as uuid } from "uuid";
-import RedisStorageAdapter from "../../../src/adapters/RedisStorageAdapter";
-import { BaseStorage } from "../../../src/storage/BaseStorage";
+import { Storage } from "../../src/storage/Storage";
+import { StorageAdapter } from "../../src";
 
-const redis = new Redis();
-const adapter = new RedisStorageAdapter(redis);
-const prefix = "cache";
-const storage = new BaseStorage({ adapter, prefix });
-
-describe("Base storage", () => {
-  beforeEach(async () => {
-    await redis.flushall();
-  });
-
+export const runStorageTests = (storage: Storage, adapter: StorageAdapter) => {
   describe("set", () => {
-    it("set no tags if no tag specified", async () => {
-      const key = uuid();
-      const value = uuid();
-
-      await storage.set(key, value);
-      await expect(redis.keys("*")).resolves.toEqual([`cache:cache-${key}`]);
-    });
-
     it("does not modify not touched if all tags exist", async () => {
       const key = uuid();
       const value = uuid();
       const existingTag = "existingTag";
-      const tagVersionKey = `cache:cache-cache-tags-versions:${existingTag}`;
+      const tagVersionKey = `cache-cache-tags-versions:${existingTag}`;
 
-      await redis.set(tagVersionKey, 1);
+      await adapter.set(tagVersionKey, "1");
       await storage.set(key, value, { tags: [existingTag] });
-      await expect(redis.get(tagVersionKey)).resolves.toEqual("1");
+      await expect(adapter.get(tagVersionKey)).resolves.toEqual("1");
     });
   });
 
@@ -39,16 +21,16 @@ describe("Base storage", () => {
       const tag = "notTouchedTag";
 
       await storage.touch([tag]);
-      await expect(redis.get(`cache:cache-cache-tags-versions:${tag}`)).resolves.not.toEqual("0");
+      await expect(adapter.get(`cache-cache-tags-versions:${tag}`)).resolves.not.toEqual("0");
     });
 
     it("preserves not touched if touched only existing tags", async () => {
       const existingTag = "existingTag";
-      const tagVersionKey = `cache:cache-cache-tags-versions:${existingTag}`;
+      const tagVersionKey = `cache-cache-tags-versions:${existingTag}`;
 
-      await redis.set(tagVersionKey, 1);
+      await adapter.set(tagVersionKey, "1");
       await storage.touch([existingTag]);
-      await expect(redis.get(tagVersionKey)).resolves.not.toEqual("0");
+      await expect(adapter.get(tagVersionKey)).resolves.not.toEqual("0");
     });
   });
 
@@ -68,9 +50,9 @@ describe("Base storage", () => {
 
     it("returns correct version for existing tag", async () => {
       const existingTag = "existingTag";
-      const tagVersionKey = `cache:cache-cache-tags-versions:${existingTag}`;
+      const tagVersionKey = `cache-cache-tags-versions:${existingTag}`;
 
-      await redis.set(tagVersionKey, 1);
+      await adapter.set(tagVersionKey, "1");
 
       const tags = await storage.getTags([existingTag]);
 
@@ -79,9 +61,9 @@ describe("Base storage", () => {
 
     it("returns correct version for mixed tags", async () => {
       const existingTag = "existingTag";
-      const tagVersionKey = `cache:cache-cache-tags-versions:${existingTag}`;
+      const tagVersionKey = `cache-cache-tags-versions:${existingTag}`;
 
-      await redis.set(tagVersionKey, 1);
+      await adapter.set(tagVersionKey, "1");
 
       const notTouchedTag = "notTouchedTag";
       const tags = await storage.getTags([existingTag, notTouchedTag]);
@@ -97,7 +79,7 @@ describe("Base storage", () => {
     it("works", async () => {
       const tag1 = "tag1";
 
-      await storage.set(uuid(), uuid(), { tags: [tag1]});
+      await storage.set(uuid(), uuid(), { tags: [tag1] });
       await expect(storage.getTags([tag1])).resolves.toEqual([{ name: tag1, version: 0 }]);
       await storage.touch([tag1]);
 
@@ -109,7 +91,7 @@ describe("Base storage", () => {
 
       const tag2 = "tag2";
 
-      await storage.set(uuid(), uuid(), { tags: [tag2]});
+      await storage.set(uuid(), uuid(), { tags: [tag2] });
 
       const tags2 = await storage.getTags([tag1, tag2]);
 
@@ -128,4 +110,4 @@ describe("Base storage", () => {
       expect(tags3[1].version).toBeGreaterThan(0);
     });
   });
-});
+};
