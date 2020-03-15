@@ -128,6 +128,7 @@ describe("RefreshAheadManager", () => {
 
   it("get refreshes record if storage record will expire soon", async () =>
     new Promise(
+      // eslint-disable-next-line no-async-promise-executor
       async (resolve, reject): Promise<any> => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
@@ -159,6 +160,7 @@ describe("RefreshAheadManager", () => {
 
   it("get refreshes record if storage record will expire soon and not throws if executor throws", async () =>
     new Promise(
+      // eslint-disable-next-line no-async-promise-executor
       async (resolve, reject): Promise<any> => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
@@ -193,6 +195,7 @@ describe("RefreshAheadManager", () => {
 
   it("get not throws unhandled rejections if record is expire soon and refresh was called", async () =>
     new Promise(
+      // eslint-disable-next-line no-async-promise-executor
       async (resolve, reject): Promise<any> => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;

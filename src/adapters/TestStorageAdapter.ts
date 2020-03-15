@@ -7,7 +7,7 @@ class TestStorageAdapter implements StorageAdapter {
   isConnected: boolean;
   internalStorage: any;
 
-  constructor(testInstance: any, isConnected: boolean = true) {
+  constructor(testInstance: any, isConnected = true) {
     this.testInterface = testInstance;
     this.testInterface.internalStorage = {};
     this.isConnected = isConnected;

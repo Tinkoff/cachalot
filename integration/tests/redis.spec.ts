@@ -134,6 +134,8 @@ describe("Redis adapter", () => {
 
       await redis.set(`${key}_lock`, "");
 
+      await delay(shortExpireTimeout);
+
       const releaseLockResult = await adapter.releaseLock(key);
 
       expect(releaseLockResult).toEqual(true);
@@ -177,7 +179,7 @@ describe("Redis adapter", () => {
     });
 
     it("mset throws error on empty values", async () => {
-      await expect(adapter.mset(new Map<string, any>())).rejects.toThrowError("ERR wrong number of arguments for \"mset\" command");
+      await expect(adapter.mset(new Map<string, any>())).rejects.toThrowError("ERR wrong number of arguments for 'mset' command");
     });
   });
 
