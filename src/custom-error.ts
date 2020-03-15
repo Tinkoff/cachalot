@@ -1,4 +1,4 @@
-export default function (name: string, message: string, payload: any = {}): Error {
+export default function(name: string, message: string, payload: any = {}): Error {
   class CacheManagerError extends Error {
     payload: any;
 

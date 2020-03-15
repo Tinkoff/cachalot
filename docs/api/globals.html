@@ -81,6 +81,7 @@
 								<li class="tsd-kind-class"><a href="classes/basestorage.html" class="tsd-kind-icon">Base<wbr>Storage</a></li>
 								<li class="tsd-kind-class"><a href="classes/cache.html" class="tsd-kind-icon">Cache</a></li>
 								<li class="tsd-kind-class"><a href="classes/readthroughmanager.html" class="tsd-kind-icon">Read<wbr>Through<wbr>Manager</a></li>
+								<li class="tsd-kind-class"><a href="classes/record.html" class="tsd-kind-icon">Record</a></li>
 								<li class="tsd-kind-class"><a href="classes/redismock.html" class="tsd-kind-icon">Redis<wbr>Mock</a></li>
 								<li class="tsd-kind-class"><a href="classes/redisstorageadapter.html" class="tsd-kind-icon">Redis<wbr>Storage<wbr>Adapter</a></li>
 								<li class="tsd-kind-class"><a href="classes/refreshaheadmanager.html" class="tsd-kind-icon">Refresh<wbr>Ahead<wbr>Manager</a></li>
@@ -110,8 +111,7 @@
 								<li class="tsd-kind-interface"><a href="interfaces/storage.html" class="tsd-kind-icon">Storage</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/storageadapter.html" class="tsd-kind-icon">Storage<wbr>Adapter</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/storageadapteroptions.html" class="tsd-kind-icon">Storage<wbr>Adapter<wbr>Options</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/storagerecord.html" class="tsd-kind-icon">Storage<wbr>Record</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/storagerecordtag.html" class="tsd-kind-icon">Storage<wbr>Record<wbr>Tag</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/tag.html" class="tsd-kind-icon">Tag</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/writeoptions.html" class="tsd-kind-icon">Write<wbr>Options</a></li>
 							</ul>
 						</section>
@@ -126,9 +126,9 @@
 								<li class="tsd-kind-type-alias"><a href="globals.html#keylockcheckfn" class="tsd-kind-icon">Key<wbr>Lock<wbr>Check<wbr>Fn</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#lockedkeyretrievestrategytype" class="tsd-kind-icon">Locked<wbr>Key<wbr>Retrieve<wbr>Strategy<wbr>Type</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#readwriteoptions" class="tsd-kind-icon">Read<wbr>Write<wbr>Options</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#recordvalue" class="tsd-kind-icon">Record<wbr>Value</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#redisstorageadapteroptions" class="tsd-kind-icon">Redis<wbr>Storage<wbr>Adapter<wbr>Options</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#storagerecordvalue" class="tsd-kind-icon">Storage<wbr>Record<wbr>Value</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#storagetags" class="tsd-kind-icon">Storage<wbr>Tags</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#tags" class="tsd-kind-icon">Tags</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#valueofexecutor" class="tsd-kind-icon">Value<wbr>OfExecutor</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#waitforresultlockedkeyretrievestrategyoptions" class="tsd-kind-icon">Wait<wbr>For<wbr>Result<wbr>Locked<wbr>Key<wbr>Retrieve<wbr>Strategy<wbr>Options</a></li>
 							</ul>
@@ -142,8 +142,6 @@
 								<li class="tsd-kind-variable"><a href="globals.html#default_operation_timeout" class="tsd-kind-icon">DEFAULT_<wbr>OPERATION_<wbr>TIMEOUT</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_refresh_ahead_factor" class="tsd-kind-icon">DEFAULT_<wbr>REFRESH_<wbr>AHEAD_<wbr>FACTOR</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_request_timeout" class="tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#non_existing_tag_version" class="tsd-kind-icon">NON_<wbr>EXISTING_<wbr>TAG_<wbr>VERSION</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#not_touched_tags_cache_key" class="tsd-kind-icon">NOT_<wbr>TOUCHED_<wbr>TAGS_<wbr>CACHE_<wbr>KEY</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#tags_versions_alias" class="tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#adapter" class="tsd-kind-icon">adapter</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#getrecordmock" class="tsd-kind-icon">get<wbr>Record<wbr>Mock</a></li>
@@ -165,12 +163,11 @@
 								<li class="tsd-kind-function"><a href="globals.html#requestmaximumtimeoutexceedederror" class="tsd-kind-icon">Request<wbr>Maximum<wbr>Timeout<wbr>Exceeded<wbr>Error</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#waitforresulterror" class="tsd-kind-icon">Wait<wbr>For<wbr>Result<wbr>Error</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#cachekey" class="tsd-kind-icon">cache<wbr>Key</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#createlogger" class="tsd-kind-icon">create<wbr>Logger</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#createrecord" class="tsd-kind-icon">create<wbr>Record</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#default" class="tsd-kind-icon">default</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isbasestorageoptions" class="tsd-kind-icon">is<wbr>Base<wbr>Storage<wbr>Options</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#iscustomstorageoptions" class="tsd-kind-icon">is<wbr>Custom<wbr>Storage<wbr>Options</a></li>
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#withtimeout" class="tsd-kind-icon">with<wbr>Timeout</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#isoperationtimeouterror" class="tsd-kind-icon">is<wbr>Operation<wbr>Timeout<wbr>Error</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#withtimeout" class="tsd-kind-icon">with<wbr>Timeout</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -194,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">Base<wbr>Storage<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>adapter<span class="tsd-signature-symbol">: </span><a href="interfaces/storageadapter.html" class="tsd-signature-type">StorageAdapter</a><span class="tsd-signature-symbol">; </span>expiresIn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>hashKeys<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>tagsAdapter<span class="tsd-signature-symbol">?: </span><a href="interfaces/storageadapter.html" class="tsd-signature-type">StorageAdapter</a><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.ts#L18">src/storages/base.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.ts#L14">src/storage/BaseStorage.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -224,7 +221,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cache<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="interfaces/cachewithcustomstorageoptions.html" class="tsd-signature-type">CacheWithCustomStorageOptions</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/cachewithbasestorageoptions.html" class="tsd-signature-type">CacheWithBaseStorageOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>expiresIn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>hashKeys<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>logger<span class="tsd-signature-symbol">: </span><a href="interfaces/logger.html" class="tsd-signature-type">Logger</a><span class="tsd-signature-symbol">; </span>prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L24">src/cache.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L24">src/Cache.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -234,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">Command<wbr>Fn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.ts#L40">src/storages/base.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.ts#L36">src/storage/BaseStorage.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -271,7 +268,7 @@
 					<div class="tsd-signature tsd-kind-icon">Executor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/executor.ts#L11">src/executor.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Executor.ts#L12">src/Executor.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -302,7 +299,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Record<wbr>Fn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.ts#L13">src/locked-key-retrieve-strategies/wait-for-result.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts#L13">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -333,7 +330,7 @@
 					<div class="tsd-signature tsd-kind-icon">Key<wbr>Lock<wbr>Check<wbr>Fn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.ts#L12">src/locked-key-retrieve-strategies/wait-for-result.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts#L12">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -364,7 +361,7 @@
 					<div class="tsd-signature tsd-kind-icon">Locked<wbr>Key<wbr>Retrieve<wbr>Strategy<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><a href="enums/lockedkeyretrievestrategytypes.html" class="tsd-signature-type">LockedKeyRetrieveStrategyTypes</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategy.ts#L18">src/locked-key-retrieve-strategy.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/LockedKeyRetrieveStrategy.ts#L18">src/LockedKeyRetrieveStrategy.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -374,7 +371,17 @@
 					<div class="tsd-signature tsd-kind-icon">Read<wbr>Write<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="interfaces/readoptions.html" class="tsd-signature-type">ReadOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/writeoptions.html" class="tsd-signature-type">WriteOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L106">src/storage.ts:106</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/Storage.ts#L77">src/storage/Storage.ts:77</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="recordvalue" class="tsd-anchor"></a>
+					<h3>Record<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">Record<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/Storage.ts#L36">src/storage/Storage.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -384,7 +391,7 @@
 					<div class="tsd-signature tsd-kind-icon">Redis<wbr>Storage<wbr>Adapter<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>lockExpireTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>operationTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L15">src/adapters/redis/index.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L14">src/adapters/RedisStorageAdapter.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -400,29 +407,19 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="storagerecordvalue" class="tsd-anchor"></a>
-					<h3>Storage<wbr>Record<wbr>Value</h3>
-					<div class="tsd-signature tsd-kind-icon">Storage<wbr>Record<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<a name="tags" class="tsd-anchor"></a>
+					<h3>Tags</h3>
+					<div class="tsd-signature tsd-kind-icon">Tags<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L66">src/storage.ts:66</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="storagetags" class="tsd-anchor"></a>
-					<h3>Storage<wbr>Tags</h3>
-					<div class="tsd-signature tsd-kind-icon">Storage<wbr>Tags<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage.ts#L67">src/storage.ts:67</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/Storage.ts#L38">src/storage/Storage.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>tagName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="interfaces/storagerecordtag.html" class="tsd-signature-type">StorageRecordTag</a></h5>
+								<h5><span class="tsd-signature-symbol">[</span>tagName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="interfaces/tag.html" class="tsd-signature-type">Tag</a></h5>
 							</li>
 						</ul>
 					</div>
@@ -433,7 +430,7 @@
 					<div class="tsd-signature tsd-kind-icon">Value<wbr>OfExecutor&lt;V&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReturnType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> RT<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">RT</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">V</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/executor.ts#L10">src/executor.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Executor.ts#L11">src/Executor.ts:11</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -449,7 +446,7 @@
 					<div class="tsd-signature tsd-kind-icon">Wait<wbr>For<wbr>Result<wbr>Locked<wbr>Key<wbr>Retrieve<wbr>Strategy<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>getRecord<span class="tsd-signature-symbol">: </span><a href="globals.html#getrecordfn" class="tsd-signature-type">GetRecordFn</a><span class="tsd-signature-symbol">; </span>keyLockCheckFn<span class="tsd-signature-symbol">: </span><a href="globals.html#keylockcheckfn" class="tsd-signature-type">KeyLockCheckFn</a><span class="tsd-signature-symbol">; </span>logger<span class="tsd-signature-symbol">: </span><a href="interfaces/logger.html" class="tsd-signature-type">Logger</a><span class="tsd-signature-symbol">; </span>maximumTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>requestTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.ts#L14">src/locked-key-retrieve-strategies/wait-for-result.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts#L14">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -482,7 +479,7 @@
 					<div class="tsd-signature tsd-kind-icon">CACHE_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"cache"</span><span class="tsd-signature-symbol"> = &quot;cache&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L11">src/adapters/redis/index.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L10">src/adapters/RedisStorageAdapter.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -497,7 +494,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>LOCK_<wbr>EXPIRES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">20000</span><span class="tsd-signature-symbol"> = 20000</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L13">src/adapters/redis/index.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L12">src/adapters/RedisStorageAdapter.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -507,7 +504,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>MAXIMUM_<wbr>TIMEOUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">3000</span><span class="tsd-signature-symbol"> = 3000</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.ts#L9">src/locked-key-retrieve-strategies/wait-for-result.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts#L9">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -517,7 +514,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>OPERATION_<wbr>TIMEOUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">150</span><span class="tsd-signature-symbol"> = 150</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L12">src/adapters/redis/index.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L11">src/adapters/RedisStorageAdapter.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -527,7 +524,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>REFRESH_<wbr>AHEAD_<wbr>FACTOR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0.8</span><span class="tsd-signature-symbol"> = 0.8</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.ts#L13">src/managers/refresh-ahead.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.ts#L7">src/managers/RefreshAheadManager.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -537,27 +534,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">250</span><span class="tsd-signature-symbol"> = 250</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.ts#L10">src/locked-key-retrieve-strategies/wait-for-result.ts:10</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="non_existing_tag_version" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> NON_<wbr>EXISTING_<wbr>TAG_<wbr>VERSION</h3>
-					<div class="tsd-signature tsd-kind-icon">NON_<wbr>EXISTING_<wbr>TAG_<wbr>VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> = 0</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.ts#L16">src/storages/base.ts:16</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="not_touched_tags_cache_key" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> NOT_<wbr>TOUCHED_<wbr>TAGS_<wbr>CACHE_<wbr>KEY</h3>
-					<div class="tsd-signature tsd-kind-icon">NOT_<wbr>TOUCHED_<wbr>TAGS_<wbr>CACHE_<wbr>KEY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"not-touched-tags"</span><span class="tsd-signature-symbol"> = &quot;not-touched-tags&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.ts#L14">src/storages/base.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts#L10">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -567,7 +544,7 @@
 					<div class="tsd-signature tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"cache-tags-versions"</span><span class="tsd-signature-symbol"> = &quot;cache-tags-versions&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.ts#L12">src/storages/base.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.ts#L12">src/storage/BaseStorage.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -577,7 +554,7 @@
 					<div class="tsd-signature tsd-kind-icon">adapter<span class="tsd-signature-symbol">:</span> <a href="classes/redisstorageadapter.html" class="tsd-signature-type">RedisStorageAdapter</a><span class="tsd-signature-symbol"> = new RedisStorageAdapter(mock)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/redis.spec.ts#L10">src/adapters/redis/redis.spec.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.spec.ts#L8">src/adapters/RedisStorageAdapter.spec.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -587,7 +564,7 @@
 					<div class="tsd-signature tsd-kind-icon">get<wbr>Record<wbr>Mock<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.spec.ts#L8">src/locked-key-retrieve-strategies/wait-for-result.spec.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts#L12">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -597,9 +574,9 @@
 					<div class="tsd-signature tsd-kind-icon">instance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L22">src/cache.spec.ts:22</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/run-executor.spec.ts#L3">src/locked-key-retrieve-strategies/run-executor.spec.ts:3</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.spec.ts#L3">src/locked-key-retrieve-strategies/wait-for-result.spec.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L22">src/Cache.spec.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy.spec.ts#L3">src/locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy.spec.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts#L7">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -609,9 +586,9 @@
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>Storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L11">src/managers/read-through.spec.ts:11</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L11">src/managers/refresh-ahead.spec.ts:11</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L11">src/managers/write-through.spec.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L11">src/managers/ReadThroughManager.spec.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L11">src/managers/RefreshAheadManager.spec.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L11">src/managers/WriteThroughManager.spec.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -626,7 +603,7 @@
 					<div class="tsd-signature tsd-kind-icon">key<wbr>Lock<wbr>Check<wbr>FnMock<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.spec.ts#L9">src/locked-key-retrieve-strategies/wait-for-result.spec.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts#L13">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -636,9 +613,9 @@
 					<div class="tsd-signature tsd-kind-icon">manager<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L13">src/managers/read-through.spec.ts:13</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L13">src/managers/refresh-ahead.spec.ts:13</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L13">src/managers/write-through.spec.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L13">src/managers/ReadThroughManager.spec.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L13">src/managers/RefreshAheadManager.spec.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L13">src/managers/WriteThroughManager.spec.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -648,17 +625,17 @@
 					<div class="tsd-signature tsd-kind-icon">mock<span class="tsd-signature-symbol">:</span> <a href="classes/redismock.html" class="tsd-signature-type">RedisMock</a><span class="tsd-signature-symbol"> = new RedisMock()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/redis.spec.ts#L9">src/adapters/redis/redis.spec.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.spec.ts#L7">src/adapters/RedisStorageAdapter.spec.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="mockmanager" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> mock<wbr>Manager</h3>
-					<div class="tsd-signature tsd-kind-icon">mock<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="globals.html#mockmanager" class="tsd-signature-type">mockManager</a><span class="tsd-signature-symbol"> = class {static getName: any &#x3D; () &#x3D;&gt; &#x27;mock&#x27;;get: any &#x3D; jest.fn().mockResolvedValue(&#x27;mockResult&#x27;);set: any &#x3D; jest.fn();}</span></div>
+					<div class="tsd-signature tsd-kind-icon">mock<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="globals.html#mockmanager" class="tsd-signature-type">mockManager</a><span class="tsd-signature-symbol"> = class {static getName: any &#x3D; () &#x3D;&gt; &quot;mock&quot;;get: any &#x3D; jest.fn().mockResolvedValue(&quot;mockResult&quot;);set: any &#x3D; jest.fn();}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L16">src/cache.spec.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L16">src/Cache.spec.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -668,10 +645,10 @@
 					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L12">src/managers/read-through.spec.ts:12</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L12">src/managers/refresh-ahead.spec.ts:12</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L12">src/managers/write-through.spec.ts:12</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.spec.ts#L10">src/storages/base.spec.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L12">src/managers/ReadThroughManager.spec.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L12">src/managers/RefreshAheadManager.spec.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L12">src/managers/WriteThroughManager.spec.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.spec.ts#L11">src/storage/BaseStorage.spec.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -681,7 +658,7 @@
 					<div class="tsd-signature tsd-kind-icon">test<wbr>Adapter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.spec.ts#L9">src/storages/base.spec.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.spec.ts#L10">src/storage/BaseStorage.spec.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -793,7 +770,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/redis/index.ts#L20">src/adapters/redis/index.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L19">src/adapters/RedisStorageAdapter.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -803,64 +780,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="createlogger" class="tsd-anchor"></a>
-					<h3>create<wbr>Logger</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Logger<span class="tsd-signature-symbol">(</span>logger<span class="tsd-signature-symbol">: </span><a href="interfaces/logger.html" class="tsd-signature-type">Logger</a>, manager<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/logger.html" class="tsd-signature-type">Logger</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/create-logger.ts#L3">src/create-logger.ts:3</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>logger: <a href="interfaces/logger.html" class="tsd-signature-type">Logger</a></h5>
-								</li>
-								<li>
-									<h5>manager: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/logger.html" class="tsd-signature-type">Logger</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="createrecord" class="tsd-anchor"></a>
-					<h3>create<wbr>Record</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Record<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><a href="globals.html#storagerecordvalue" class="tsd-signature-type">StorageRecordValue</a>, tags<span class="tsd-signature-symbol">: </span><a href="interfaces/storagerecordtag.html" class="tsd-signature-type">StorageRecordTag</a><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">?: </span><a href="interfaces/writeoptions.html" class="tsd-signature-type">WriteOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/storagerecord.html" class="tsd-signature-type">StorageRecord</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/record/index.ts#L3">src/record/index.ts:3</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>value: <a href="globals.html#storagerecordvalue" class="tsd-signature-type">StorageRecordValue</a></h5>
-								</li>
-								<li>
-									<h5>tags: <a href="interfaces/storagerecordtag.html" class="tsd-signature-type">StorageRecordTag</a><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="interfaces/writeoptions.html" class="tsd-signature-type">WriteOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/storagerecord.html" class="tsd-signature-type">StorageRecord</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -868,22 +787,28 @@
 					<a name="default" class="tsd-anchor"></a>
 					<h3>default</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, payload<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/serialize.ts#L1">src/serialize.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/custom-error.ts#L1">src/custom-error.ts:1</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">any</span></h5>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> payload: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Error</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -897,7 +822,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L32">src/cache.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L32">src/Cache.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -920,7 +845,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L30">src/cache.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L30">src/Cache.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -933,11 +858,34 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="isoperationtimeouterror" class="tsd-anchor"></a>
+					<h3>is<wbr>Operation<wbr>Timeout<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Operation<wbr>Timeout<wbr>Error<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/errors.ts#L26">src/errors.ts:26</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>error: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="withtimeout" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> with<wbr>Timeout</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">with<wbr>Timeout&lt;T&gt;<span class="tsd-signature-symbol">(</span>promise<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Timeout<span class="tsd-signature-symbol">(</span>promise<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -946,22 +894,16 @@
 									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/with-timeout.ts#L3">src/with-timeout.ts:3</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>promise: <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>promise: <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
 									<h5>timeout: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1064,10 +1006,10 @@
 					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L9">src/cache.spec.ts:9</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L5">src/managers/read-through.spec.ts:5</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L5">src/managers/refresh-ahead.spec.ts:5</a></li>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L5">src/managers/write-through.spec.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L9">src/Cache.spec.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L5">src/managers/ReadThroughManager.spec.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L5">src/managers/RefreshAheadManager.spec.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L5">src/managers/WriteThroughManager.spec.ts:5</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1076,10 +1018,10 @@
 						<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L13">src/cache.spec.ts:13</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L9">src/managers/read-through.spec.ts:9</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L9">src/managers/refresh-ahead.spec.ts:9</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L9">src/managers/write-through.spec.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L13">src/Cache.spec.ts:13</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L9">src/managers/ReadThroughManager.spec.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L9">src/managers/RefreshAheadManager.spec.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L9">src/managers/WriteThroughManager.spec.ts:9</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1089,10 +1031,10 @@
 						<div class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L10">src/cache.spec.ts:10</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L6">src/managers/read-through.spec.ts:6</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L6">src/managers/refresh-ahead.spec.ts:6</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L6">src/managers/write-through.spec.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L10">src/Cache.spec.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L6">src/managers/ReadThroughManager.spec.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L6">src/managers/RefreshAheadManager.spec.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L6">src/managers/WriteThroughManager.spec.ts:6</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1102,10 +1044,10 @@
 						<div class="tsd-signature tsd-kind-icon">trace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L11">src/cache.spec.ts:11</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L7">src/managers/read-through.spec.ts:7</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L7">src/managers/refresh-ahead.spec.ts:7</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L7">src/managers/write-through.spec.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L11">src/Cache.spec.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L7">src/managers/ReadThroughManager.spec.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L7">src/managers/RefreshAheadManager.spec.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L7">src/managers/WriteThroughManager.spec.ts:7</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1115,10 +1057,10 @@
 						<div class="tsd-signature tsd-kind-icon">warn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L12">src/cache.spec.ts:12</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/read-through.spec.ts#L8">src/managers/read-through.spec.ts:8</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/refresh-ahead.spec.ts#L8">src/managers/refresh-ahead.spec.ts:8</a></li>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/write-through.spec.ts#L8">src/managers/write-through.spec.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L12">src/Cache.spec.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L8">src/managers/ReadThroughManager.spec.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L8">src/managers/RefreshAheadManager.spec.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L8">src/managers/WriteThroughManager.spec.ts:8</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1129,7 +1071,7 @@
 					<div class="tsd-signature tsd-kind-icon">logger<wbr>Mock<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.spec.ts#L5">src/locked-key-retrieve-strategies/wait-for-result.spec.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts#L9">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts:9</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1138,7 +1080,7 @@
 						<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/wait-for-result.spec.ts#L6">src/locked-key-retrieve-strategies/wait-for-result.spec.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts#L10">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts:10</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1149,7 +1091,7 @@
 					<div class="tsd-signature tsd-kind-icon">test<wbr>Interface<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.spec.ts#L6">src/storages/base.spec.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.spec.ts#L7">src/storage/BaseStorage.spec.ts:7</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1158,7 +1100,7 @@
 						<div class="tsd-signature tsd-kind-icon">internal<wbr>Storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storages/base.spec.ts#L7">src/storages/base.spec.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/storage/BaseStorage.spec.ts#L8">src/storage/BaseStorage.spec.ts:8</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-type-declaration">
@@ -1197,6 +1139,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/readthroughmanager.html" class="tsd-kind-icon">Read<wbr>Through<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/record.html" class="tsd-kind-icon">Record</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/redismock.html" class="tsd-kind-icon">Redis<wbr>Mock</a>
@@ -1271,10 +1216,7 @@
 						<a href="interfaces/storageadapteroptions.html" class="tsd-kind-icon">Storage<wbr>Adapter<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/storagerecord.html" class="tsd-kind-icon">Storage<wbr>Record</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/storagerecordtag.html" class="tsd-kind-icon">Storage<wbr>Record<wbr>Tag</a>
+						<a href="interfaces/tag.html" class="tsd-kind-icon">Tag</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/writeoptions.html" class="tsd-kind-icon">Write<wbr>Options</a>
@@ -1304,13 +1246,13 @@
 						<a href="globals.html#readwriteoptions" class="tsd-kind-icon">Read<wbr>Write<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#recordvalue" class="tsd-kind-icon">Record<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#redisstorageadapteroptions" class="tsd-kind-icon">Redis<wbr>Storage<wbr>Adapter<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#storagerecordvalue" class="tsd-kind-icon">Storage<wbr>Record<wbr>Value</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#storagetags" class="tsd-kind-icon">Storage<wbr>Tags</a>
+						<a href="globals.html#tags" class="tsd-kind-icon">Tags</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#valueofexecutor" class="tsd-kind-icon">Value<wbr>OfExecutor</a>
@@ -1335,12 +1277,6 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#default_request_timeout" class="tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#non_existing_tag_version" class="tsd-kind-icon">NON_<wbr>EXISTING_<wbr>TAG_<wbr>VERSION</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#not_touched_tags_cache_key" class="tsd-kind-icon">NOT_<wbr>TOUCHED_<wbr>TAGS_<wbr>CACHE_<wbr>KEY</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#tags_versions_alias" class="tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS</a>
@@ -1391,12 +1327,6 @@
 						<a href="globals.html#cachekey" class="tsd-kind-icon">cache<wbr>Key</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#createlogger" class="tsd-kind-icon">create<wbr>Logger</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#createrecord" class="tsd-kind-icon">create<wbr>Record</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#default" class="tsd-kind-icon">default</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -1405,7 +1335,10 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#iscustomstorageoptions" class="tsd-kind-icon">is<wbr>Custom<wbr>Storage<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isoperationtimeouterror" class="tsd-kind-icon">is<wbr>Operation<wbr>Timeout<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#withtimeout" class="tsd-kind-icon">with<wbr>Timeout</a>
 					</li>
 					<li class=" tsd-kind-object-literal">

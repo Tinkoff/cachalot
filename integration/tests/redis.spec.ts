@@ -1,7 +1,7 @@
-import { v4 as uuid } from 'uuid';
-import Redis, { Redis as RedisType } from 'ioredis';
-import RedisStorageAdapter, { CACHE_PREFIX } from '../../../src/adapters/redis';
-import { ConnectionStatus } from '../../../src/connection-status';
+import { v4 as uuid } from "uuid";
+import Redis, { Redis as RedisType } from "ioredis";
+import RedisStorageAdapter, { CACHE_PREFIX } from "../../src/adapters/RedisStorageAdapter";
+import { ConnectionStatus } from "../../src/ConnectionStatus";
 
 let redis: RedisType;
 let adapter: RedisStorageAdapter;
@@ -13,7 +13,7 @@ function delay(duration: number): Promise<void> {
 const longExpireTimeout = 50;
 const shortExpireTimeout = 50;
 
-describe('Redis adapter', () => {
+describe("Redis adapter", () => {
   beforeAll(() => {
     redis = new Redis();
     adapter = new RedisStorageAdapter(redis, { lockExpireTimeout: longExpireTimeout });
@@ -23,13 +23,13 @@ describe('Redis adapter', () => {
     redis.disconnect();
   });
 
-  it('Sets connection status to "connected" if redis executes some command', async () => {
-    await redis.get('');
+  it("Sets connection status to \"connected\" if redis executes some command", async () => {
+    await redis.get("");
     expect(adapter.getConnectionStatus()).toEqual(ConnectionStatus.CONNECTED);
   });
 
-  describe('set', () => {
-    it('set returns true if operation is successful', async () => {
+  describe("set", () => {
+    it("set returns true if operation is successful", async () => {
       const key = uuid();
       const value = uuid();
 
@@ -37,30 +37,28 @@ describe('Redis adapter', () => {
       await expect(adapter.get(key)).resolves.toEqual(value);
     });
 
-    it('set adds cache prefix', async () => {
+    it("set adds cache prefix", async () => {
       const key = uuid();
       const value = uuid();
 
       await adapter.set(key, value);
-
       await expect(redis.get(`${CACHE_PREFIX}:${key}`)).resolves.toEqual(value);
     });
 
-    it('set calls set with cache prefix and PX mode when expires set', async () => {
+    it("set calls set with cache prefix and PX mode when expires set", async () => {
       const key = uuid();
       const value = uuid();
 
       const localAdapter = new RedisStorageAdapter(redis, { lockExpireTimeout: shortExpireTimeout });
+
       await localAdapter.set(key, value, shortExpireTimeout);
-
       await delay(shortExpireTimeout);
-
       await expect(redis.get(`${CACHE_PREFIX}:${key}`)).resolves.toBeNull();
     });
   });
 
-  describe('get', () => {
-    it('get returns value', async () => {
+  describe("get", () => {
+    it("get returns value", async () => {
       const key = uuid();
       const value = uuid();
 
@@ -68,32 +66,32 @@ describe('Redis adapter', () => {
       await expect(adapter.get(key)).resolves.toEqual(value);
     });
 
-    it('get returns null if key does not set', async () => {
+    it("get returns null if key does not set", async () => {
       const key = uuid();
+
       await expect(adapter.get(key)).resolves.toBeNull();
     });
 
-    it('get adds cache prefix', async () => {
+    it("get adds cache prefix", async () => {
       const key = uuid();
       const value = uuid();
-      await redis.set(`${CACHE_PREFIX}:${key}`, value);
 
+      await redis.set(`${CACHE_PREFIX}:${key}`, value);
       await expect(adapter.get(key)).resolves.toEqual(value);
     });
   });
 
-  describe('del', () => {
-    it('del calls del with cache prefix', async () => {
+  describe("del", () => {
+    it("del calls del with cache prefix", async () => {
       const key = uuid();
       const value = uuid();
 
       await redis.set(`${CACHE_PREFIX}:${key}`, value);
       await adapter.del(key);
-
       await expect(redis.get(`${CACHE_PREFIX}:${key}`)).resolves.toBeNull();
     });
 
-    it('del does nothing if key does not exist', async () => {
+    it("del does nothing if key does not exist", async () => {
       const key = uuid();
       const keyWithPrefix = `${CACHE_PREFIX}:${key}`;
 
@@ -103,72 +101,74 @@ describe('Redis adapter', () => {
     });
   });
 
-  describe('acquireLock', () => {
-    it('acquireLock returns true if lock is successful', async () => {
+  describe("acquireLock", () => {
+    it("acquireLock returns true if lock is successful", async () => {
       const key = uuid();
       const lockResult = await adapter.acquireLock(key);
 
       expect(lockResult).toEqual(true);
     });
 
-    it('acquireLock calls set with generated key name and in NX mode', async () => {
+    it("acquireLock calls set with generated key name and in NX mode", async () => {
       const key = uuid();
-
       const localAdapter = new RedisStorageAdapter(redis, { lockExpireTimeout: shortExpireTimeout });
       const lockResult = await localAdapter.acquireLock(key);
+
       expect(lockResult).toEqual(true);
 
       await delay(shortExpireTimeout);
-
       await (expect(redis.get(`${key}_lock`))).resolves.toBeNull();
     });
   });
 
-  describe('releaseLock', () => {
-    it('releaseLock returns false if lock does not exist', async () => {
+  describe("releaseLock", () => {
+    it("releaseLock returns false if lock does not exist", async () => {
       const key = uuid();
       const releaseLockResult = await adapter.releaseLock(key);
+
       expect(releaseLockResult).toEqual(false);
     });
 
-    it('releaseLock delete lock record with appropriate key, and returns true on success', async () => {
+    it("releaseLock delete lock record with appropriate key, and returns true on success", async () => {
       const key = uuid();
 
-      await redis.set(`${key}_lock`, '');
+      await redis.set(`${key}_lock`, "");
+
       const releaseLockResult = await adapter.releaseLock(key);
+
       expect(releaseLockResult).toEqual(true);
     });
 
-    it('releaseLock delete lock record set by acquireLock', async () => {
+    it("releaseLock delete lock record set by acquireLock", async () => {
       const key = uuid();
 
       await adapter.acquireLock(key);
-
       await expect(adapter.releaseLock(key)).resolves.toEqual(true);
     });
   });
 
-  describe('isLockExists', () => {
-    it('isLockExists returns true if lock exists', async () => {
+  describe("isLockExists", () => {
+    it("isLockExists returns true if lock exists", async () => {
       const key = uuid();
 
       await adapter.acquireLock(key);
       await expect(adapter.isLockExists(key)).resolves.toEqual(true);
     });
 
-    it('isLockExists returns false if lock does not exist', async () => {
+    it("isLockExists returns false if lock does not exist", async () => {
       const key = uuid();
 
       await expect(adapter.isLockExists(key)).resolves.toEqual(false);
     });
   });
 
-  describe('mset', () => {
-    it('mset sets values', async () => {
+  describe("mset", () => {
+    it("mset sets values", async () => {
       const values = new Map([
         [uuid(), uuid()],
         [uuid(), uuid()]
       ]);
+
       await adapter.mset(values);
 
       for (const [key, value] of values.entries()) {
@@ -176,13 +176,13 @@ describe('Redis adapter', () => {
       }
     });
 
-    it('mset throws error on empty values', async () => {
-      await expect(adapter.mset(new Map<string, any>())).rejects.toThrowError('ERR wrong number of arguments for \'mset\' command');
+    it("mset throws error on empty values", async () => {
+      await expect(adapter.mset(new Map<string, any>())).rejects.toThrowError("ERR wrong number of arguments for \"mset\" command");
     });
   });
 
-  describe('mget', () => {
-    it('mget gets values', async () => {
+  describe("mget", () => {
+    it("mget gets values", async () => {
       const values = new Map([
         [uuid(), uuid()],
         [uuid(), uuid()]
@@ -197,7 +197,7 @@ describe('Redis adapter', () => {
       expect(result).toEqual(Array.from(values.values()));
     });
 
-    it('mget returns null for non-existing keys', async () => {
+    it("mget returns null for non-existing keys", async () => {
       const values = new Map([
         [uuid(), uuid()],
         [uuid(), uuid()]
@@ -209,6 +209,7 @@ describe('Redis adapter', () => {
 
       const keys = Array.from(values.keys());
       const nonExistingKey = uuid();
+
       keys.push(nonExistingKey);
 
       const result = await adapter.mget(keys);

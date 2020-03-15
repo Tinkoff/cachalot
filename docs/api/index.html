@@ -110,7 +110,7 @@
 					<h5>Example of use:</h5>
 				</a>
 				<p>Initialization:</p>
-				<pre><code class="language-typescript"><span class="hljs-comment">// cache.ts</span>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Cache.ts</span>
 
 <span class="hljs-keyword">import</span> Redis <span class="hljs-keyword">from</span> <span class="hljs-string">'ioredis'</span>;
 <span class="hljs-keyword">import</span> Cache, { RedisStorageAdapter } <span class="hljs-keyword">from</span> <span class="hljs-string">'cachalot'</span>;
@@ -298,6 +298,9 @@ limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 						<a href="classes/readthroughmanager.html" class="tsd-kind-icon">Read<wbr>Through<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/record.html" class="tsd-kind-icon">Record</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/redismock.html" class="tsd-kind-icon">Redis<wbr>Mock</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -370,10 +373,7 @@ limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 						<a href="interfaces/storageadapteroptions.html" class="tsd-kind-icon">Storage<wbr>Adapter<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/storagerecord.html" class="tsd-kind-icon">Storage<wbr>Record</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/storagerecordtag.html" class="tsd-kind-icon">Storage<wbr>Record<wbr>Tag</a>
+						<a href="interfaces/tag.html" class="tsd-kind-icon">Tag</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/writeoptions.html" class="tsd-kind-icon">Write<wbr>Options</a>
@@ -403,13 +403,13 @@ limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 						<a href="globals.html#readwriteoptions" class="tsd-kind-icon">Read<wbr>Write<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#recordvalue" class="tsd-kind-icon">Record<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#redisstorageadapteroptions" class="tsd-kind-icon">Redis<wbr>Storage<wbr>Adapter<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#storagerecordvalue" class="tsd-kind-icon">Storage<wbr>Record<wbr>Value</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#storagetags" class="tsd-kind-icon">Storage<wbr>Tags</a>
+						<a href="globals.html#tags" class="tsd-kind-icon">Tags</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#valueofexecutor" class="tsd-kind-icon">Value<wbr>OfExecutor</a>
@@ -434,12 +434,6 @@ limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#default_request_timeout" class="tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#non_existing_tag_version" class="tsd-kind-icon">NON_<wbr>EXISTING_<wbr>TAG_<wbr>VERSION</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#not_touched_tags_cache_key" class="tsd-kind-icon">NOT_<wbr>TOUCHED_<wbr>TAGS_<wbr>CACHE_<wbr>KEY</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#tags_versions_alias" class="tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS</a>
@@ -490,12 +484,6 @@ limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 						<a href="globals.html#cachekey" class="tsd-kind-icon">cache<wbr>Key</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#createlogger" class="tsd-kind-icon">create<wbr>Logger</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#createrecord" class="tsd-kind-icon">create<wbr>Record</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#default" class="tsd-kind-icon">default</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -504,7 +492,10 @@ limitations <span class="hljs-keyword">under</span> the License.</code></pre>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#iscustomstorageoptions" class="tsd-kind-icon">is<wbr>Custom<wbr>Storage<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isoperationtimeouterror" class="tsd-kind-icon">is<wbr>Operation<wbr>Timeout<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#withtimeout" class="tsd-kind-icon">with<wbr>Timeout</a>
 					</li>
 					<li class=" tsd-kind-object-literal">

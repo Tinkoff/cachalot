@@ -1,6 +1,6 @@
-import * as errors from './errors';
+import * as errors from "./errors";
 
-export default function (value: any): any {
+export default function(value: any): any {
   if (value === undefined) {
     return value;
   }
