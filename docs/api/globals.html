@@ -80,6 +80,8 @@
 								<li class="tsd-kind-class"><a href="classes/basemanager.html" class="tsd-kind-icon">Base<wbr>Manager</a></li>
 								<li class="tsd-kind-class"><a href="classes/basestorage.html" class="tsd-kind-icon">Base<wbr>Storage</a></li>
 								<li class="tsd-kind-class"><a href="classes/cache.html" class="tsd-kind-icon">Cache</a></li>
+								<li class="tsd-kind-class"><a href="classes/memcachedmock.html" class="tsd-kind-icon">Memcached<wbr>Mock</a></li>
+								<li class="tsd-kind-class"><a href="classes/memcachedstorageadapter.html" class="tsd-kind-icon">Memcached<wbr>Storage<wbr>Adapter</a></li>
 								<li class="tsd-kind-class"><a href="classes/readthroughmanager.html" class="tsd-kind-icon">Read<wbr>Through<wbr>Manager</a></li>
 								<li class="tsd-kind-class"><a href="classes/record.html" class="tsd-kind-icon">Record</a></li>
 								<li class="tsd-kind-class"><a href="classes/redismock.html" class="tsd-kind-icon">Redis<wbr>Mock</a></li>
@@ -125,6 +127,7 @@
 								<li class="tsd-kind-type-alias"><a href="globals.html#getrecordfn" class="tsd-kind-icon">Get<wbr>Record<wbr>Fn</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#keylockcheckfn" class="tsd-kind-icon">Key<wbr>Lock<wbr>Check<wbr>Fn</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#lockedkeyretrievestrategytype" class="tsd-kind-icon">Locked<wbr>Key<wbr>Retrieve<wbr>Strategy<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#memcachedstorageadapteroptions" class="tsd-kind-icon">Memcached<wbr>Storage<wbr>Adapter<wbr>Options</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#readwriteoptions" class="tsd-kind-icon">Read<wbr>Write<wbr>Options</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#recordvalue" class="tsd-kind-icon">Record<wbr>Value</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#redisstorageadapteroptions" class="tsd-kind-icon">Redis<wbr>Storage<wbr>Adapter<wbr>Options</a></li>
@@ -142,6 +145,7 @@
 								<li class="tsd-kind-variable"><a href="globals.html#default_operation_timeout" class="tsd-kind-icon">DEFAULT_<wbr>OPERATION_<wbr>TIMEOUT</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_refresh_ahead_factor" class="tsd-kind-icon">DEFAULT_<wbr>REFRESH_<wbr>AHEAD_<wbr>FACTOR</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#default_request_timeout" class="tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#second" class="tsd-kind-icon">SECOND</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#tags_versions_alias" class="tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#adapter" class="tsd-kind-icon">adapter</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#getrecordmock" class="tsd-kind-icon">get<wbr>Record<wbr>Mock</a></li>
@@ -158,6 +162,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#operationerror" class="tsd-kind-icon">Operation<wbr>Error</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#operationtimeouterror" class="tsd-kind-icon">Operation<wbr>Timeout<wbr>Error</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#parseerror" class="tsd-kind-icon">Parse<wbr>Error</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#requestmaximumtimeoutexceedederror" class="tsd-kind-icon">Request<wbr>Maximum<wbr>Timeout<wbr>Exceeded<wbr>Error</a></li>
@@ -221,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">Cache<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="interfaces/cachewithcustomstorageoptions.html" class="tsd-signature-type">CacheWithCustomStorageOptions</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/cachewithbasestorageoptions.html" class="tsd-signature-type">CacheWithBaseStorageOptions</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>expiresIn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>hashKeys<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>logger<span class="tsd-signature-symbol">: </span><a href="interfaces/logger.html" class="tsd-signature-type">Logger</a><span class="tsd-signature-symbol">; </span>prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L24">src/Cache.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.ts#L24">src/Cache.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -366,6 +371,24 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="memcachedstorageadapteroptions" class="tsd-anchor"></a>
+					<h3>Memcached<wbr>Storage<wbr>Adapter<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">Memcached<wbr>Storage<wbr>Adapter<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>lockExpireTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L20">src/adapters/MemcachedStorageAdapter.ts:20</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>lock<wbr>Expire<wbr>Timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="readwriteoptions" class="tsd-anchor"></a>
 					<h3>Read<wbr>Write<wbr>Options</h3>
 					<div class="tsd-signature tsd-kind-icon">Read<wbr>Write<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="interfaces/readoptions.html" class="tsd-signature-type">ReadOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/writeoptions.html" class="tsd-signature-type">WriteOptions</a></div>
@@ -479,6 +502,7 @@
 					<div class="tsd-signature tsd-kind-icon">CACHE_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"cache"</span><span class="tsd-signature-symbol"> = &quot;cache&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L7">src/adapters/MemcachedStorageAdapter.ts:7</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L10">src/adapters/RedisStorageAdapter.ts:10</a></li>
 						</ul>
 					</aside>
@@ -494,6 +518,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>LOCK_<wbr>EXPIRES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">20000</span><span class="tsd-signature-symbol"> = 20000</span></div>
 					<aside class="tsd-sources">
 						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L8">src/adapters/MemcachedStorageAdapter.ts:8</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L12">src/adapters/RedisStorageAdapter.ts:12</a></li>
 						</ul>
 					</aside>
@@ -539,6 +564,16 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="second" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> SECOND</h3>
+					<div class="tsd-signature tsd-kind-icon">SECOND<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1000</span><span class="tsd-signature-symbol"> = 1000</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L6">src/adapters/MemcachedStorageAdapter.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="tags_versions_alias" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> TAGS_<wbr>VERSIONS_<wbr>ALIAS</h3>
 					<div class="tsd-signature tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"cache-tags-versions"</span><span class="tsd-signature-symbol"> = &quot;cache-tags-versions&quot;</span></div>
@@ -554,6 +589,7 @@
 					<div class="tsd-signature tsd-kind-icon">adapter<span class="tsd-signature-symbol">:</span> <a href="classes/redisstorageadapter.html" class="tsd-signature-type">RedisStorageAdapter</a><span class="tsd-signature-symbol"> = new RedisStorageAdapter(mock)</span></div>
 					<aside class="tsd-sources">
 						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.spec.ts#L8">src/adapters/MemcachedStorageAdapter.spec.ts:8</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.spec.ts#L8">src/adapters/RedisStorageAdapter.spec.ts:8</a></li>
 						</ul>
 					</aside>
@@ -574,7 +610,7 @@
 					<div class="tsd-signature tsd-kind-icon">instance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L22">src/Cache.spec.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L22">src/Cache.spec.ts:22</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy.spec.ts#L3">src/locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy.spec.ts:3</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts#L7">src/locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy.spec.ts:7</a></li>
 						</ul>
@@ -625,6 +661,7 @@
 					<div class="tsd-signature tsd-kind-icon">mock<span class="tsd-signature-symbol">:</span> <a href="classes/redismock.html" class="tsd-signature-type">RedisMock</a><span class="tsd-signature-symbol"> = new RedisMock()</span></div>
 					<aside class="tsd-sources">
 						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.spec.ts#L7">src/adapters/MemcachedStorageAdapter.spec.ts:7</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.spec.ts#L7">src/adapters/RedisStorageAdapter.spec.ts:7</a></li>
 						</ul>
 					</aside>
@@ -635,7 +672,7 @@
 					<div class="tsd-signature tsd-kind-icon">mock<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="globals.html#mockmanager" class="tsd-signature-type">mockManager</a><span class="tsd-signature-symbol"> = class {static getName: any &#x3D; () &#x3D;&gt; &quot;mock&quot;;get: any &#x3D; jest.fn().mockResolvedValue(&quot;mockResult&quot;);set: any &#x3D; jest.fn();}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L16">src/Cache.spec.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L16">src/Cache.spec.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -665,6 +702,32 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="operationerror" class="tsd-anchor"></a>
+					<h3>Operation<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Operation<wbr>Error<span class="tsd-signature-symbol">(</span>op<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L14">src/adapters/MemcachedStorageAdapter.ts:14</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>op: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>err: <span class="tsd-signature-type">Error</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Error</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="operationtimeouterror" class="tsd-anchor"></a>
 					<h3>Operation<wbr>Timeout<wbr>Error</h3>
@@ -770,7 +833,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/RedisStorageAdapter.ts#L19">src/adapters/RedisStorageAdapter.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L10">src/adapters/MemcachedStorageAdapter.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -822,7 +885,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L32">src/Cache.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.ts#L32">src/Cache.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -845,7 +908,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.ts#L30">src/Cache.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.ts#L30">src/Cache.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1006,7 +1069,7 @@
 					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L9">src/Cache.spec.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L9">src/Cache.spec.ts:9</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L5">src/managers/ReadThroughManager.spec.ts:5</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L5">src/managers/RefreshAheadManager.spec.ts:5</a></li>
 							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L5">src/managers/WriteThroughManager.spec.ts:5</a></li>
@@ -1018,7 +1081,7 @@
 						<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L13">src/Cache.spec.ts:13</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L13">src/Cache.spec.ts:13</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L9">src/managers/ReadThroughManager.spec.ts:9</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L9">src/managers/RefreshAheadManager.spec.ts:9</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L9">src/managers/WriteThroughManager.spec.ts:9</a></li>
@@ -1031,7 +1094,7 @@
 						<div class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L10">src/Cache.spec.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L10">src/Cache.spec.ts:10</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L6">src/managers/ReadThroughManager.spec.ts:6</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L6">src/managers/RefreshAheadManager.spec.ts:6</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L6">src/managers/WriteThroughManager.spec.ts:6</a></li>
@@ -1044,7 +1107,7 @@
 						<div class="tsd-signature tsd-kind-icon">trace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L11">src/Cache.spec.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L11">src/Cache.spec.ts:11</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L7">src/managers/ReadThroughManager.spec.ts:7</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L7">src/managers/RefreshAheadManager.spec.ts:7</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L7">src/managers/WriteThroughManager.spec.ts:7</a></li>
@@ -1057,7 +1120,7 @@
 						<div class="tsd-signature tsd-kind-icon">warn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/cache.spec.ts#L12">src/Cache.spec.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/Cache.spec.ts#L12">src/Cache.spec.ts:12</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/ReadThroughManager.spec.ts#L8">src/managers/ReadThroughManager.spec.ts:8</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/RefreshAheadManager.spec.ts#L8">src/managers/RefreshAheadManager.spec.ts:8</a></li>
 								<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/managers/WriteThroughManager.spec.ts#L8">src/managers/WriteThroughManager.spec.ts:8</a></li>
@@ -1136,6 +1199,12 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/cache.html" class="tsd-kind-icon">Cache</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/memcachedmock.html" class="tsd-kind-icon">Memcached<wbr>Mock</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/memcachedstorageadapter.html" class="tsd-kind-icon">Memcached<wbr>Storage<wbr>Adapter</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/readthroughmanager.html" class="tsd-kind-icon">Read<wbr>Through<wbr>Manager</a>
@@ -1243,6 +1312,9 @@
 						<a href="globals.html#lockedkeyretrievestrategytype" class="tsd-kind-icon">Locked<wbr>Key<wbr>Retrieve<wbr>Strategy<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#memcachedstorageadapteroptions" class="tsd-kind-icon">Memcached<wbr>Storage<wbr>Adapter<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#readwriteoptions" class="tsd-kind-icon">Read<wbr>Write<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
@@ -1279,6 +1351,9 @@
 						<a href="globals.html#default_request_timeout" class="tsd-kind-icon">DEFAULT_<wbr>REQUEST_<wbr>TIMEOUT</a>
 					</li>
 					<li class=" tsd-kind-variable">
+						<a href="globals.html#second" class="tsd-kind-icon">SECOND</a>
+					</li>
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#tags_versions_alias" class="tsd-kind-icon">TAGS_<wbr>VERSIONS_<wbr>ALIAS</a>
 					</li>
 					<li class=" tsd-kind-variable">
@@ -1310,6 +1385,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#testadapter" class="tsd-kind-icon">test<wbr>Adapter</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#operationerror" class="tsd-kind-icon">Operation<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#operationtimeouterror" class="tsd-kind-icon">Operation<wbr>Timeout<wbr>Error</a>

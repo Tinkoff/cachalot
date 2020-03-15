@@ -117,7 +117,7 @@ describe("Redis adapter", () => {
       expect(lockResult).toEqual(true);
 
       await delay(shortExpireTimeout);
-      await (expect(redis.get(`${key}_lock`))).resolves.toBeNull();
+      await (expect(redis.get(`cache:${key}_lock`))).resolves.toBeNull();
     });
   });
 
@@ -132,7 +132,7 @@ describe("Redis adapter", () => {
     it("releaseLock delete lock record with appropriate key, and returns true on success", async () => {
       const key = uuid();
 
-      await redis.set(`${key}_lock`, "");
+      await redis.set(`cache:${key}_lock`, "");
 
       await delay(shortExpireTimeout);
 

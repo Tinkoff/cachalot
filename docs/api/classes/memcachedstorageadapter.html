@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StorageAdapter | cachalot</title>
+	<title>MemcachedStorageAdapter | cachalot</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="storageadapter.html">StorageAdapter</a>
+					<a href="memcachedstorageadapter.html">MemcachedStorageAdapter</a>
 				</li>
 			</ul>
-			<h1>Interface StorageAdapter</h1>
+			<h1>Class MemcachedStorageAdapter</h1>
 		</div>
 	</div>
 </header>
@@ -69,9 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface adapter for class Manager. Adapter is &quot;interlayer&quot;
-							between storage methods and the manager itself. Any adapter
-						must implement all methods and properties of this interface</p>
+						<p>Memcached adapter for Manager. Implements the StorageAdapter interface</p>
 					</div>
 				</div>
 			</section>
@@ -79,16 +77,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StorageAdapter</span>
+						<span class="target">MemcachedStorageAdapter</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
-				<h3>Implemented by</h3>
+				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/memcachedstorageadapter.html" class="tsd-signature-type">MemcachedStorageAdapter</a></li>
-					<li><a href="../classes/redisstorageadapter.html" class="tsd-signature-type">RedisStorageAdapter</a></li>
-					<li><a href="../classes/teststorageadapter.html" class="tsd-signature-type">TestStorageAdapter</a></li>
+					<li><a href="../interfaces/storageadapter.html" class="tsd-signature-type">StorageAdapter</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -96,37 +92,119 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="memcachedstorageadapter.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="memcachedstorageadapter.html#connectionstatus" class="tsd-kind-icon">connection<wbr>Status</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="memcachedstorageadapter.html#memcachedinstance" class="tsd-kind-icon">memcached<wbr>Instance</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="memcachedstorageadapter.html#options" class="tsd-kind-icon">options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#acquirelock" class="tsd-kind-icon">acquire<wbr>Lock</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#del" class="tsd-kind-icon">del</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#mget" class="tsd-kind-icon">mget</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#mset" class="tsd-kind-icon">mset</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#onconnect" class="tsd-kind-icon">on<wbr>Connect</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#releaselock" class="tsd-kind-icon">release<wbr>Lock</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#set" class="tsd-kind-icon">set</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="storageadapter.html#setoptions" class="tsd-kind-icon">set<wbr>Options</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#acquirelock" class="tsd-kind-icon">acquire<wbr>Lock</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#del" class="tsd-kind-icon">del</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#mget" class="tsd-kind-icon">mget</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#mset" class="tsd-kind-icon">mset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#onconnect" class="tsd-kind-icon">on<wbr>Connect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#releaselock" class="tsd-kind-icon">release<wbr>Lock</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="memcachedstorageadapter.html#set" class="tsd-kind-icon">set</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="memcachedstorageadapter.html#setconnectionstatus" class="tsd-kind-icon">set<wbr>Connection<wbr>Status</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="acquirelock" class="tsd-anchor"></a>
-					<h3>acquire<wbr>Lock</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">acquire<wbr>Lock<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Memcached<wbr>Storage<wbr>Adapter<span class="tsd-signature-symbol">(</span>memcachedInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Memcached</span>, options<span class="tsd-signature-symbol">?: </span><a href="../globals.html#memcachedstorageadapteroptions" class="tsd-signature-type">MemcachedStorageAdapterOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="memcachedstorageadapter.html" class="tsd-signature-type">MemcachedStorageAdapter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L63">src/StorageAdapter.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L27">src/adapters/MemcachedStorageAdapter.ts:27</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The adapter&#39;s constructor takes as its input the only parameter - the memcached instance (new Memcached)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>memcachedInstance: <span class="tsd-signature-type">Memcached</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../globals.html#memcachedstorageadapteroptions" class="tsd-signature-type">MemcachedStorageAdapterOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="memcachedstorageadapter.html" class="tsd-signature-type">MemcachedStorageAdapter</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="connectionstatus" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> connection<wbr>Status</h3>
+					<div class="tsd-signature tsd-kind-icon">connection<wbr>Status<span class="tsd-signature-symbol">:</span> <a href="../enums/connectionstatus.html" class="tsd-signature-type">ConnectionStatus</a><span class="tsd-signature-symbol"> = ConnectionStatus.DISCONNECTED</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L42">src/adapters/MemcachedStorageAdapter.ts:42</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="memcachedinstance" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> memcached<wbr>Instance</h3>
+					<div class="tsd-signature tsd-kind-icon">memcached<wbr>Instance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Memcached</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L43">src/adapters/MemcachedStorageAdapter.ts:43</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="options" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../globals.html#memcachedstorageadapteroptions" class="tsd-signature-type">MemcachedStorageAdapterOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L44">src/adapters/MemcachedStorageAdapter.ts:44</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="acquirelock" class="tsd-anchor"></a>
+					<h3>acquire<wbr>Lock</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">acquire<wbr>Lock<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#acquirelock">acquireLock</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L140">src/adapters/MemcachedStorageAdapter.ts:140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -144,17 +222,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="del" class="tsd-anchor"></a>
 					<h3>del</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">del<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#del">del</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L58">src/StorageAdapter.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L125">src/adapters/MemcachedStorageAdapter.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -172,17 +251,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L47">src/StorageAdapter.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L94">src/adapters/MemcachedStorageAdapter.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -201,17 +281,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getconnectionstatus" class="tsd-anchor"></a>
 					<h3>get<wbr>Connection<wbr>Status</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Connection<wbr>Status<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/connectionstatus.html" class="tsd-signature-type">ConnectionStatus</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#getconnectionstatus">getConnectionStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L30">src/StorageAdapter.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L56">src/adapters/MemcachedStorageAdapter.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -223,17 +304,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="islockexists" class="tsd-anchor"></a>
 					<h3>is<wbr>Lock<wbr>Exists</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Lock<wbr>Exists<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#islockexists">isLockExists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L73">src/StorageAdapter.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L170">src/adapters/MemcachedStorageAdapter.ts:170</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -251,17 +333,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="mget" class="tsd-anchor"></a>
 					<h3>mget</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">mget<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#mget">mget</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L53">src/StorageAdapter.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L110">src/adapters/MemcachedStorageAdapter.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,17 +363,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="mset" class="tsd-anchor"></a>
 					<h3>mset</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">mset<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#mset">mset</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L41">src/StorageAdapter.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L85">src/adapters/MemcachedStorageAdapter.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -308,17 +392,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="onconnect" class="tsd-anchor"></a>
 					<h3>on<wbr>Connect</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">on<wbr>Connect<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L25">src/StorageAdapter.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L49">src/adapters/MemcachedStorageAdapter.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -354,17 +438,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="releaselock" class="tsd-anchor"></a>
 					<h3>release<wbr>Lock</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">release<wbr>Lock<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#releaselock">releaseLock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L68">src/StorageAdapter.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L155">src/adapters/MemcachedStorageAdapter.ts:155</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -382,17 +467,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="set" class="tsd-anchor"></a>
 					<h3>set</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, expiresIn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/storageadapter.html">StorageAdapter</a>.<a href="../interfaces/storageadapter.html#set">set</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L36">src/StorageAdapter.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L64">src/adapters/MemcachedStorageAdapter.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -417,28 +503,28 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="setoptions" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> set<wbr>Options</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="storageadapteroptions.html" class="tsd-signature-type">StorageAdapterOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="setconnectionstatus" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Connection<wbr>Status</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Connection<wbr>Status<span class="tsd-signature-symbol">(</span>status<span class="tsd-signature-symbol">: </span><a href="../enums/connectionstatus.html" class="tsd-signature-type">ConnectionStatus</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/StorageAdapter.ts#L20">src/StorageAdapter.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/TinkoffCreditSystems/cachalot/blob/master/src/adapters/MemcachedStorageAdapter.ts#L187">src/adapters/MemcachedStorageAdapter.ts:187</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>The method sends the settings from above (from BaseManager) to the adapter. Called in the BaseManager constructor if set</p>
+									<p>Changes adapter connection status</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="storageadapteroptions.html" class="tsd-signature-type">StorageAdapterOptions</a></h5>
+									<h5>status: <a href="../enums/connectionstatus.html" class="tsd-signature-type">ConnectionStatus</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -459,41 +545,53 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="storageadapter.html" class="tsd-kind-icon">Storage<wbr>Adapter</a>
+					<li class="current tsd-kind-class">
+						<a href="memcachedstorageadapter.html" class="tsd-kind-icon">Memcached<wbr>Storage<wbr>Adapter</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#acquirelock" class="tsd-kind-icon">acquire<wbr>Lock</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#del" class="tsd-kind-icon">del</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="memcachedstorageadapter.html#connectionstatus" class="tsd-kind-icon">connection<wbr>Status</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#get" class="tsd-kind-icon">get</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="memcachedstorageadapter.html#memcachedinstance" class="tsd-kind-icon">memcached<wbr>Instance</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="memcachedstorageadapter.html#options" class="tsd-kind-icon">options</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#acquirelock" class="tsd-kind-icon">acquire<wbr>Lock</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#mget" class="tsd-kind-icon">mget</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#del" class="tsd-kind-icon">del</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#mset" class="tsd-kind-icon">mset</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#get" class="tsd-kind-icon">get</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#onconnect" class="tsd-kind-icon">on<wbr>Connect</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#getconnectionstatus" class="tsd-kind-icon">get<wbr>Connection<wbr>Status</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#releaselock" class="tsd-kind-icon">release<wbr>Lock</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#islockexists" class="tsd-kind-icon">is<wbr>Lock<wbr>Exists</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#set" class="tsd-kind-icon">set</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#mget" class="tsd-kind-icon">mget</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="storageadapter.html#setoptions" class="tsd-kind-icon">set<wbr>Options</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#mset" class="tsd-kind-icon">mset</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#onconnect" class="tsd-kind-icon">on<wbr>Connect</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#releaselock" class="tsd-kind-icon">release<wbr>Lock</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="memcachedstorageadapter.html#set" class="tsd-kind-icon">set</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="memcachedstorageadapter.html#setconnectionstatus" class="tsd-kind-icon">set<wbr>Connection<wbr>Status</a>
 							</li>
 						</ul>
 					</li>
