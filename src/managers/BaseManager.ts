@@ -54,7 +54,7 @@ export abstract class BaseManager implements Manager {
   public abstract set(key: string, value: RecordValue, options?: WriteOptions): Promise<any>;
 
   public del(key: string): Promise<boolean> {
-    return this.storage.del(key)
+    return this.storage.del(key);
   }
 
   protected isTagsOutdated = (recordArrayTags: Tag[], actualArrayTags: Tag[]): boolean => {

@@ -1,6 +1,6 @@
 import { StorageAdapter } from "../StorageAdapter";
 import Memcached from "memcached";
-import {ConnectionStatus} from "../ConnectionStatus";
+import { ConnectionStatus } from "../ConnectionStatus";
 import customError from "../custom-error";
 
 const SECOND = 1000;
@@ -68,23 +68,22 @@ export class MemcachedStorageAdapter implements StorageAdapter {
       lifetime = expiresIn / SECOND;
     }
 
-    return new Promise<boolean>(((resolve, reject) => {
-      this.memcachedInstance.set(cacheKey(key), value, lifetime, ((err, result) => {
+    return new Promise<boolean>((resolve, reject) => {
+      this.memcachedInstance.set(cacheKey(key), value, lifetime, (err, result) => {
         if (err) {
-          return reject(OperationError("set", err))
+          return reject(OperationError("set", err));
         }
 
-        resolve(result)
-      }))
-    }))
+        resolve(result);
+      });
+    });
   }
 
   /**
    * mset - stores values to the storage
    */
   async mset(values: Map<string, string>): Promise<void> {
-    await Promise.all([...values.entries()]
-      .map(([key, value]) => this.set(key, value)))
+    await Promise.all([...values.entries()].map(([key, value]) => this.set(key, value)));
   }
 
   /**
@@ -92,15 +91,15 @@ export class MemcachedStorageAdapter implements StorageAdapter {
    * Returns null if record does not exist
    */
   async get(key: string): Promise<string | null> {
-    return new Promise(((resolve, reject) => {
-      this.memcachedInstance.get(cacheKey(key), ((err, result) => {
+    return new Promise((resolve, reject) => {
+      this.memcachedInstance.get(cacheKey(key), (err, result) => {
         if (err) {
-          return reject(OperationError("get", err))
+          return reject(OperationError("get", err));
         }
 
-        return resolve(result || null)
-      }))
-    }))
+        return resolve(result || null);
+      });
+    });
   }
 
   /**
@@ -110,75 +109,80 @@ export class MemcachedStorageAdapter implements StorageAdapter {
   async mget(keys: string[]): Promise<(string | null)[]> {
     const cacheKeys = keys.map(cacheKey);
 
-    return new Promise(((resolve, reject) => {
-      this.memcachedInstance.getMulti(cacheKeys, ((err, result) => {
+    return new Promise((resolve, reject) => {
+      this.memcachedInstance.getMulti(cacheKeys, (err, result) => {
         if (err) {
-          return reject(OperationError("mget", err))
+          return reject(OperationError("mget", err));
         }
 
-        resolve(Object.values(result))
-      }))
-    }))
+        resolve(Object.values(result));
+      });
+    });
   }
 
   /**
    * Removes the entry with the key key from storage
    */
   async del(key: string): Promise<boolean> {
-    return new Promise(((resolve, reject) => {
-      this.memcachedInstance.del(cacheKey(key), ((err, result) => {
+    return new Promise((resolve, reject) => {
+      this.memcachedInstance.del(cacheKey(key), (err, result) => {
         if (err) {
-          return reject(OperationError("del", err))
+          return reject(OperationError("del", err));
         }
 
-        return resolve(result)
-      }))
-    }))
+        return resolve(result);
+      });
+    });
   }
 
   /**
    * Locks the entry with the key key to be changed, returns true if the operation is successful, otherwise false
    */
   async acquireLock(key: string): Promise<boolean> {
-    return new Promise<boolean>(((resolve, reject) => {
-      this.memcachedInstance.add(cacheKey(`${key}_lock`), "", this.options.lockExpireTimeout, ((err, result) => {
-        if (err) {
-          return reject(OperationError("acquireLock", err))
-        }
+    return new Promise<boolean>((resolve, reject) => {
+      this.memcachedInstance.add(
+        cacheKey(`${key}_lock`),
+        "",
+        this.options.lockExpireTimeout,
+        (err, result) => {
+          if (err) {
+            return reject(OperationError("acquireLock", err));
+          }
 
-        resolve(result)
-      }))
-    }))
+          resolve(result);
+        }
+      );
+    });
   }
 
   /**
    * Unlocks the record with the key key, returns true if the operation is successful, otherwise false
    */
   async releaseLock(key: string): Promise<boolean> {
-    return new Promise(((resolve, reject) => {
-      this.memcachedInstance.del(cacheKey(`${key}_lock`), ((err, result) => {
+    return new Promise((resolve, reject) => {
+      this.memcachedInstance.del(cacheKey(`${key}_lock`), (err, result) => {
         if (err) {
-          return reject(OperationError("releaseLock", err))
+          return reject(OperationError("releaseLock", err));
         }
 
-        resolve(result)
-      }))
-    }))
+        resolve(result);
+      });
+    });
   }
 
   /**
    * Checks if the entry with the key key is locked for changes
    */
   async isLockExists(key: string): Promise<boolean> {
-    return new Promise(((resolve, reject) => {
-      this.memcachedInstance.get(cacheKey(`${key}_lock`), ((err, result) => {
+    return new Promise((resolve, reject) => {
+      this.memcachedInstance.get(cacheKey(`${key}_lock`), (err, result) => {
         if (err) {
-          return reject(OperationError("isLockExists", err))
+          return reject(OperationError("isLockExists", err));
         }
 
-        resolve(result !== null && result !== undefined)
-      }))
-    }))
+        resolve(result !== null && result !== undefined);
+      });
+    });
   }
 
   /**

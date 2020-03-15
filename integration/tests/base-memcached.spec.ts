@@ -10,15 +10,15 @@ const storage = new BaseStorage({ adapter, prefix });
 
 describe("Base storage - memcached", () => {
   beforeEach(async () => {
-    await new Promise(((resolve, reject) => {
-      memcached.flush(((err, results) => {
+    await new Promise((resolve, reject) => {
+      memcached.flush((err, results) => {
         if (err) {
           return reject(err);
         }
 
         resolve(results);
-      }))
-    }))
+      });
+    });
   });
 
   runStorageTests(storage, adapter);

@@ -7,7 +7,7 @@ let redis: RedisType;
 let adapter: RedisStorageAdapter;
 
 function delay(duration: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, duration + 1));
+  return new Promise(resolve => setTimeout(resolve, duration + 1));
 }
 
 const longExpireTimeout = 50;
@@ -23,7 +23,7 @@ describe("Redis adapter", () => {
     redis.disconnect();
   });
 
-  it("Sets connection status to \"connected\" if redis executes some command", async () => {
+  it('Sets connection status to "connected" if redis executes some command', async () => {
     await redis.get("");
     expect(adapter.getConnectionStatus()).toEqual(ConnectionStatus.CONNECTED);
   });
@@ -117,7 +117,7 @@ describe("Redis adapter", () => {
       expect(lockResult).toEqual(true);
 
       await delay(shortExpireTimeout);
-      await (expect(redis.get(`cache:${key}_lock`))).resolves.toBeNull();
+      await expect(redis.get(`cache:${key}_lock`)).resolves.toBeNull();
     });
   });
 
@@ -168,7 +168,7 @@ describe("Redis adapter", () => {
     it("mset sets values", async () => {
       const values = new Map([
         [uuid(), uuid()],
-        [uuid(), uuid()]
+        [uuid(), uuid()],
       ]);
 
       await adapter.mset(values);
@@ -179,7 +179,9 @@ describe("Redis adapter", () => {
     });
 
     it("mset throws error on empty values", async () => {
-      await expect(adapter.mset(new Map<string, any>())).rejects.toThrowError("ERR wrong number of arguments for 'mset' command");
+      await expect(adapter.mset(new Map<string, any>())).rejects.toThrowError(
+        "ERR wrong number of arguments for 'mset' command"
+      );
     });
   });
 
@@ -187,7 +189,7 @@ describe("Redis adapter", () => {
     it("mget gets values", async () => {
       const values = new Map([
         [uuid(), uuid()],
-        [uuid(), uuid()]
+        [uuid(), uuid()],
       ]);
 
       for (const [key, value] of values.entries()) {
@@ -202,7 +204,7 @@ describe("Redis adapter", () => {
     it("mget returns null for non-existing keys", async () => {
       const values = new Map([
         [uuid(), uuid()],
-        [uuid(), uuid()]
+        [uuid(), uuid()],
       ]);
 
       for (const [key, value] of values.entries()) {

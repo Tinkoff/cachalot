@@ -117,7 +117,7 @@ export class RedisStorageAdapter implements StorageAdapter {
    * The del method provided by the adapter. Uses the del command to remove the key.
    */
   public async del(key: string): Promise<boolean> {
-    return await this.withTimeout(this.redisInstance.del(cacheKey(key))) > 0;
+    return (await this.withTimeout(this.redisInstance.del(cacheKey(key)))) > 0;
   }
 
   /**
