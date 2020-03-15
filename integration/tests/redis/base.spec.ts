@@ -84,13 +84,11 @@ describe("Base storage", () => {
       await redis.set(tagVersionKey, 1);
 
       const notTouchedTag = "notTouchedTag";
-      const getActualTagsSpy = jest.spyOn(storage as any, "getActualTags");
       const tags = await storage.getTags([existingTag, notTouchedTag]);
 
-      expect(getActualTagsSpy).toHaveBeenLastCalledWith([existingTag]);
       expect(tags).toEqual([
+        { name: existingTag, version: 1 },
         { name: notTouchedTag, version: 0 },
-        { name: existingTag, version: 1 }
       ]);
     });
   });
@@ -116,8 +114,8 @@ describe("Base storage", () => {
       const tags2 = await storage.getTags([tag1, tag2]);
 
       expect(tags2).toHaveLength(2);
-      expect(tags2[0]).toEqual({ name: tag2, version: 0 });
-      expect(tags2[1]).toEqual(tags[0]);
+      expect(tags2[0]).toEqual(tags[0]);
+      expect(tags2[1]).toEqual({ name: tag2, version: 0 });
 
       await storage.touch([tag1, tag2]);
 
