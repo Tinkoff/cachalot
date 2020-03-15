@@ -177,46 +177,4 @@ describe('Redis adapter', () => {
     expect((mock as any).mget).toHaveBeenCalledTimes(1);
     expect((mock as any).mget).toHaveBeenCalledWith('cache:some1', 'cache:some2');
   });
-
-  it('addToSet calls sadd', async () => {
-    const key = 'key';
-    const value = 'value';
-    (mock as any).sadd = jest.fn().mockImplementation();
-
-    await adapter.addToSet(key, [value]);
-
-    expect((mock as any).sadd).toHaveBeenCalledTimes(1);
-    expect((mock as any).sadd).toHaveBeenCalledWith('cache:key', value);
-  });
-
-  it('deleteFromSet calls srem', async () => {
-    const key = 'key';
-    const value = 'value';
-    (mock as any).srem = jest.fn().mockImplementation();
-
-    await adapter.deleteFromSet(key, [value]);
-
-    expect((mock as any).srem).toHaveBeenCalledTimes(1);
-    expect((mock as any).srem).toHaveBeenCalledWith('cache:key', value);
-  });
-
-  it('intersectWithSet calls del, sadd, sinter', async () => {
-    const key = 'key';
-    const value = 'value';
-    const temporarySetName = 'temporary-set:["value"]';
-    (mock as any).del = jest.fn();
-    (mock as any).sadd = jest.fn();
-    (mock as any).sinter = jest.fn();
-
-    await adapter.intersectWithSet(key, [value]);
-
-    expect((mock as any).del).toHaveBeenCalledTimes(1);
-    expect((mock as any).del).toHaveBeenCalledWith(temporarySetName);
-
-    expect((mock as any).sadd).toHaveBeenCalledTimes(1);
-    expect((mock as any).sadd).toHaveBeenCalledWith(temporarySetName, value);
-
-    expect((mock as any).sinter).toHaveBeenCalledTimes(1);
-    expect((mock as any).sinter).toHaveBeenCalledWith(`cache:${key}`, temporarySetName);
-  });
 });

@@ -25,3 +25,8 @@ export default function createRecord (
 
   return record;
 }
+
+export interface RecordErrorContext {
+  record: StorageRecord;
+  recordValue: any;
+}

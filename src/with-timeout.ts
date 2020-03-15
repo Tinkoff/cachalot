@@ -1,7 +1,7 @@
 import { OperationTimeoutError } from './errors';
 
-export const withTimeout = async <T>(promise: Promise<T>, timeout: number): Promise<T> => {
-  const timeoutPromise = new Promise<never>((resolveTimeout, rejectTimeout): void => {
+export const withTimeout = async (promise: Promise<any>, timeout: number): Promise<any> => {
+  const timeoutPromise = new Promise((resolveTimeout, rejectTimeout): void => {
     setTimeout(() => {
       rejectTimeout(OperationTimeoutError(timeout));
     }, timeout);

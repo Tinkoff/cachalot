@@ -108,29 +108,8 @@ export class RedisStorageAdapter implements StorageAdapter {
    * Use mget command to get multiple values from redis
    */
   public async mget(keys: string[]): Promise<(string | null)[]> {
-    const cacheKeys = keys.map(key => cacheKey(key));
-    return this.withTimeout(this.redisInstance.mget(...cacheKeys));
-  }
-
-  public async addToSet(key: string, values: string[]): Promise<void> {
-    await this.withTimeout(this.redisInstance.sadd(cacheKey(key), ...values));
-  }
-
-  public async deleteFromSet(key: string, values: string[]): Promise<void> {
-    await this.withTimeout(this.redisInstance.srem(cacheKey(key), ...values));
-  }
-
-  /**
-   * The trick is that this method stores values to temporary set and
-   * then uses Redis to make the intersection of this set with set stored in key.
-   */
-  public async intersectWithSet(key: string, values: string[]): Promise<Set<string>> {
-    const temporarySetName = `temporary-set:${serialize(values)}`;
-    await this.withTimeout(this.redisInstance.del(temporarySetName));
-    await this.withTimeout(this.redisInstance.sadd(temporarySetName, ...values));
-    const intersection = await this.withTimeout(this.redisInstance.sinter(cacheKey(key), temporarySetName));
-
-    return new Set(intersection);
+    const cacheKeys = keys.map(key => `${CACHE_PREFIX}:${key}`);
+    return this.withTimeout(this.redisInstance.mget(...cacheKeys), this.options.operationTimeout);
   }
 
   /**
