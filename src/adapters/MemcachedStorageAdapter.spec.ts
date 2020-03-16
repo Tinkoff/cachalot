@@ -28,8 +28,8 @@ describe("Memcached adapter", () => {
     expect((adapter as any).connectionStatus).toEqual(ConnectionStatus.DISCONNECTED);
   });
 
-  it("connection status is disconnected by default", () => {
-    expect((adapter as any).getConnectionStatus()).toEqual(ConnectionStatus.DISCONNECTED);
+  it("connection status is connected by default", () => {
+    expect((adapter as any).getConnectionStatus()).toEqual(ConnectionStatus.CONNECTED);
   });
 
   it("getConnectionStatus returns current connection status", () => {
@@ -65,7 +65,7 @@ describe("Memcached adapter", () => {
       .mockImplementation((key, value, lifetime, cb) => cb(new Error("err"), false));
 
     await expect(adapter.set("some", "value")).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Operation \\"set\\" error"`
+      `"Operation \\"set\\" error. err"`
     );
   });
 
@@ -74,7 +74,7 @@ describe("Memcached adapter", () => {
 
     expect(await adapter.set("some", "value")).toEqual(true);
     expect((mock as any).set).toHaveBeenCalledTimes(1);
-    expect((mock as any).set).toHaveBeenCalledWith("cache:some", "value", 0, expect.any(Function));
+    expect((mock as any).set).toHaveBeenCalledWith("some", "value", 0, expect.any(Function));
   });
 
   it("set converts milliseconds to seconds", async () => {
@@ -82,7 +82,7 @@ describe("Memcached adapter", () => {
 
     expect(await adapter.set("some", "value", 25000)).toEqual(true);
     expect((mock as any).set).toHaveBeenCalledTimes(1);
-    expect((mock as any).set).toHaveBeenCalledWith("cache:some", "value", 25, expect.any(Function));
+    expect((mock as any).set).toHaveBeenCalledWith("some", "value", 25, expect.any(Function));
   });
 
   it("get calls get with cache prefix", async () => {
@@ -92,14 +92,14 @@ describe("Memcached adapter", () => {
 
     expect(value).toEqual("some");
     expect((mock as any).get).toHaveBeenCalledTimes(1);
-    expect((mock as any).get).toHaveBeenCalledWith("cache:some", expect.any(Function));
+    expect((mock as any).get).toHaveBeenCalledWith("some", expect.any(Function));
   });
 
   it("get throws on operation error", async () => {
     (mock as any).get = jest.fn().mockImplementation((key, cb) => cb(new Error("some"), null));
 
     await expect(adapter.get("some")).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Operation \\"get\\" error"`
+      `"Operation \\"get\\" error. some"`
     );
   });
 
@@ -109,14 +109,14 @@ describe("Memcached adapter", () => {
     await adapter.del("some");
 
     expect((mock as any).del).toHaveBeenCalledTimes(1);
-    expect((mock as any).del).toHaveBeenCalledWith("cache:some", expect.any(Function));
+    expect((mock as any).del).toHaveBeenCalledWith("some", expect.any(Function));
   });
 
   it("del throws if operation throws", async () => {
     (mock as any).del = jest.fn().mockImplementation((key, cb) => cb(new Error("some"), true));
 
     await expect(adapter.del("some")).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Operation \\"del\\" error"`
+      `"Operation \\"del\\" error. some"`
     );
   });
 
@@ -142,7 +142,7 @@ describe("Memcached adapter", () => {
       .mockImplementation((key, value, expire, cb) => cb(new Error("some"), false));
 
     await expect(adapter.acquireLock("some")).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Operation \\"acquireLock\\" error"`
+      `"Operation \\"acquireLock\\" error. some"`
     );
   });
 
@@ -153,7 +153,7 @@ describe("Memcached adapter", () => {
 
     expect(lockResult).toEqual(true);
     expect((mock as any).add).toBeCalledTimes(1);
-    expect((mock as any).add).toBeCalledWith("cache:some_lock", "", 20000, expect.any(Function));
+    expect((mock as any).add).toBeCalledWith("some_lock", "", 20, expect.any(Function));
   });
 
   it("releaseLock delete lock record with appropriate key, and returns true on success", async () => {
@@ -163,7 +163,7 @@ describe("Memcached adapter", () => {
 
     expect(releaseLockResult).toEqual(true);
     expect((mock as any).del).toBeCalledTimes(1);
-    expect((mock as any).del).toBeCalledWith("cache:some_lock", expect.any(Function));
+    expect((mock as any).del).toBeCalledWith("some_lock", expect.any(Function));
   });
 
   it("releaseLock delete lock record with appropriate key, and returns false on fail", async () => {
@@ -173,14 +173,14 @@ describe("Memcached adapter", () => {
 
     expect(releaseLockResult).toEqual(false);
     expect((mock as any).del).toBeCalledTimes(1);
-    expect((mock as any).del).toBeCalledWith("cache:some_lock", expect.any(Function));
+    expect((mock as any).del).toBeCalledWith("some_lock", expect.any(Function));
   });
 
   it("releaseLock delete lock record with appropriate key, throws on error", async () => {
     (mock as any).del = jest.fn().mockImplementation((key, cb) => cb(new Error("some"), false));
 
     await expect(adapter.releaseLock("some")).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Operation \\"releaseLock\\" error"`
+      `"Operation \\"releaseLock\\" error. some"`
     );
   });
 
@@ -204,7 +204,7 @@ describe("Memcached adapter", () => {
     (mock as any).get = jest.fn().mockImplementation((key, cb) => cb(new Error("some"), false));
 
     await expect(adapter.isLockExists("some")).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Operation \\"isLockExists\\" error"`
+      `"Operation \\"isLockExists\\" error. some"`
     );
   });
 
@@ -226,13 +226,13 @@ describe("Memcached adapter", () => {
     expect((mock as any).set.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          "cache:some1",
+          "some1",
           "value1",
           0,
           [Function],
         ],
         Array [
-          "cache:some2",
+          "some2",
           "value2",
           0,
           [Function],
@@ -252,11 +252,13 @@ describe("Memcached adapter", () => {
     await adapter.mget(Array.from(values.keys()));
 
     expect((mock as any).getMulti).toHaveBeenCalledTimes(1);
-    expect((mock as any).getMulti).toHaveBeenCalledWith(["cache:some1", "cache:some2"], expect.any(Function));
+    expect((mock as any).getMulti).toHaveBeenCalledWith(["some1", "some2"], expect.any(Function));
   });
 
   it("mget throws on error", async () => {
     (mock as any).getMulti = jest.fn().mockImplementation((keys, cb) => cb(new Error("some"), null));
-    await expect(adapter.mget([])).rejects.toThrowErrorMatchingInlineSnapshot(`"Operation \\"mget\\" error"`);
+    await expect(adapter.mget([])).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Operation \\"mget\\" error. some"`
+    );
   });
 });

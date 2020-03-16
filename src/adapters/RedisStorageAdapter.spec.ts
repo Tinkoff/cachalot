@@ -5,12 +5,12 @@ import { ConnectionStatus } from "../ConnectionStatus";
 class RedisMock extends EventEmitter {}
 
 let mock: RedisMock = new RedisMock();
-let adapter: RedisStorageAdapter = new RedisStorageAdapter(mock);
+let adapter: RedisStorageAdapter = new RedisStorageAdapter(mock as any);
 
 describe("Redis adapter", () => {
   beforeEach(() => {
     mock = new RedisMock();
-    adapter = new RedisStorageAdapter(mock);
+    adapter = new RedisStorageAdapter(mock as any);
   });
 
   it('Sets connection status to "connected" if redis emits ready', () => {
@@ -64,7 +64,7 @@ describe("Redis adapter", () => {
 
     expect(await adapter.set("some", "value")).toEqual(true);
     expect((mock as any).set).toHaveBeenCalledTimes(1);
-    expect((mock as any).set).toHaveBeenCalledWith("cache:some", "value");
+    expect((mock as any).set).toHaveBeenCalledWith("some", "value");
   });
 
   it("set calls set with cache prefix and PX mode when expires set", async () => {
@@ -72,7 +72,7 @@ describe("Redis adapter", () => {
 
     expect(await adapter.set("some", "value", 1)).toEqual(true);
     expect((mock as any).set).toHaveBeenCalledTimes(1);
-    expect((mock as any).set).toHaveBeenCalledWith("cache:some", "value", "PX", 1);
+    expect((mock as any).set).toHaveBeenCalledWith("some", "value", "PX", 1);
   });
 
   it("get calls get with cache prefix", async () => {
@@ -82,7 +82,7 @@ describe("Redis adapter", () => {
 
     expect(value).toEqual("hello");
     expect((mock as any).get).toHaveBeenCalledTimes(1);
-    expect((mock as any).get).toHaveBeenCalledWith("cache:some");
+    expect((mock as any).get).toHaveBeenCalledWith("some");
   });
 
   it("del calls del with cache prefix", async () => {
@@ -91,7 +91,7 @@ describe("Redis adapter", () => {
     await adapter.del("some");
 
     expect((mock as any).del).toHaveBeenCalledTimes(1);
-    expect((mock as any).del).toHaveBeenCalledWith("cache:some");
+    expect((mock as any).del).toHaveBeenCalledWith("some");
   });
 
   it("acquireLock returns true if lock is successful", async () => {
@@ -117,7 +117,7 @@ describe("Redis adapter", () => {
 
     expect(lockResult).toEqual(true);
     expect((mock as any).set).toBeCalledTimes(1);
-    expect((mock as any).set).toBeCalledWith("cache:some_lock", "", "PX", DEFAULT_LOCK_EXPIRES, "NX");
+    expect((mock as any).set).toBeCalledWith("some_lock", "", "PX", DEFAULT_LOCK_EXPIRES, "NX");
   });
 
   it("releaseLock delete lock record with appropriate key, and returns true on success", async () => {
@@ -126,7 +126,7 @@ describe("Redis adapter", () => {
     const releaseLockResult = await adapter.releaseLock("some");
     expect(releaseLockResult).toEqual(true);
     expect((mock as any).del).toBeCalledTimes(1);
-    expect((mock as any).del).toBeCalledWith("cache:some_lock");
+    expect((mock as any).del).toBeCalledWith("some_lock");
   });
 
   it("releaseLock delete lock record with appropriate key, and returns false on fail", async () => {
@@ -135,7 +135,7 @@ describe("Redis adapter", () => {
     const releaseLockResult = await adapter.releaseLock("some");
     expect(releaseLockResult).toEqual(false);
     expect((mock as any).del).toBeCalledTimes(1);
-    expect((mock as any).del).toBeCalledWith("cache:some_lock");
+    expect((mock as any).del).toBeCalledWith("some_lock");
   });
 
   it("isLockExists calls redis exists and return true if lock exists", async () => {
@@ -144,7 +144,7 @@ describe("Redis adapter", () => {
     const lockExists = await adapter.isLockExists("some");
     expect(lockExists).toEqual(true);
     expect((mock as any).exists).toBeCalledTimes(1);
-    expect((mock as any).exists).toBeCalledWith("cache:some_lock");
+    expect((mock as any).exists).toBeCalledWith("some_lock");
   });
 
   it("setConnectionStatus sets connection status to given string", () => {
@@ -153,7 +153,7 @@ describe("Redis adapter", () => {
   });
 
   it("createRedisAdapter creates RedisStorageAdapter instance", () => {
-    const instance = new RedisStorageAdapter(mock);
+    const instance = new RedisStorageAdapter(mock as any);
 
     expect(instance).toBeInstanceOf(RedisStorageAdapter);
   });
@@ -169,8 +169,8 @@ describe("Redis adapter", () => {
     expect((mock as any).mset).toHaveBeenCalledTimes(1);
     expect((mock as any).mset).toHaveBeenCalledWith(
       new Map([
-        ["cache:some1", "value1"],
-        ["cache:some2", "value2"],
+        ["some1", "value1"],
+        ["some2", "value2"],
       ])
     );
   });
@@ -184,6 +184,6 @@ describe("Redis adapter", () => {
     await adapter.mget(Array.from(values.keys()));
 
     expect((mock as any).mget).toHaveBeenCalledTimes(1);
-    expect((mock as any).mget).toHaveBeenCalledWith("cache:some1", "cache:some2");
+    expect((mock as any).mget).toHaveBeenCalledWith("some1", "some2");
   });
 });

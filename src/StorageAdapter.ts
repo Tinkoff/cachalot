@@ -22,7 +22,7 @@ export interface StorageAdapter {
   /**
    * The method should call the callback passed to it as soon as the storage is ready to execute commands.
    */
-  onConnect(callback: (...args: any[]) => any): void;
+  onConnect(callback: (...args: unknown[]) => void): void;
 
   /**
    * Returns the current status of the storage connection.
@@ -38,7 +38,7 @@ export interface StorageAdapter {
   /**
    * mset - stores values to the storage
    */
-  mset(values: Map<string, any>): Promise<void>;
+  mset(values: Map<string, string>): Promise<void>;
 
   /**
    * get - returns value by key
@@ -60,7 +60,7 @@ export interface StorageAdapter {
   /**
    * Locks the entry with the key key to be changed, returns true if the operation is successful, otherwise false
    */
-  acquireLock(key: string): Promise<boolean>;
+  acquireLock(key: string, lockExpireTimeout?: number): Promise<boolean>;
 
   /**
    * Unlocks the record with the key key, returns true if the operation is successful, otherwise false
