@@ -1,6 +1,6 @@
-import * as errors from './errors';
+import * as errors from "./errors/errors";
 
-export default function (value: any): any {
+export default function(value: any): any {
   if (value === undefined) {
     return value;
   }
@@ -8,6 +8,6 @@ export default function (value: any): any {
   try {
     return JSON.parse(value);
   } catch (error) {
-    throw errors.ParseError(error);
+    throw errors.parseError(error);
   }
 }

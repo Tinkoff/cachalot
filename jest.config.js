@@ -17,12 +17,13 @@ module.exports = {
   "coveragePathIgnorePatterns": [
     "<rootDir>/dist/",
     "<rootDir>/node_modules/",
-    "<rootDir>/src/index.ts",
+    "<rootDir>/src/RedisStorageAdapter.ts",
     "<rootDir>/src/constants.ts",
     "<rootDir>/src/errors.ts",
-    "<rootDir>/src/connection-status.ts",
-    "<rootDir>/src/locked-key-retrieve-strategy.ts",
-    "<rootDir>/src/adapters/test",
+    "<rootDir>/src/index.ts",
+    "<rootDir>/src/ConnectionStatus.ts",
+    "<rootDir>/src/LockedKeyRetrieveStrategy.ts",
+    "<rootDir>/src/adapters/TestStorageAdapter.ts",
   ],
   "coverageThreshold": {
     "global": {
