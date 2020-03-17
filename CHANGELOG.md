@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.6.0...v2.0.0) (2020-03-17)
+
+
+### Features
+
+* **adapters:** Memcached adapter based on "memcached" module ([9b4aa04](https://github.com/TinkoffCreditSystems/cachalot/commit/9b4aa04))
+
+
+### BREAKING CHANGES
+
+* **adapters:** * Removed tag reading optimizations. It is not intended to use caches in this way.
+* The "del" interface has been changed to be more convenient.
+
 # [1.6.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.5.1...v1.6.0) (2020-02-14)
 
 
