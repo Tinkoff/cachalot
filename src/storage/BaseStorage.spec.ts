@@ -1,8 +1,9 @@
 import TestStorageAdapter from "../adapters/TestStorageAdapter";
 import { ConnectionStatus } from "../ConnectionStatus";
-import { OperationTimeoutError } from "../errors";
+import { operationTimeoutError } from "../errors/errors";
 import timeout from "../timeout";
 import { BaseStorage, TAGS_VERSIONS_ALIAS } from "./BaseStorage";
+import { Record } from "./Record";
 
 const testInterface = {
   internalStorage: {},
@@ -287,7 +288,7 @@ describe("BaseStorage", () => {
   });
 
   it("cachedCommand pushes command to command queue if execution timed out", async () => {
-    const error = OperationTimeoutError(1);
+    const error = operationTimeoutError(1);
     const command = jest.fn().mockRejectedValue(error);
 
     await expect((storage as any).cachedCommand(command, 1, "hello")).resolves.toEqual(undefined);
@@ -371,5 +372,52 @@ describe("BaseStorage", () => {
     const tagV2 = { ...tag1, version: 2 };
     await storage.setTagVersions([tagV2]);
     await expect(storage.getTags([tag1.name])).resolves.toEqual([tagV2]);
+  });
+
+  it("isOutdated returns true if cannot get tags", async () => {
+    storage.getTags = jest.fn().mockImplementationOnce(() => {
+      throw new Error("Operation timeout");
+    });
+
+    const record = new Record("test", "value", [{ name: "tag1", version: 1 }]);
+    await expect(storage.isOutdated(record)).resolves.toEqual(true);
+  });
+
+  it("isOutdated returns true if tags outdated", async () => {
+    storage.getTags = jest.fn().mockResolvedValueOnce([
+      {
+        name: "tag1",
+        version: 2,
+      },
+    ]);
+
+    const record = new Record("test", "value", [{ name: "tag1", version: 1 }]);
+    await expect(storage.isOutdated(record)).resolves.toEqual(true);
+  });
+
+  it("isOutdated returns false if tags not outdated", async () => {
+    storage.getTags = jest.fn().mockResolvedValue([
+      {
+        name: "tag1",
+        version: 2,
+      },
+    ]);
+
+    const record = new Record("test", "value", [{ name: "tag1", version: 3 }]);
+    await expect(storage.isOutdated(record)).resolves.toEqual(false);
+    const record2 = new Record("test2", "value2", [{ name: "tag1", version: 2 }]);
+    await expect(storage.isOutdated(record2)).resolves.toEqual(false);
+  });
+
+  it("isOutdated returns false no tags present in record", async () => {
+    storage.getTags = jest.fn().mockResolvedValue([
+      {
+        name: "tag1",
+        version: 2,
+      },
+    ]);
+
+    const record = new Record("test", "value", []);
+    await expect(storage.isOutdated(record)).resolves.toEqual(false);
   });
 });

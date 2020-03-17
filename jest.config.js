@@ -23,7 +23,7 @@ module.exports = {
     "<rootDir>/src/index.ts",
     "<rootDir>/src/ConnectionStatus.ts",
     "<rootDir>/src/LockedKeyRetrieveStrategy.ts",
-    "<rootDir>/src/adapters/test",
+    "<rootDir>/src/adapters/TestStorageAdapter.ts",
   ],
   "coverageThreshold": {
     "global": {

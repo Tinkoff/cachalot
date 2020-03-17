@@ -1,4 +1,6 @@
-import { Tag, RecordValue, WriteOptions } from "./Storage";
+import { Tag, WriteOptions } from "./Storage";
+
+export type RecordValue = object | string | number | null;
 
 export class Record {
   /**

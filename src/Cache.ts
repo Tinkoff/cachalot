@@ -1,14 +1,14 @@
 import defaultsDeep from "lodash/defaultsDeep";
 import { ConnectionStatus } from "./ConnectionStatus";
 import { Executor, ValueOfExecutor } from "./Executor";
-import { ReadWriteOptions, Storage, RecordValue, WriteOptions } from "./storage/Storage";
+import { ReadWriteOptions, Storage, WriteOptions } from "./storage/Storage";
 import { StorageAdapter } from "./StorageAdapter";
 import { BaseStorage } from "./storage/BaseStorage";
 import { Logger } from "./Logger";
 import { Manager } from "./Manager";
 import RefreshAheadManager from "./managers/RefreshAheadManager";
 import { BaseManager, ManagerOptions } from "./managers/BaseManager";
-import { EXPIRES_IN } from "./constants";
+import {RecordValue} from "./storage/Record";
 
 export interface CacheWithCustomStorageOptions {
   storage: Storage;
@@ -34,6 +34,12 @@ export const isBaseStorageOptions = (options: any): options is CacheWithBaseStor
 export interface ManagerSelectorOptions {
   manager?: string;
 }
+
+export const EXPIRES_IN = {
+  minute: 60000,
+  hour: 3600000,
+  day: 86400000,
+};
 
 /**
  * Cache is the basic class of CacheManager.

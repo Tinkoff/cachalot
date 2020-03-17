@@ -1,7 +1,7 @@
 import { BaseManager, ManagerOptions } from "./BaseManager";
 import { Executor, ExecutorContext, ValueOfExecutor } from "../Executor";
-import { WriteOptions, Tag, RecordValue, ReadWriteOptions } from "../storage/Storage";
-import { Record } from "../storage/Record";
+import { WriteOptions, ReadWriteOptions } from "../storage/Storage";
+import { Record, RecordValue } from "../storage/Record";
 import deserialize from "../deserialize";
 
 export const DEFAULT_REFRESH_AHEAD_FACTOR = 0.8;
@@ -49,10 +49,8 @@ class RefreshAheadManager extends BaseManager {
       return executor();
     }
 
-    if (await this.isRecordValid(record)) {
-      const result = deserialize((record as any).value);
-
-      this.logger.trace("hit", key);
+    if (this.isRecordValid(record) && !(await this.storage.isOutdated(record))) {
+      const result = deserialize(record.value);
 
       if (this.isRecordExpireSoon(record)) {
         this.refresh(key, executorContext, options).catch(err => this.logger.error(err));
@@ -61,16 +59,14 @@ class RefreshAheadManager extends BaseManager {
       return result;
     }
 
-    this.logger.trace("miss", key);
-
     return this.updateCacheAndGetResult<E>(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<any> {
+  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
     return this.storage.set(key, value, options);
   }
 
-  private async isRecordValid(record: Record | null | void): Promise<boolean> {
+  private isRecordValid(record: Record | null | void): record is Record {
     const currentDate: number = Date.now();
 
     if (!record) {
@@ -82,20 +78,6 @@ class RefreshAheadManager extends BaseManager {
 
     if (isExpired) {
       return false;
-    }
-
-    if (record.tags && record.tags.length) {
-      let actualTags: Tag[] = [];
-
-      try {
-        actualTags = await this.storage.getTags(record.tags.map(tag => tag.name));
-      } catch (err) {
-        return false;
-      }
-
-      if (this.isTagsOutdated(record.tags, actualTags)) {
-        return false;
-      }
     }
 
     return record.value !== undefined;

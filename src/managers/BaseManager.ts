@@ -1,11 +1,11 @@
-import differenceWith from "lodash/differenceWith";
 import { Manager } from "../Manager";
-import { ExpireOptions, WriteOptions, Storage, Tag, RecordValue, ReadWriteOptions } from "../storage/Storage";
+import { ExpireOptions, WriteOptions, Storage, ReadWriteOptions } from "../storage/Storage";
 import { LockedKeyRetrieveStrategy, LockedKeyRetrieveStrategyTypes } from "../LockedKeyRetrieveStrategy";
 import { Logger } from "../Logger";
 import { WaitForResultLockedKeyRetrieveStrategy } from "../locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy";
 import { RunExecutorLockedKeyRetrieveStrategy } from "../locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy";
 import { Executor, ExecutorContext, ValueOfExecutor } from "../Executor";
+import { Record, RecordValue } from "../storage/Record";
 
 export interface ManagerOptions extends ExpireOptions {
   prefix?: string;
@@ -51,18 +51,11 @@ export abstract class BaseManager implements Manager {
     options: ReadWriteOptions
   ): Promise<ValueOfExecutor<E>>;
 
-  public abstract set(key: string, value: RecordValue, options?: WriteOptions): Promise<any>;
+  public abstract set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record>;
 
   public del(key: string): Promise<boolean> {
     return this.storage.del(key);
   }
-
-  protected isTagsOutdated = (recordArrayTags: Tag[], actualArrayTags: Tag[]): boolean => {
-    const isTagOutdatedComparator = (recordTag: Tag, actualTag: Tag): boolean =>
-      recordTag.name === actualTag.name && recordTag.version >= actualTag.version;
-
-    return differenceWith(recordArrayTags, actualArrayTags, isTagOutdatedComparator).length !== 0;
-  };
 
   protected async updateCacheAndGetResult<E extends Executor>(
     context: ExecutorContext,

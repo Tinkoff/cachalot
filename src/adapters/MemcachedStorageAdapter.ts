@@ -1,18 +1,12 @@
 import { StorageAdapter } from "../StorageAdapter";
 import Memcached from "memcached";
 import { ConnectionStatus } from "../ConnectionStatus";
-import customError from "../custom-error";
+import customError from "../errors/custom-error";
 
 export const DEFAULT_LOCK_EXPIRES = 20000;
 
-export function OperationError(op: string, err?: Error): Error {
-  let text = `Operation "${op}" error. `;
-
-  if (err) {
-    text += err.message;
-  }
-
-  return customError("OperationError", text, err);
+function operationError(op: string, err: Error): Error {
+  return customError("operationError", `Operation "${op}" error. ${err.message}`, err);
 }
 
 export type MemcachedStorageAdapterOptions = {
@@ -65,7 +59,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
     return new Promise<boolean>((resolve, reject) => {
       this.memcachedInstance.set(key, value, lifetime, (err, result) => {
         if (err) {
-          return reject(OperationError("set", err));
+          return reject(operationError("set", err));
         }
 
         resolve(result);
@@ -90,13 +84,13 @@ export class MemcachedStorageAdapter implements StorageAdapter {
    */
   async get(key: string): Promise<string | null> {
     if (key === "") {
-      throw new Error("ERR wrong number of arguments for 'get' command");
+      throw new Error("ERR wrong arguments for 'get' command");
     }
 
     return new Promise((resolve, reject) => {
       this.memcachedInstance.get(key, (err, result) => {
         if (err) {
-          return reject(OperationError("get", err));
+          return reject(operationError("get", err));
         }
 
         return resolve(result || null);
@@ -112,7 +106,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
     return new Promise((resolve, reject) => {
       this.memcachedInstance.getMulti(keys, (err, result) => {
         if (err) {
-          return reject(OperationError("mget", err));
+          return reject(operationError("mget", err));
         }
 
         resolve(
@@ -135,7 +129,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
     return new Promise((resolve, reject) => {
       this.memcachedInstance.del(key, (err, result) => {
         if (err) {
-          return reject(OperationError("del", err));
+          return reject(operationError("del", err));
         }
 
         return resolve(result);
@@ -152,7 +146,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
     return new Promise<boolean>((resolve, reject) => {
       this.memcachedInstance.add(`${key}_lock`, "", this.getLifetimeFromMs(expiresIn), (err, result) => {
         if (err) {
-          return reject(OperationError("acquireLock", err));
+          return reject(operationError("acquireLock", err));
         }
 
         resolve(result);
@@ -167,7 +161,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
     return new Promise((resolve, reject) => {
       this.memcachedInstance.del(`${key}_lock`, (err, result) => {
         if (err) {
-          return reject(OperationError("releaseLock", err));
+          return reject(operationError("releaseLock", err));
         }
 
         resolve(result);
@@ -182,7 +176,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
     return new Promise((resolve, reject) => {
       this.memcachedInstance.get(`${key}_lock`, (err, result) => {
         if (err) {
-          return reject(OperationError("isLockExists", err));
+          return reject(operationError("isLockExists", err));
         }
 
         resolve(result !== null && result !== undefined);

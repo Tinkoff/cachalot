@@ -25,6 +25,10 @@ describe("RefreshAheadManager", () => {
     });
   });
 
+  it("getName returns string", () => {
+    expect(RefreshAheadManager.getName()).toEqual(expect.any(String));
+  });
+
   it("constructor throws if Refresh-Ahead factor is less or equals zero", () => {
     expect(
       () =>
@@ -230,34 +234,6 @@ describe("RefreshAheadManager", () => {
 
   it("get runs executor and updates key if storage has record with undefined value", async () => {
     await manager.set("test", undefined);
-
-    expect(await manager.get("test", () => "234")).toEqual("234");
-    expect(storage.storage).toEqual({ test: "234" });
-  });
-
-  it("get runs executor and updates key if record tags outdated", async () => {
-    storage.getTags.mockResolvedValueOnce([{ name: "tag1", version: 2 }]);
-    storage.get.mockResolvedValueOnce({
-      key: "test",
-      value: JSON.stringify("234"),
-      permanent: true,
-      tags: [{ name: "tag1", version: 1 }],
-    });
-
-    expect(await manager.get("test", () => "234")).toEqual("234");
-    expect(storage.storage).toEqual({ test: "234" });
-  });
-
-  it("get runs executor and updates key if cannot get tags", async () => {
-    storage.getTags.mockImplementationOnce(() => {
-      throw new Error("Operation timeout");
-    });
-    storage.get.mockResolvedValueOnce({
-      key: "test",
-      value: JSON.stringify("234"),
-      permanent: true,
-      tags: [{ name: "tag1", version: 1 }],
-    });
 
     expect(await manager.get("test", () => "234")).toEqual("234");
     expect(storage.storage).toEqual({ test: "234" });

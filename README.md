@@ -8,7 +8,7 @@
 The library is designed to cache query results. Features:
 * Implements popular caching strategies (Read-Through, Write-Through, Refresh-Ahead), and also allows them to be combined
 * Defines an adapter interface that allows you to use it with any key-value storage for which the corresponding adapter is written
-* Comes with adapter for redis
+* Comes with adapter for redis, memcached
 * Allows to use prefixes for keys, automatic hashing
 * Allows to pass in a logger that will be used to display informational messages and errors
 * Supports various behaviors of cache write waiting (heavy queries), more details below.

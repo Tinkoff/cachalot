@@ -40,16 +40,16 @@ class TestStorageAdapter implements StorageAdapter {
     return this.testInterface.internalStorage[key];
   }
 
-  async del(key: string): Promise<any> {
+  async del(key: string): Promise<boolean> {
     this.checkConnection();
 
     if (this.testInterface.internalStorage[key]) {
       delete this.testInterface.internalStorage[key];
 
-      return 1;
+      return true;
     }
 
-    return 0;
+    return false;
   }
 
   async acquireLock(key: string): Promise<boolean> {
@@ -61,9 +61,9 @@ class TestStorageAdapter implements StorageAdapter {
   async releaseLock(key: string): Promise<boolean> {
     this.checkConnection();
 
-    const deletedKeys = await this.del(`${key}_lock`);
+    const isDeleted = await this.del(`${key}_lock`);
 
-    return deletedKeys > 0;
+    return isDeleted;
   }
 
   async isLockExists(key: string): Promise<boolean> {

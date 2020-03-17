@@ -5,7 +5,7 @@ module.exports = {
       diagnostics: true,
     },
   },
-  testMatch: ['<rootDir>/tests/**/*.spec.ts'],
+  testMatch: ['<rootDir>/integration/**/*.spec.ts'],
   testEnvironment: 'node',
   transform: {
     '^.+\\.ts$': 'ts-jest',

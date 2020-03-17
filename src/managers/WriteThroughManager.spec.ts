@@ -25,6 +25,10 @@ describe("WriteThroughManager", () => {
     });
   });
 
+  it("getName returns string", () => {
+    expect(WriteThroughManager.getName()).toEqual(expect.any(String));
+  });
+
   it("registers new expiration strategies given in options", () => {
     const mockLockedKeyRetrieveStrategy = {
       getName: (): string => "test",

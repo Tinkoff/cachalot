@@ -1,5 +1,6 @@
 import { Executor, ValueOfExecutor } from "./Executor";
-import { WriteOptions, RecordValue, ReadWriteOptions } from "./storage/Storage";
+import { WriteOptions, ReadWriteOptions } from "./storage/Storage";
+import {RecordValue} from "./storage/Record";
 
 /**
  * Manager is the basic interface for all caching classes. Manager must implement

@@ -1,7 +1,7 @@
 import { BaseManager, ManagerOptions } from "./BaseManager";
 import { Executor, ValueOfExecutor } from "../Executor";
-import { WriteOptions, Tag, RecordValue, ReadWriteOptions } from "../storage/Storage";
-import { Record } from "../storage/Record";
+import { WriteOptions, ReadWriteOptions } from "../storage/Storage";
+import { Record, RecordValue } from "../storage/Record";
 import deserialize from "../deserialize";
 
 class ReadThroughManager extends BaseManager {
@@ -29,22 +29,18 @@ class ReadThroughManager extends BaseManager {
       return executor();
     }
 
-    if (await this.isRecordValid(record)) {
-      this.logger.trace("hit", key);
-
-      return deserialize((record as any).value);
+    if (this.isRecordValid(record) && !(await this.storage.isOutdated(record))) {
+      return deserialize(record.value);
     }
-
-    this.logger.trace("miss", key);
 
     return this.updateCacheAndGetResult<E>(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<any> {
+  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
     return this.storage.set(key, value, options);
   }
 
-  private async isRecordValid(record: Record | null | void): Promise<boolean> {
+  private isRecordValid(record: Record | null | void): record is Record {
     const currentDate: number = Date.now();
 
     if (!record) {
@@ -56,20 +52,6 @@ class ReadThroughManager extends BaseManager {
 
     if (isExpired) {
       return false;
-    }
-
-    if (record.tags && record.tags.length) {
-      let actualTags: Tag[] = [];
-
-      try {
-        actualTags = await this.storage.getTags(record.tags.map(tag => tag.name));
-      } catch (err) {
-        return false;
-      }
-
-      if (this.isTagsOutdated(record.tags, actualTags)) {
-        return false;
-      }
     }
 
     return record.value !== undefined;

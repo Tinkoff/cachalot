@@ -1,5 +1,5 @@
 import { LockedKeyRetrieveStrategy } from "../LockedKeyRetrieveStrategy";
-import * as errors from "../errors";
+import * as errors from "../errors/errors";
 import deserialize from "../deserialize";
 import timeout from "../timeout";
 import { ExecutorContext } from "../Executor";
@@ -56,7 +56,7 @@ export class WaitForResultLockedKeyRetrieveStrategy implements LockedKeyRetrieve
           switch (rec) {
             case null:
             case undefined:
-              throw errors.WaitForResultError();
+              throw errors.waitForResultError();
             default:
               return deserialize(rec.value);
           }
@@ -69,7 +69,7 @@ export class WaitForResultLockedKeyRetrieveStrategy implements LockedKeyRetrieve
 
       this.logger.error(`Key "${context.key}" is locked more than allowed ${this.maximumTimeout}ms.`);
 
-      throw errors.RequestMaximumTimeoutExceededError(this.maximumTimeout);
+      throw errors.requestMaximumTimeoutExceededError(this.maximumTimeout);
     };
 
     return retryRequest();

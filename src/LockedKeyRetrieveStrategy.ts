@@ -7,7 +7,7 @@ import { ExecutorContext } from "./Executor";
  */
 export interface LockedKeyRetrieveStrategy {
   getName(): string;
-  get<R = any>(context: ExecutorContext): Promise<R>;
+  get<R = unknown>(context: ExecutorContext): Promise<R>;
 }
 
 export enum LockedKeyRetrieveStrategyTypes {

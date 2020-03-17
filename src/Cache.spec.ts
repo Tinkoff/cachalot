@@ -1,8 +1,7 @@
-import Cache from "./Cache";
+import Cache, { EXPIRES_IN } from "./Cache";
 import TestStorage from "./storage/__mocks__/TestStorage";
 import TestStorageAdapter from "./adapters/TestStorageAdapter";
 import { BaseStorage } from "./storage/BaseStorage";
-import { EXPIRES_IN } from "./constants";
 import RefreshAheadManager from "./managers/RefreshAheadManager";
 import { ConnectionStatus } from "./ConnectionStatus";
 

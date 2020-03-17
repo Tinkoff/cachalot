@@ -1,6 +1,6 @@
 import { LockedKeyRetrieveStrategyType } from "../LockedKeyRetrieveStrategy";
 import { ConnectionStatus } from "../ConnectionStatus";
-import { Record } from "./Record";
+import { Record, RecordValue } from "./Record";
 
 /**
  * Storage is an abstraction over different operations with records
@@ -15,7 +15,8 @@ export interface Storage {
   keyIsLocked(key: string): Promise<boolean>;
   del(key: string): Promise<boolean>;
   getTags(tagNames: string[]): Promise<Tag[]>;
-  set(key: string, value: RecordValue, options?: WriteOptions): Promise<any>;
+  isOutdated(record: Record): Promise<boolean>;
+  set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record>;
   getConnectionStatus(): ConnectionStatus;
 }
 
@@ -32,8 +33,6 @@ export interface Tag {
    */
   version: number;
 }
-
-export type RecordValue = object | string | number | null;
 
 export type Tags = {
   [tagName: string]: Tag;

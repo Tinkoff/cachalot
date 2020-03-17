@@ -3,11 +3,11 @@ import isFunction from "lodash/isFunction";
 import uniq from "lodash/uniq";
 import { ConnectionStatus } from "../ConnectionStatus";
 import deserialize from "../deserialize";
-import { isOperationTimeoutError } from "../errors";
-import serialize from "../serialize";
-import { Storage, Tag, RecordValue, WriteOptions } from "./Storage";
+import { isOperationTimeoutError } from "../errors/errors";
+import { Storage, Tag, WriteOptions } from "./Storage";
 import { StorageAdapter } from "../StorageAdapter";
-import { Record } from "./Record";
+import { Record, RecordValue } from "./Record";
+import differenceWith from "lodash/differenceWith";
 
 export const TAGS_VERSIONS_ALIAS = "cache-tags-versions";
 
@@ -26,14 +26,14 @@ export type BaseStorageOptions = {
  */
 export interface Command {
   fn: CommandFn;
-  params: any[];
+  params: unknown[];
 }
 
 /**
  * CommandFn is a function (usually a Storage method bind to its context) which is stored in
  * Command object for further execution.
  */
-export type CommandFn = (...args: any[]) => any;
+export type CommandFn = (...args: unknown[]) => unknown;
 
 /**
  * BaseStorage is the default Storage implementation for Manager.
@@ -156,7 +156,7 @@ export class BaseStorage implements Storage {
   /**
    * set creates new record with provided options and sets it to storage using the adapter.
    */
-  public async set(key: string, value: RecordValue, options: WriteOptions = {}): Promise<any> {
+  public async set(key: string, value: RecordValue, options: WriteOptions = {}): Promise<Record> {
     let tags: string[] = [];
 
     if (isFunction(options.tags)) {
@@ -175,11 +175,37 @@ export class BaseStorage implements Storage {
 
     await this.adapter.set(
       this.createKey(key),
-      serialize({ ...record, value: serialize(record.value) }),
+      JSON.stringify({ ...record, value: JSON.stringify(record.value) }),
       record.expiresIn
     );
 
     return record;
+  }
+
+  /**
+   * Checks if record is outdated by tags
+   *
+   * @param record
+   */
+  public async isOutdated(record: Record): Promise<boolean> {
+    if (record.tags && record.tags.length) {
+      let actualTags: Tag[] = [];
+
+      try {
+        actualTags = await this.getTags(record.tags.map(tag => tag.name));
+      } catch (err) {
+        return true;
+      }
+
+      const isTagOutdatedComparator = (recordTag: Tag, actualTag: Tag): boolean =>
+        recordTag.name === actualTag.name && recordTag.version >= actualTag.version;
+
+      const diff = differenceWith(record.tags, actualTags, isTagOutdatedComparator);
+
+      return diff.length !== 0;
+    }
+
+    return false;
   }
 
   /**
@@ -243,7 +269,7 @@ export class BaseStorage implements Storage {
    * the response will be sent immediately and the command will be executed later when the connection is restored
    * or current execution timed out.
    */
-  private async cachedCommand(fn: CommandFn, ...args: any[]): Promise<void> {
+  private async cachedCommand(fn: CommandFn, ...args: unknown[]): Promise<void> {
     if (!fn) {
       throw new Error("Cached function is required");
     }
@@ -265,7 +291,7 @@ export class BaseStorage implements Storage {
     }
   }
 
-  private queueCommand(fn: CommandFn, params: any[]): void {
+  private queueCommand(fn: CommandFn, params: unknown[]): void {
     this.commandsQueue.push({ fn, params });
   }
 }

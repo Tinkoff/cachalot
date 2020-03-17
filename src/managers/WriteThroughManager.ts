@@ -1,7 +1,7 @@
 import { BaseManager, ManagerOptions } from "./BaseManager";
 import { Executor, ValueOfExecutor } from "../Executor";
-import { ReadWriteOptions, WriteOptions, RecordValue } from "../storage/Storage";
-import { Record } from "../storage/Record";
+import { ReadWriteOptions, WriteOptions } from "../storage/Storage";
+import { Record, RecordValue } from "../storage/Record";
 import deserialize from "../deserialize";
 
 class WriteThroughManager extends BaseManager {
@@ -30,10 +30,10 @@ class WriteThroughManager extends BaseManager {
 
     const executorContext = { key, executor, options };
 
-    if (await this.isRecordValid(record)) {
+    if (this.isRecordValid(record)) {
       this.logger.trace("hit", key);
 
-      return deserialize((record as any).value);
+      return deserialize(record.value);
     }
 
     this.logger.trace("miss", key);
@@ -41,11 +41,11 @@ class WriteThroughManager extends BaseManager {
     return this.updateCacheAndGetResult<E>(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<any> {
+  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
     return this.storage.set(key, value, { ...options, permanent: true });
   }
 
-  private async isRecordValid(record: Record | null | void): Promise<boolean> {
+  private isRecordValid(record: Record | null | void): record is Record {
     if (!record) {
       return false;
     }
