@@ -12,7 +12,7 @@ const logger = {
   error: jest.fn(),
 };
 
-const mockManager = class {
+const MockManager = class {
   static getName: any = () => "mock";
   get: any = jest.fn().mockResolvedValue("mockResult");
   set: any = jest.fn();
@@ -78,8 +78,8 @@ describe("Cache", () => {
   });
 
   it("registerManager registers new manager", () => {
-    instance.registerManager(mockManager);
-    expect(instance.managers.get("mock")).toBeInstanceOf(mockManager);
+    instance.registerManager(MockManager);
+    expect(instance.managers.get("mock")).toBeInstanceOf(MockManager);
   });
 
   it("getManager throws if cannot get manager", () => {
@@ -87,8 +87,8 @@ describe("Cache", () => {
   });
 
   it("getManager returns registered manager by its name", () => {
-    instance.registerManager(mockManager, "custom-name");
-    expect(instance.getManager("custom-name")).toBeInstanceOf(mockManager);
+    instance.registerManager(MockManager, "custom-name");
+    expect(instance.getManager("custom-name")).toBeInstanceOf(MockManager);
   });
 
   it('get calls executor directly if storage connection status is not "connected"', async () => {
@@ -111,7 +111,7 @@ describe("Cache", () => {
   it("get gets manager from options", async () => {
     const executor = jest.fn().mockResolvedValue(1);
 
-    instance.registerManager(mockManager);
+    instance.registerManager(MockManager);
 
     await expect(instance.get("test", executor, { manager: "mock" })).resolves.toEqual("mockResult");
   });
@@ -126,7 +126,7 @@ describe("Cache", () => {
   });
 
   it("get delegates get to manager's get", async () => {
-    instance.registerManager(mockManager);
+    instance.registerManager(MockManager);
 
     const executor = jest.fn().mockResolvedValue(1);
     const manager = instance.getManager("mock");
@@ -137,7 +137,7 @@ describe("Cache", () => {
   });
 
   it("set gets manager from options", async () => {
-    instance.registerManager(mockManager);
+    instance.registerManager(MockManager);
 
     const manager = instance.getManager("mock");
 
