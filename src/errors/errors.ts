@@ -26,3 +26,9 @@ export function operationTimeoutError(timeout: number): Error {
 export function isOperationTimeoutError(error: unknown): boolean {
   return error instanceof Error && error.name === ERRORS.OperationTimeoutError;
 }
+
+export function executorReturnsUndefinedError(): Error {
+  const text = "Executor should not return undefined. Correct value for emptiness is null.";
+
+  return customError(ERRORS.ExecutorReturnsUndefinedError, text);
+}

@@ -1,12 +1,22 @@
+import { executorReturnsUndefinedError } from "./errors/errors";
 import { ReadWriteOptions } from "./storage/Storage";
 import { Record } from "./storage/Record";
 
-export interface ExecutorContext {
+export interface ExecutorContext<R> {
   key: string;
-  executor: Executor;
-  options: ReadWriteOptions;
-  record?: Record;
+  executor: Executor<R>;
+  options: ReadWriteOptions<R>;
+  record?: Record<R>;
 }
 
-export type ValueOfExecutor<V extends Executor> = ReturnType<V> extends Promise<infer RT> ? RT : V;
-export type Executor = (...args: any[]) => Promise<any> | any;
+export async function runExecutor<R>(executor: Executor<R>): Promise<R> {
+  const result = await executor();
+
+  if (result === undefined) {
+    throw executorReturnsUndefinedError();
+  }
+
+  return result;
+}
+
+export type Executor<R> = (...args: unknown[]) => Promise<R> | R;

@@ -6,7 +6,7 @@ import deserialize from "../deserialize";
 import { isOperationTimeoutError } from "../errors/errors";
 import { Storage, Tag, WriteOptions } from "./Storage";
 import { StorageAdapter } from "../StorageAdapter";
-import { Record, RecordValue } from "./Record";
+import { Record } from "./Record";
 import differenceWith from "lodash/differenceWith";
 
 export const TAGS_VERSIONS_ALIAS = "cache-tags-versions";
@@ -87,8 +87,13 @@ export class BaseStorage implements Storage {
    * Gets a record using an adapter. It is expected that the adapter returns or null (value not found)
    * or serialized Record.
    */
-  public async get(key: string): Promise<Record | null> {
-    const record = deserialize(await this.adapter.get(this.createKey(key)));
+  public async get<R>(key: string): Promise<Record<R> | null> {
+    const value = await this.adapter.get(this.createKey(key));
+    if (value == null) {
+      return null;
+    }
+
+    const record = deserialize<Record<R>>(value);
 
     if (!Record.isRecord(record)) {
       return null;
@@ -109,7 +114,9 @@ export class BaseStorage implements Storage {
    * Invalidates tags given as array of strings.
    */
   public async touch(tags: string[]): Promise<void> {
-    return this.cachedCommand(this.setTagVersions.bind(this), tags.map(this.createTag));
+    if (tags.length > 0) {
+      await this.cachedCommand(this.setTagVersions.bind(this), tags.map(this.createTag));
+    }
   }
 
   /**
@@ -145,6 +152,10 @@ export class BaseStorage implements Storage {
    * version.
    */
   public async getTags(tagNames: string[]): Promise<Tag[]> {
+    if (tagNames.length === 0) {
+      return [];
+    }
+
     const existingTags = await this.tagsAdapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
 
     return tagNames.map((tagName, index) => ({
@@ -156,7 +167,7 @@ export class BaseStorage implements Storage {
   /**
    * set creates new record with provided options and sets it to storage using the adapter.
    */
-  public async set(key: string, value: RecordValue, options: WriteOptions = {}): Promise<Record> {
+  public async set<R>(key: string, value: R, options: WriteOptions<R> = {}): Promise<Record<R>> {
     let tags: string[] = [];
 
     if (isFunction(options.tags)) {
@@ -187,7 +198,7 @@ export class BaseStorage implements Storage {
    *
    * @param record
    */
-  public async isOutdated(record: Record): Promise<boolean> {
+  public async isOutdated<R>(record: Record<R>): Promise<boolean> {
     if (record.tags && record.tags.length) {
       let actualTags: Tag[] = [];
 

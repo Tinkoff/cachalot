@@ -102,7 +102,7 @@ describe("RefreshAheadManager", () => {
 
   it("get runs executor and updates key, uses default lockedKeyRetrieveStrategy get when key is locked", async () => {
     storage.get.mockResolvedValueOnce(null);
-    storage.lockKey.mockResolvedValueOnce(false);
+    storage.lockKey.mockReturnValueOnce(false);
     expect(await manager.get("test", () => "234")).toEqual("234");
     expect(await storage.get("test")).toMatchObject({});
   });
@@ -124,7 +124,7 @@ describe("RefreshAheadManager", () => {
 
     (Date.now as any).mockReturnValueOnce(DATE_ADVANCED);
 
-    storage.get.mockResolvedValueOnce(returnMock);
+    storage.get.mockReturnValueOnce(returnMock);
     expect(await manager.get("test", () => "234")).toEqual("234");
     expect(await storage.get("test")).toMatchObject({ key: "test", value: '"234"' });
     Date.now = realNow;
@@ -133,7 +133,7 @@ describe("RefreshAheadManager", () => {
   it("get refreshes record if storage record will expire soon", async () =>
     new Promise(
       // eslint-disable-next-line no-async-promise-executor
-      async (resolve, reject): Promise<any> => {
+      async (resolve): Promise<any> => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
         const realNow = Date.now;
@@ -156,7 +156,7 @@ describe("RefreshAheadManager", () => {
 
         (Date.now as any).mockReturnValue(DATE_ADVANCED);
 
-        storage.get.mockResolvedValueOnce(returnMock);
+        storage.get.mockReturnValueOnce(returnMock);
         expect(await manager.get("test", () => "234")).toEqual("234");
         Date.now = realNow;
       }
@@ -165,7 +165,7 @@ describe("RefreshAheadManager", () => {
   it("get refreshes record if storage record will expire soon and not throws if executor throws", async () =>
     new Promise(
       // eslint-disable-next-line no-async-promise-executor
-      async (resolve, reject): Promise<any> => {
+      async (resolve): Promise<any> => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
         const realNow = Date.now;
@@ -187,7 +187,7 @@ describe("RefreshAheadManager", () => {
 
         (Date.now as any).mockReturnValue(DATE_ADVANCED);
 
-        storage.get.mockResolvedValueOnce(returnMock);
+        storage.get.mockReturnValueOnce(returnMock);
         expect(
           await manager.get("test", () => {
             throw new Error("Operation timeout");
@@ -200,7 +200,7 @@ describe("RefreshAheadManager", () => {
   it("get not throws unhandled rejections if record is expire soon and refresh was called", async () =>
     new Promise(
       // eslint-disable-next-line no-async-promise-executor
-      async (resolve, reject): Promise<any> => {
+      async (resolve): Promise<any> => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
         const realNow = Date.now;
@@ -226,18 +226,11 @@ describe("RefreshAheadManager", () => {
 
         (Date.now as any).mockReturnValue(DATE_ADVANCED);
 
-        storage.get.mockResolvedValueOnce(returnMock);
+        storage.get.mockReturnValueOnce(returnMock);
         expect(await manager.get("test", () => "234")).toEqual("234");
         Date.now = realNow;
       }
     ));
-
-  it("get runs executor and updates key if storage has record with undefined value", async () => {
-    await manager.set("test", undefined);
-
-    expect(await manager.get("test", () => "234")).toEqual("234");
-    expect(storage.storage).toEqual({ test: "234" });
-  });
 
   it("get throws if executor throws", async () => {
     await expect(

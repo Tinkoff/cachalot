@@ -1,7 +1,7 @@
 import { BaseManager, ManagerOptions } from "./BaseManager";
-import { Executor, ValueOfExecutor } from "../Executor";
+import { Executor, runExecutor } from "../Executor";
 import { WriteOptions, ReadWriteOptions } from "../storage/Storage";
-import { Record, RecordValue } from "../storage/Record";
+import { Record } from "../storage/Record";
 import deserialize from "../deserialize";
 
 class ReadThroughManager extends BaseManager {
@@ -13,34 +13,30 @@ class ReadThroughManager extends BaseManager {
     super(options);
   }
 
-  public async get<E extends Executor>(
-    key: string,
-    executor: E,
-    options: ReadWriteOptions = {}
-  ): Promise<ValueOfExecutor<E>> {
-    const executorContext = { key, executor, options };
-    let record: Record | null = null;
+  public async get<R>(key: string, executor: Executor<R>, options: ReadWriteOptions<R> = {}): Promise<R> {
+    let record: Record<string> | null = null;
 
     try {
       record = await this.storage.get(key);
     } catch (e) {
       this.logger.error("Failed to get value from storage, falling back to executor", e);
 
-      return executor();
+      return runExecutor(executor);
     }
 
     if (this.isRecordValid(record) && !(await this.storage.isOutdated(record))) {
       return deserialize(record.value);
     }
 
-    return this.updateCacheAndGetResult<E>(executorContext, options);
+    const executorContext = { key, executor, options };
+    return this.updateCacheAndGetResult(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
+  public async set<R>(key: string, value: R, options?: WriteOptions<R>): Promise<Record<R>> {
     return this.storage.set(key, value, options);
   }
 
-  private isRecordValid(record: Record | null | void): record is Record {
+  private isRecordValid<R>(record: Record<R> | null | undefined): record is Record<R> {
     const currentDate: number = Date.now();
 
     if (!record) {

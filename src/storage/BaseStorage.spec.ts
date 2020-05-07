@@ -172,6 +172,18 @@ describe("BaseStorage", () => {
     expect(testInterface.internalStorage["cache-cache-tags-versions:sometag"]).not.toEqual(tagsBefore);
   });
 
+  it("touch does nothing if tag list is empty", async () => {
+    await storage.set("test", "123", { expiresIn: 0, tags: ["sometag"] });
+
+    const TIMEOUT = 10;
+    const tagsBefore = testInterface.internalStorage["cache-cache-tags-versions:sometag"];
+
+    await timeout(TIMEOUT);
+    await storage.touch([]);
+
+    expect(testInterface.internalStorage["cache-cache-tags-versions:sometag"]).toEqual(tagsBefore);
+  });
+
   it("getLockedKeyRetrieveStrategy throws if cannot get strategy", () => {
     expect(() => storage.getLockedKeyRetrieveStrategy("unknown")).toThrow();
   });
@@ -191,7 +203,7 @@ describe("BaseStorage", () => {
   });
 
   it("get throws if storage returns invalid record", async () => {
-    (testInterface.internalStorage as any).test = {};
+    (testInterface.internalStorage as any)["cache-test"] = `{"a":1}`;
 
     expect(await storage.get("test")).toBeNull();
   });
@@ -232,6 +244,14 @@ describe("BaseStorage", () => {
         version: 0,
       },
     ]);
+  });
+
+  it("getTags does nothing if tag list is empty", async () => {
+    const tag1 = { name: "tag1", version: 1537176259547 };
+
+    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version;
+
+    expect(await (storage as any).getTags([])).toEqual([]);
   });
 
   it("lockKey returns true if lock exists", async () => {
@@ -309,7 +329,7 @@ describe("BaseStorage", () => {
 
   it("executeCommandsFromQueue executes commands and saves unsuccessfull commands to queue", async () => {
     const command1 = async (a: number): Promise<number> => a;
-    const command2 = async (a: number, b: number): Promise<void> => {
+    const command2 = async (): Promise<void> => {
       throw new Error("error!");
     };
     const command3 = async (a: number, b: number): Promise<number> => a + b;

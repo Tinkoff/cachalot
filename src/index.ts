@@ -1,6 +1,6 @@
 import { StorageAdapter, StorageAdapterOptions } from "./StorageAdapter";
 import { Tag, Tags } from "./storage/Storage";
-import {Record, RecordValue} from "./storage/Record";
+import { Record } from "./storage/Record";
 import Cache, { CacheOptions } from "./Cache";
 import RedisStorageAdapter from "./adapters/RedisStorageAdapter";
 import MemcachedStorageAdapter from "./adapters/MemcachedStorageAdapter";
@@ -14,7 +14,6 @@ export {
   StorageAdapterOptions,
   Record,
   Tag,
-  RecordValue,
   Tags,
   RedisStorageAdapter,
   MemcachedStorageAdapter,

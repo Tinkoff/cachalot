@@ -1,10 +1,6 @@
 import * as errors from "./errors/errors";
 
-export default function(value: any): any {
-  if (value === undefined) {
-    return value;
-  }
-
+export default function<R>(value: string): R {
   try {
     return JSON.parse(value);
   } catch (error) {

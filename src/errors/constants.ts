@@ -3,4 +3,5 @@ export const ERRORS = {
   RequestMaximumTimeoutExceededError: "RequestMaximumTimeoutExceededError",
   WaitForResultError: "WaitForResultError",
   OperationTimeoutError: "OperationTimeoutError",
+  ExecutorReturnsUndefinedError: "ExecutorReturnsUndefinedError",
 };

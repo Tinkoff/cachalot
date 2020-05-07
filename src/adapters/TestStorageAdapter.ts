@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConnectionStatus } from "../ConnectionStatus";
-import { StorageAdapterOptions, StorageAdapter } from "../StorageAdapter";
+import { StorageAdapter, StorageAdapterOptions } from "../StorageAdapter";
 
 class TestStorageAdapter implements StorageAdapter {
   options: StorageAdapterOptions;
@@ -61,9 +62,7 @@ class TestStorageAdapter implements StorageAdapter {
   async releaseLock(key: string): Promise<boolean> {
     this.checkConnection();
 
-    const isDeleted = await this.del(`${key}_lock`);
-
-    return isDeleted;
+    return this.del(`${key}_lock`);
   }
 
   async isLockExists(key: string): Promise<boolean> {

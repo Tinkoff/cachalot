@@ -1,11 +1,10 @@
-import { Manager } from "../Manager";
 import { ExpireOptions, WriteOptions, Storage, ReadWriteOptions } from "../storage/Storage";
 import { LockedKeyRetrieveStrategy, LockedKeyRetrieveStrategyTypes } from "../LockedKeyRetrieveStrategy";
 import { Logger } from "../Logger";
 import { WaitForResultLockedKeyRetrieveStrategy } from "../locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy";
 import { RunExecutorLockedKeyRetrieveStrategy } from "../locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy";
-import { Executor, ExecutorContext, ValueOfExecutor } from "../Executor";
-import { Record, RecordValue } from "../storage/Record";
+import { Executor, ExecutorContext, runExecutor } from "../Executor";
+import { Record } from "../storage/Record";
 
 export interface ManagerOptions extends ExpireOptions {
   prefix?: string;
@@ -16,7 +15,7 @@ export interface ManagerOptions extends ExpireOptions {
   lockedKeyRetrieveStrategies?: [string, LockedKeyRetrieveStrategy][];
 }
 
-export abstract class BaseManager implements Manager {
+export abstract class BaseManager {
   protected constructor(options: ManagerOptions) {
     this.logger = options.logger;
     this.storage = options.storage;
@@ -45,22 +44,18 @@ export abstract class BaseManager implements Manager {
 
   protected logger: Logger;
 
-  public abstract get<E extends Executor>(
-    key: string,
-    executor: E,
-    options: ReadWriteOptions
-  ): Promise<ValueOfExecutor<E>>;
+  public abstract get<R>(key: string, executor: Executor<R>, options: ReadWriteOptions<R>): Promise<R>;
 
-  public abstract set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record>;
+  public abstract set<R>(key: string, value: R, options?: WriteOptions<R>): Promise<Record<R>>;
 
   public del(key: string): Promise<boolean> {
     return this.storage.del(key);
   }
 
-  protected async updateCacheAndGetResult<E extends Executor>(
-    context: ExecutorContext,
-    options: ReadWriteOptions
-  ): Promise<ValueOfExecutor<E>> {
+  protected async updateCacheAndGetResult<R>(
+    context: ExecutorContext<R>,
+    options: ReadWriteOptions<R>
+  ): Promise<R> {
     const lockedKeyRetrieveStrategy = this.getLockedKeyRetrieveStrategy(
       options.lockedKeyRetrieveStrategyType
     );
@@ -73,7 +68,7 @@ export abstract class BaseManager implements Manager {
         `Error occurred while trying to lock key "${context.key}". Reason: ${keyLockError.message}. Running executor`
       );
 
-      return context.executor();
+      return runExecutor(context.executor);
     }
 
     if (!isKeySuccessfullyLocked) {
@@ -82,7 +77,7 @@ export abstract class BaseManager implements Manager {
 
     try {
       this.logger.trace(`Running executor for key "${context.key}"`);
-      const executorResult = await context.executor();
+      const executorResult = await runExecutor(context.executor);
 
       await this.set(context.key, executorResult, options);
 
