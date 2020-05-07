@@ -1,12 +1,7 @@
 import deserialize from "./deserialize";
 
 describe("deserizalize", () => {
-  it("returns undefined as is", () => {
-    expect(deserialize(undefined)).toEqual(undefined);
-  });
-
   it("parses valid json string or null", () => {
-    expect(deserialize(null)).toEqual(null);
     expect(deserialize("null")).toEqual(null);
     expect(deserialize('"test"')).toEqual("test");
     expect(deserialize("1")).toEqual(1);

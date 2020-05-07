@@ -1,12 +1,11 @@
 import { ReadWriteOptions } from "./storage/Storage";
 import { Record } from "./storage/Record";
 
-export interface ExecutorContext {
+export interface ExecutorContext<R> {
   key: string;
-  executor: Executor;
+  executor: Executor<R>;
   options: ReadWriteOptions;
-  record?: Record;
+  record?: Record<R>;
 }
 
-export type ValueOfExecutor<V extends Executor> = ReturnType<V> extends Promise<infer RT> ? RT : V;
-export type Executor = (...args: any[]) => Promise<any> | any;
+export type Executor<R> = (...args: unknown[]) => Promise<R> | R;

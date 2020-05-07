@@ -3,8 +3,8 @@
  * errors and trace/debug information
  */
 export interface Logger {
-  info(...args: any[]): void;
-  trace(...args: any[]): void;
-  warn(...args: any[]): void;
-  error(...args: any[]): void;
+  info(...args: unknown[]): void;
+  trace(...args: unknown[]): void;
+  warn(...args: unknown[]): void;
+  error(...args: unknown[]): void;
 }

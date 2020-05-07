@@ -66,6 +66,16 @@ describe("ReadThroughManager", () => {
     ).toEqual("123");
   });
 
+  it("get returns undefined if record.value is not defined", async () => {
+    await manager.set("test", undefined, { expiresIn: 100 });
+
+    expect(
+      await manager.get("test", () => {
+        /* empty */
+      })
+    ).toEqual(undefined);
+  });
+
   it("get runs executor and updates key if it not exists", async () => {
     storage.get.mockResolvedValueOnce(null);
     expect(await manager.get("test", () => "234")).toEqual("234");

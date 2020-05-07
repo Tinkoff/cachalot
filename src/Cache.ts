@@ -1,14 +1,14 @@
 import defaultsDeep from "lodash/defaultsDeep";
 import { ConnectionStatus } from "./ConnectionStatus";
-import { Executor, ValueOfExecutor } from "./Executor";
+import { Executor } from "./Executor";
 import { ReadWriteOptions, Storage, WriteOptions } from "./storage/Storage";
 import { StorageAdapter } from "./StorageAdapter";
 import { BaseStorage } from "./storage/BaseStorage";
 import { Logger } from "./Logger";
 import { Manager } from "./Manager";
 import RefreshAheadManager from "./managers/RefreshAheadManager";
-import { BaseManager, ManagerOptions } from "./managers/BaseManager";
-import {RecordValue} from "./storage/Record";
+import { ManagerOptions } from "./managers/BaseManager";
+import { Record } from "./storage/Record";
 
 export interface CacheWithCustomStorageOptions {
   storage: Storage;
@@ -17,20 +17,25 @@ export interface CacheWithBaseStorageOptions {
   adapter: StorageAdapter;
   tagsAdapter?: StorageAdapter;
 }
-export interface ManagerConstructor<T extends BaseManager = any> {
+
+export interface ManagerConstructor<T extends Manager> {
   new (options: ManagerOptions): T;
   getName(): string;
 }
+
 export type CacheOptions = (CacheWithCustomStorageOptions | CacheWithBaseStorageOptions) & {
   logger: Logger;
   expiresIn?: number;
   prefix?: string;
   hashKeys?: boolean;
 };
-export const isCustomStorageOptions = (options: any): options is CacheWithCustomStorageOptions =>
-  Boolean(options.storage);
-export const isBaseStorageOptions = (options: any): options is CacheWithBaseStorageOptions =>
-  Boolean(options.adapter) && !Boolean(options.storage);
+
+export const isCustomStorageOptions = (options: object): options is CacheWithCustomStorageOptions =>
+  Object.prototype.hasOwnProperty.call(options, "storage");
+
+export const isBaseStorageOptions = (options: object): options is CacheWithBaseStorageOptions =>
+  Object.prototype.hasOwnProperty.call(options, "adapter");
+
 export interface ManagerSelectorOptions {
   manager?: string;
 }
@@ -97,11 +102,11 @@ class Cache {
    * Get delegates call to default or provided manager. The only thing it does by itself is checking
    * the connection status of storage. If storage is disconnected calls executor directly and returns result.
    */
-  public async get<E extends Executor>(
+  public async get<E extends Executor<R>, R>(
     key: string,
     executor: E,
     options: ReadWriteOptions & ManagerSelectorOptions = {}
-  ): Promise<ValueOfExecutor<E>> {
+  ): Promise<R | undefined> {
     const connectionStatus = this.storage.getConnectionStatus();
 
     if (connectionStatus !== ConnectionStatus.CONNECTED) {
@@ -122,11 +127,11 @@ class Cache {
   /**
    * Just like "get" this method delegates call to default or provided manager
    */
-  public async set(
+  public async set<R>(
     key: string,
-    value: RecordValue,
+    value: R,
     options: WriteOptions & ManagerSelectorOptions = {}
-  ): Promise<any> {
+  ): Promise<Record<R>> {
     const { manager: managerName = RefreshAheadManager.getName() } = options;
     const computedOptions = defaultsDeep({}, options, { expiresIn: this.expiresIn });
     const manager = this.getManager(managerName);
@@ -145,15 +150,15 @@ class Cache {
    * cache.touch(['news']);
    * ```
    */
-  public async touch(tags: string[]): Promise<any> {
+  public async touch(tags: string[]): Promise<void> {
     return this.storage.touch(tags);
   }
 
   /**
    * Register a new cache manager
    */
-  public registerManager(
-    managerClass: ManagerConstructor,
+  public registerManager<T extends Manager>(
+    managerClass: ManagerConstructor<T>,
     name?: string | null,
     options: Partial<ManagerOptions> = {}
   ): void {

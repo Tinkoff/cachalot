@@ -1,7 +1,8 @@
+import { Manager } from "../Manager";
 import { BaseManager, ManagerOptions } from "./BaseManager";
-import { Executor, ExecutorContext, ValueOfExecutor } from "../Executor";
+import { Executor, ExecutorContext } from "../Executor";
 import { WriteOptions, ReadWriteOptions } from "../storage/Storage";
-import { Record, RecordValue } from "../storage/Record";
+import { Record, RecordWithValue } from "../storage/Record";
 import deserialize from "../deserialize";
 
 export const DEFAULT_REFRESH_AHEAD_FACTOR = 0.8;
@@ -10,7 +11,7 @@ export interface RefreshAheadManagerOptions extends ManagerOptions {
   refreshAheadFactor?: number;
 }
 
-class RefreshAheadManager extends BaseManager {
+class RefreshAheadManager extends BaseManager implements Manager {
   public static getName(): string {
     return "refresh-ahead";
   }
@@ -31,15 +32,15 @@ class RefreshAheadManager extends BaseManager {
     }
   }
 
-  private refreshAheadFactor: number;
+  private readonly refreshAheadFactor: number;
 
-  public async get<E extends Executor>(
+  public async get<E extends Executor<R>, R>(
     key: string,
     executor: E,
     options: ReadWriteOptions = {}
-  ): Promise<ValueOfExecutor<E>> {
+  ): Promise<R | undefined> {
     const executorContext = { key, executor, options };
-    let record: Record | null = null;
+    let record: Record<string> | null = null;
 
     try {
       record = await this.storage.get(key);
@@ -50,7 +51,7 @@ class RefreshAheadManager extends BaseManager {
     }
 
     if (this.isRecordValid(record) && !(await this.storage.isOutdated(record))) {
-      const result = deserialize(record.value);
+      const result = deserialize<R>(record.value);
 
       if (this.isRecordExpireSoon(record)) {
         this.refresh(key, executorContext, options).catch(err => this.logger.error(err));
@@ -59,14 +60,14 @@ class RefreshAheadManager extends BaseManager {
       return result;
     }
 
-    return this.updateCacheAndGetResult<E>(executorContext, options);
+    return this.updateCacheAndGetResult<E, R>(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
+  public async set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>> {
     return this.storage.set(key, value, options);
   }
 
-  private isRecordValid(record: Record | null | void): record is Record {
+  private isRecordValid<R>(record: Record<R> | null | void): record is RecordWithValue<R> {
     const currentDate: number = Date.now();
 
     if (!record) {
@@ -83,7 +84,7 @@ class RefreshAheadManager extends BaseManager {
     return record.value !== undefined;
   }
 
-  private isRecordExpireSoon(record: Record | null): boolean {
+  private isRecordExpireSoon<R>(record: Record<R> | null): boolean {
     const currentDate: number = Date.now();
 
     if (!record) {
@@ -95,7 +96,7 @@ class RefreshAheadManager extends BaseManager {
     return !record.permanent && currentDate > recordExpireDate;
   }
 
-  private async refresh(key: string, context: ExecutorContext, options: WriteOptions): Promise<void> {
+  private async refresh<R>(key: string, context: ExecutorContext<R>, options: WriteOptions): Promise<void> {
     const refreshAheadKey = `refreshAhead:${key}`;
     const isExecutorLockSuccessful = await this.storage.lockKey(refreshAheadKey);
 

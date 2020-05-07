@@ -5,7 +5,7 @@ import { Getter, runAdapterTests } from "./adapter-agnostic";
 const memcached = new Memcached("127.0.0.1:11211");
 const adapter = new MemcachedStorageAdapter(memcached);
 
-const get: Getter<string> = (key: string) =>
+const get: Getter = (key: string) =>
   new Promise((resolve, reject) => {
     memcached.get(key, (err, data) => {
       if (err) {
@@ -20,7 +20,7 @@ const get: Getter<string> = (key: string) =>
     });
   });
 
-const set = (key: string, value: string) =>
+const set = (key: string, value: string): Promise<boolean> =>
   new Promise((resolve, reject) => {
     memcached.set(key, value, 0, (err, data) => {
       if (err) {

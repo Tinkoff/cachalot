@@ -1,6 +1,6 @@
 import { LockedKeyRetrieveStrategyType } from "../LockedKeyRetrieveStrategy";
 import { ConnectionStatus } from "../ConnectionStatus";
-import { Record, RecordValue } from "./Record";
+import { Record } from "./Record";
 
 /**
  * Storage is an abstraction over different operations with records
@@ -8,15 +8,15 @@ import { Record, RecordValue } from "./Record";
  * over simple storage keys
  */
 export interface Storage {
-  get(key: string): Promise<Record | null>;
+  get<R>(key: string): Promise<Record<R> | null>;
   touch(tags: string[]): Promise<void>;
   lockKey(key: string): Promise<boolean>;
   releaseKey(key: string): Promise<boolean>;
   keyIsLocked(key: string): Promise<boolean>;
   del(key: string): Promise<boolean>;
   getTags(tagNames: string[]): Promise<Tag[]>;
-  isOutdated(record: Record): Promise<boolean>;
-  set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record>;
+  isOutdated<R>(record: Record<R>): Promise<boolean>;
+  set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>>;
   getConnectionStatus(): ConnectionStatus;
 }
 
@@ -70,7 +70,7 @@ export interface WriteOptions extends ExpireOptions {
   /**
    * getTags allows to detect tags for record depending on executor result
    */
-  getTags?: (executorResult: any) => string[];
+  getTags?: (executorResult: unknown) => string[];
 }
 
 export type ReadWriteOptions = ReadOptions & WriteOptions;

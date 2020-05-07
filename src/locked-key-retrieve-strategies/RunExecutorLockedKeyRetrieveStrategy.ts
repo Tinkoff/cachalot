@@ -10,7 +10,7 @@ export class RunExecutorLockedKeyRetrieveStrategy implements LockedKeyRetrieveSt
     return "runExecutor";
   }
 
-  async get(context: ExecutorContext): Promise<any> {
+  async get<R>(context: ExecutorContext<R>): Promise<R | undefined> {
     return context.executor();
   }
 }

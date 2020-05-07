@@ -1,10 +1,11 @@
 import { BaseManager, ManagerOptions } from "./BaseManager";
-import { Executor, ValueOfExecutor } from "../Executor";
+import { Executor } from "../Executor";
 import { ReadWriteOptions, WriteOptions } from "../storage/Storage";
-import { Record, RecordValue } from "../storage/Record";
+import { Record, RecordWithValue } from "../storage/Record";
 import deserialize from "../deserialize";
+import { Manager } from "../Manager";
 
-class WriteThroughManager extends BaseManager {
+class WriteThroughManager extends BaseManager implements Manager {
   public static getName(): string {
     return "write-through";
   }
@@ -13,12 +14,12 @@ class WriteThroughManager extends BaseManager {
     super(options);
   }
 
-  public async get<E extends Executor>(
+  public async get<E extends Executor<R>, R>(
     key: string,
     executor: E,
     options: ReadWriteOptions = {}
-  ): Promise<ValueOfExecutor<E>> {
-    let record: Record | null = null;
+  ): Promise<R | undefined> {
+    let record: Record<string> | null = null;
 
     try {
       record = await this.storage.get(key);
@@ -33,19 +34,19 @@ class WriteThroughManager extends BaseManager {
     if (this.isRecordValid(record)) {
       this.logger.trace("hit", key);
 
-      return deserialize(record.value);
+      return deserialize<R>(record.value);
     }
 
     this.logger.trace("miss", key);
 
-    return this.updateCacheAndGetResult<E>(executorContext, options);
+    return this.updateCacheAndGetResult<E, R>(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
+  public async set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>> {
     return this.storage.set(key, value, { ...options, permanent: true });
   }
 
-  private isRecordValid(record: Record | null | void): record is Record {
+  private isRecordValid<R>(record: Record<R> | null | void): record is RecordWithValue<R> {
     if (!record) {
       return false;
     }

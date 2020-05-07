@@ -1,10 +1,11 @@
+import { Manager } from "../Manager";
 import { BaseManager, ManagerOptions } from "./BaseManager";
-import { Executor, ValueOfExecutor } from "../Executor";
+import { Executor } from "../Executor";
 import { WriteOptions, ReadWriteOptions } from "../storage/Storage";
-import { Record, RecordValue } from "../storage/Record";
+import { Record, RecordWithValue } from "../storage/Record";
 import deserialize from "../deserialize";
 
-class ReadThroughManager extends BaseManager {
+class ReadThroughManager extends BaseManager implements Manager {
   public static getName(): string {
     return "read-through";
   }
@@ -13,16 +14,16 @@ class ReadThroughManager extends BaseManager {
     super(options);
   }
 
-  public async get<E extends Executor>(
+  public async get<E extends Executor<R>, R>(
     key: string,
     executor: E,
     options: ReadWriteOptions = {}
-  ): Promise<ValueOfExecutor<E>> {
+  ): Promise<R | undefined> {
     const executorContext = { key, executor, options };
-    let record: Record | null = null;
+    let record: Record<string> | null = null;
 
     try {
-      record = await this.storage.get(key);
+      record = await this.storage.get<string>(key);
     } catch (e) {
       this.logger.error("Failed to get value from storage, falling back to executor", e);
 
@@ -33,14 +34,14 @@ class ReadThroughManager extends BaseManager {
       return deserialize(record.value);
     }
 
-    return this.updateCacheAndGetResult<E>(executorContext, options);
+    return this.updateCacheAndGetResult<E, R>(executorContext, options);
   }
 
-  public async set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record> {
+  public async set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>> {
     return this.storage.set(key, value, options);
   }
 
-  private isRecordValid(record: Record | null | void): record is Record {
+  private isRecordValid<R>(record: Record<R> | null | undefined): record is RecordWithValue<R> {
     const currentDate: number = Date.now();
 
     if (!record) {

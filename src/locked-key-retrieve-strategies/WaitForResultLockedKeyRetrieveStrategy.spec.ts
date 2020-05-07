@@ -38,6 +38,14 @@ describe("WaitForResultLockedKeyRetrieveStrategy", () => {
     expect(instance.getName()).toEqual(expect.any(String));
   });
 
+  it("get deserializes value", async () => {
+    keyLockCheckFnMock.mockReturnValue(false);
+    getRecordMock.mockReturnValue({ value: `{"a":1}` });
+
+    expect(await instance.get({ key: "test" })).toEqual({ a: 1 });
+    getRecordMock.mockReset();
+  });
+
   it("get throws if null in cache", async () => {
     getRecordMock.mockReturnValue(null);
     await expect(instance.get({ key: "test" })).rejects.toThrow("Error while waiting for result in cache");
