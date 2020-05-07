@@ -1,8 +1,8 @@
-import Redis, { Redis as RedisType } from "ioredis";
+import Redis from "ioredis";
 import RedisStorageAdapter from "../../src/adapters/RedisStorageAdapter";
 import { runAdapterTests } from "./adapter-agnostic";
 
-const redis: RedisType = new Redis();
+const redis = new Redis();
 const adapter = new RedisStorageAdapter(redis, { lockExpireTimeout: 50 });
 
 describe("Redis adapter", () => {
