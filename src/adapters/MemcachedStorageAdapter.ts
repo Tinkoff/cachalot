@@ -1,9 +1,31 @@
-import { StorageAdapter } from "../StorageAdapter";
-import Memcached from "memcached";
+import { EventEmitter } from "events";
 import { ConnectionStatus } from "../ConnectionStatus";
 import customError from "../errors/custom-error";
+import { StorageAdapter } from "../StorageAdapter";
 
 export const DEFAULT_LOCK_EXPIRES = 20000;
+
+interface Memcached extends EventEmitter {
+  add(
+    key: string,
+    value: string,
+    lifetime: number,
+    cb: (err: Error | undefined, result: boolean) => void
+  ): void;
+
+  get(key: string, cb: (err: Error | undefined, data: string) => void): void;
+
+  getMulti(keys: string[], cb: (err: Error | undefined, data: { [key: string]: string }) => void): void;
+
+  set(
+    key: string,
+    value: string,
+    lifetime: number,
+    cb: (err: Error | undefined, result: boolean) => void
+  ): void;
+
+  del(key: string, cb: (err: Error | undefined, result: boolean) => void): void;
+}
 
 function operationError(op: string, err: Error): Error {
   return customError("operationError", `Operation "${op}" error. ${err.message}`, err);
@@ -38,7 +60,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
   /**
    * The method should call the callback passed to it as soon as the storage is ready to execute commands.
    */
-  onConnect(callback: (err: Memcached.IssueData) => void): void {
+  onConnect(callback: (err: unknown) => void): void {
     this.memcachedInstance.on("reconnect", callback);
   }
 
@@ -143,7 +165,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
   async acquireLock(key: string, lockExpireTimeout?: number): Promise<boolean> {
     const expiresIn = lockExpireTimeout !== undefined ? lockExpireTimeout : this.options.lockExpireTimeout;
 
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.memcachedInstance.add(`${key}_lock`, "", this.getLifetimeFromMs(expiresIn), (err, result) => {
         if (err) {
           return reject(operationError("acquireLock", err));

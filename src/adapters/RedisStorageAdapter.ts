@@ -1,4 +1,4 @@
-import IORedis, { Redis } from "ioredis";
+import { EventEmitter } from "events";
 import _, { partial } from "lodash";
 import { ConnectionStatus } from "../ConnectionStatus";
 import { StorageAdapter } from "../StorageAdapter";
@@ -9,6 +9,26 @@ import { withTimeout } from "../with-timeout";
  */
 export const DEFAULT_OPERATION_TIMEOUT = 150;
 export const DEFAULT_LOCK_EXPIRES = 20000;
+
+interface Redis extends EventEmitter {
+  del(...keys: string[]): Promise<number>;
+
+  get(key: string): Promise<string | null>;
+
+  exists(...keys: string[]): Promise<number>;
+
+  set(
+    key: string,
+    value: string,
+    expiryMode?: string,
+    time?: number | string,
+    setMode?: number | string
+  ): Promise<string>;
+
+  mget(...keys: string[]): Promise<Array<string | null>>;
+
+  mset(data: Map<string, string>): Promise<"OK">;
+}
 
 export type RedisStorageAdapterOptions = {
   operationTimeout?: number;
@@ -82,8 +102,8 @@ export class RedisStorageAdapter implements StorageAdapter {
   /**
    * Set multiple values to redis storage
    */
-  public async mset(values: Map<string, IORedis.ValueType>): Promise<void> {
-    const data = new Map<string, IORedis.ValueType>();
+  public async mset(values: Map<string, string>): Promise<void> {
+    const data = new Map<string, string>();
 
     for (const [key, value] of values.entries()) {
       data.set(key, value);
