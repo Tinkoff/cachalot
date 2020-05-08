@@ -13,7 +13,7 @@ function delay(duration: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, duration + 1));
 }
 
-export const runAdapterTests = (get: Getter, set: Setter, adapter: StorageAdapter) => {
+export const runAdapterTests = (get: Getter, set: Setter, adapter: StorageAdapter): void => {
   it('Sets connection status to "connected" if adapter executes some command', async () => {
     await adapter.get("test");
     expect(adapter.getConnectionStatus()).toEqual(ConnectionStatus.CONNECTED);

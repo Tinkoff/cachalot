@@ -10,7 +10,7 @@ export const DEFAULT_MAXIMUM_TIMEOUT = 3000;
 export const DEFAULT_REQUEST_TIMEOUT = 250;
 
 export type KeyLockCheckFn = (key: string) => boolean | Promise<boolean>;
-export type GetRecordFn = (key: string) => Promise<any>;
+export type GetRecordFn = <R>(key: string) => Promise<Record<R> | null>;
 export type WaitForResultLockedKeyRetrieveStrategyOptions = {
   maximumTimeout?: number;
   requestTimeout?: number;
@@ -44,21 +44,21 @@ export class WaitForResultLockedKeyRetrieveStrategy implements LockedKeyRetrieve
     return "waitForResult";
   }
 
-  public async get(context: ExecutorContext): Promise<any> {
+  public async get<R>(context: ExecutorContext<R>): Promise<R> {
     const startTime = Date.now();
-    const retryRequest = async (): Promise<any> => {
+    const retryRequest = async (): Promise<R> => {
       if (Date.now() < startTime + this.maximumTimeout) {
         const isLocked = await this.keyIsLocked(context.key);
 
         if (!isLocked) {
-          const rec: Record | null = await this.getRecord(context.key);
+          const rec = await this.getRecord<string>(context.key);
 
           switch (rec) {
             case null:
             case undefined:
               throw errors.waitForResultError();
             default:
-              return deserialize(rec.value);
+              return deserialize<R>(rec.value);
           }
         }
 

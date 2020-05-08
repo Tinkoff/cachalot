@@ -1,6 +1,6 @@
 import { LockedKeyRetrieveStrategyType } from "../LockedKeyRetrieveStrategy";
 import { ConnectionStatus } from "../ConnectionStatus";
-import { Record, RecordValue } from "./Record";
+import { Record } from "./Record";
 
 /**
  * Storage is an abstraction over different operations with records
@@ -8,15 +8,15 @@ import { Record, RecordValue } from "./Record";
  * over simple storage keys
  */
 export interface Storage {
-  get(key: string): Promise<Record | null>;
+  get<R>(key: string): Promise<Record<R> | null>;
   touch(tags: string[]): Promise<void>;
   lockKey(key: string): Promise<boolean>;
   releaseKey(key: string): Promise<boolean>;
   keyIsLocked(key: string): Promise<boolean>;
   del(key: string): Promise<boolean>;
   getTags(tagNames: string[]): Promise<Tag[]>;
-  isOutdated(record: Record): Promise<boolean>;
-  set(key: string, value: RecordValue, options?: WriteOptions): Promise<Record>;
+  isOutdated<R>(record: Record<R>): Promise<boolean>;
+  set<R>(key: string, value: R, options?: WriteOptions<R>): Promise<Record<R>>;
   getConnectionStatus(): ConnectionStatus;
 }
 
@@ -60,7 +60,7 @@ export interface ExpireOptions {
   permanent?: boolean;
 }
 
-export interface WriteOptions extends ExpireOptions {
+export interface WriteOptions<R> extends ExpireOptions {
   /**
    * Tags - are keys for which the manager checks the validity of a particular entry.
    * If the tag value is in the cache and invalidation time < current time, the tag will be considered invalid and
@@ -70,7 +70,7 @@ export interface WriteOptions extends ExpireOptions {
   /**
    * getTags allows to detect tags for record depending on executor result
    */
-  getTags?: (executorResult: any) => string[];
+  getTags?: (executorResult: R) => string[];
 }
 
-export type ReadWriteOptions = ReadOptions & WriteOptions;
+export type ReadWriteOptions<R> = ReadOptions & WriteOptions<R>;

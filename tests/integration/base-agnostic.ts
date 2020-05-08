@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { Storage } from "../../src/storage/Storage";
 import { StorageAdapter } from "../../src";
 
-export const runStorageTests = (storage: Storage, adapter: StorageAdapter) => {
+export const runStorageTests = (storage: Storage, adapter: StorageAdapter): void => {
   describe("set", () => {
     it("does not modify not touched if all tags exist", async () => {
       const key = uuid();

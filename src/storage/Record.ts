@@ -1,13 +1,11 @@
 import { Tag, WriteOptions } from "./Storage";
 
-export type RecordValue = object | string | number | null;
-
-export class Record {
+export class Record<R> {
   /**
    * Checks if provided value is valid Record.
    */
-  static isRecord(value: any): value is Record {
-    return value === null || (typeof value === "object" && value.key);
+  static isRecord(value: unknown): value is Record<unknown> {
+    return typeof value === "object" && Object.prototype.hasOwnProperty.call(value, "key");
   }
   /**
    * Record key
@@ -28,13 +26,13 @@ export class Record {
   /**
    * Key value
    */
-  value?: RecordValue;
+  value: R;
   /**
    * Cache tags Array with pairs of tag name and version. The version is stored as unixtime.
    */
   tags: Tag[];
 
-  constructor(key: string, value: RecordValue, tags: Tag[], options: WriteOptions = {}) {
+  constructor(key: string, value: R, tags: Tag[], options: WriteOptions<R> = {}) {
     const { expiresIn = 0 } = options;
 
     this.key = key;

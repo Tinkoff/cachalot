@@ -99,7 +99,7 @@ describe("Cache", () => {
 
   it("gets value from storage if tags not valid", async () => {
     const struct = { a: 1, b: 2 };
-    const executor = () => struct;
+    const executor = (): typeof struct => struct;
     const tags = [uuid()];
     const key = uuid();
 

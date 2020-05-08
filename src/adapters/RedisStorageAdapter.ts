@@ -63,7 +63,7 @@ export class RedisStorageAdapter implements StorageAdapter {
   /**
    * Implementing this method in the redis adapter will trigger a callback as soon as the redis send event to the 'ready' event.
    */
-  public onConnect(callback: (...args: any[]) => void): void {
+  public onConnect(callback: (...args: unknown[]) => void): void {
     this.redisInstance.on("ready", callback);
   }
 
