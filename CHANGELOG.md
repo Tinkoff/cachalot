@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.0...v3.0.1) (2020-05-08)
+
+
+### Bug Fixes
+
+* Do not depend on redis or memcached typings ([95e1f2c](https://github.com/TinkoffCreditSystems/cachalot/commit/95e1f2c))
+
 # [3.0.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v2.0.0...v3.0.0) (2020-05-08)
 
 
