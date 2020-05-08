@@ -16,7 +16,7 @@ export interface Storage {
   del(key: string): Promise<boolean>;
   getTags(tagNames: string[]): Promise<Tag[]>;
   isOutdated<R>(record: Record<R>): Promise<boolean>;
-  set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>>;
+  set<R>(key: string, value: R, options?: WriteOptions<R>): Promise<Record<R>>;
   getConnectionStatus(): ConnectionStatus;
 }
 
@@ -60,7 +60,7 @@ export interface ExpireOptions {
   permanent?: boolean;
 }
 
-export interface WriteOptions extends ExpireOptions {
+export interface WriteOptions<R> extends ExpireOptions {
   /**
    * Tags - are keys for which the manager checks the validity of a particular entry.
    * If the tag value is in the cache and invalidation time < current time, the tag will be considered invalid and
@@ -70,7 +70,7 @@ export interface WriteOptions extends ExpireOptions {
   /**
    * getTags allows to detect tags for record depending on executor result
    */
-  getTags?: (executorResult: unknown) => string[];
+  getTags?: (executorResult: R) => string[];
 }
 
-export type ReadWriteOptions = ReadOptions & WriteOptions;
+export type ReadWriteOptions<R> = ReadOptions & WriteOptions<R>;

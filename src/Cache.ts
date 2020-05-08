@@ -1,14 +1,14 @@
 import defaultsDeep from "lodash/defaultsDeep";
 import { ConnectionStatus } from "./ConnectionStatus";
-import { Executor } from "./Executor";
-import { ReadWriteOptions, Storage, WriteOptions } from "./storage/Storage";
-import { StorageAdapter } from "./StorageAdapter";
-import { BaseStorage } from "./storage/BaseStorage";
+import { Executor, runExecutor } from "./Executor";
 import { Logger } from "./Logger";
 import { Manager } from "./Manager";
-import RefreshAheadManager from "./managers/RefreshAheadManager";
 import { ManagerOptions } from "./managers/BaseManager";
+import RefreshAheadManager from "./managers/RefreshAheadManager";
+import { BaseStorage } from "./storage/BaseStorage";
 import { Record } from "./storage/Record";
+import { ReadWriteOptions, Storage, WriteOptions } from "./storage/Storage";
+import { StorageAdapter } from "./StorageAdapter";
 
 export interface CacheWithCustomStorageOptions {
   storage: Storage;
@@ -102,11 +102,11 @@ class Cache {
    * Get delegates call to default or provided manager. The only thing it does by itself is checking
    * the connection status of storage. If storage is disconnected calls executor directly and returns result.
    */
-  public async get<E extends Executor<R>, R>(
+  public async get<R>(
     key: string,
-    executor: E,
-    options: ReadWriteOptions & ManagerSelectorOptions = {}
-  ): Promise<R | undefined> {
+    executor: Executor<R>,
+    options: ReadWriteOptions<R> & ManagerSelectorOptions = {}
+  ): Promise<R> {
     const connectionStatus = this.storage.getConnectionStatus();
 
     if (connectionStatus !== ConnectionStatus.CONNECTED) {
@@ -114,7 +114,7 @@ class Cache {
         `Storage connection status is "${connectionStatus}", cache is unavailable!. Running executor.`
       );
 
-      return executor();
+      return runExecutor(executor);
     }
 
     const { manager: managerName = RefreshAheadManager.getName() } = options;
@@ -130,7 +130,7 @@ class Cache {
   public async set<R>(
     key: string,
     value: R,
-    options: WriteOptions & ManagerSelectorOptions = {}
+    options: WriteOptions<R> & ManagerSelectorOptions = {}
   ): Promise<Record<R>> {
     const { manager: managerName = RefreshAheadManager.getName() } = options;
     const computedOptions = defaultsDeep({}, options, { expiresIn: this.expiresIn });

@@ -3,7 +3,7 @@ import { LockedKeyRetrieveStrategy, LockedKeyRetrieveStrategyTypes } from "../Lo
 import { Logger } from "../Logger";
 import { WaitForResultLockedKeyRetrieveStrategy } from "../locked-key-retrieve-strategies/WaitForResultLockedKeyRetrieveStrategy";
 import { RunExecutorLockedKeyRetrieveStrategy } from "../locked-key-retrieve-strategies/RunExecutorLockedKeyRetrieveStrategy";
-import { Executor, ExecutorContext } from "../Executor";
+import { Executor, ExecutorContext, runExecutor } from "../Executor";
 import { Record } from "../storage/Record";
 
 export interface ManagerOptions extends ExpireOptions {
@@ -44,16 +44,18 @@ export abstract class BaseManager {
 
   protected logger: Logger;
 
-  public abstract set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>>;
+  public abstract get<R>(key: string, executor: Executor<R>, options: ReadWriteOptions<R>): Promise<R>;
+
+  public abstract set<R>(key: string, value: R, options?: WriteOptions<R>): Promise<Record<R>>;
 
   public del(key: string): Promise<boolean> {
     return this.storage.del(key);
   }
 
-  protected async updateCacheAndGetResult<E extends Executor<R>, R>(
+  protected async updateCacheAndGetResult<R>(
     context: ExecutorContext<R>,
-    options: ReadWriteOptions
-  ): Promise<R | undefined> {
+    options: ReadWriteOptions<R>
+  ): Promise<R> {
     const lockedKeyRetrieveStrategy = this.getLockedKeyRetrieveStrategy(
       options.lockedKeyRetrieveStrategyType
     );
@@ -66,7 +68,7 @@ export abstract class BaseManager {
         `Error occurred while trying to lock key "${context.key}". Reason: ${keyLockError.message}. Running executor`
       );
 
-      return context.executor();
+      return runExecutor(context.executor);
     }
 
     if (!isKeySuccessfullyLocked) {
@@ -75,7 +77,7 @@ export abstract class BaseManager {
 
     try {
       this.logger.trace(`Running executor for key "${context.key}"`);
-      const executorResult = await context.executor();
+      const executorResult = await runExecutor(context.executor);
 
       await this.set(context.key, executorResult, options);
 

@@ -8,6 +8,6 @@ import { Record } from "./storage/Record";
  * which must decide what record should be threaten as invalid, when and how to update record
  */
 export interface Manager {
-  get<E extends Executor<R>, R>(key: string, executor: E, options: ReadWriteOptions): Promise<R | undefined>;
-  set<R>(key: string, value: R, options?: WriteOptions): Promise<Record<R>>;
+  get<R>(key: string, executor: Executor<R>, options: ReadWriteOptions<R>): Promise<R>;
+  set<R>(key: string, value: R, options?: WriteOptions<R>): Promise<Record<R>>;
 }

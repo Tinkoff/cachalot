@@ -44,9 +44,9 @@ export class WaitForResultLockedKeyRetrieveStrategy implements LockedKeyRetrieve
     return "waitForResult";
   }
 
-  public async get<R>(context: ExecutorContext<R>): Promise<R | undefined> {
+  public async get<R>(context: ExecutorContext<R>): Promise<R> {
     const startTime = Date.now();
-    const retryRequest = async (): Promise<R | undefined> => {
+    const retryRequest = async (): Promise<R> => {
       if (Date.now() < startTime + this.maximumTimeout) {
         const isLocked = await this.keyIsLocked(context.key);
 
@@ -58,9 +58,6 @@ export class WaitForResultLockedKeyRetrieveStrategy implements LockedKeyRetrieve
             case undefined:
               throw errors.waitForResultError();
             default:
-              if (rec.value === undefined) {
-                return undefined;
-              }
               return deserialize<R>(rec.value);
           }
         }

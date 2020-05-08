@@ -69,11 +69,11 @@ describe("ReadThroughManager", () => {
   it("get returns undefined if record.value is not defined", async () => {
     await manager.set("test", undefined, { expiresIn: 100 });
 
-    expect(
-      await manager.get("test", () => {
+    await expect(
+      manager.get("test", () => {
         /* empty */
       })
-    ).toEqual(undefined);
+    ).rejects.toThrowError("Executor should not return undefined. Correct value for emptiness is null.");
   });
 
   it("get runs executor and updates key if it not exists", async () => {
@@ -103,13 +103,6 @@ describe("ReadThroughManager", () => {
     expect(await manager.get("test", () => "234")).toEqual("234");
     expect(await storage.get("test")).toMatchObject({ key: "test", value: '"234"' });
     Date.now = realNow;
-  });
-
-  it("get runs executor and updates key if storage has record with undefined value", async () => {
-    await manager.set("test", undefined);
-
-    expect(await manager.get("test", () => "234")).toEqual("234");
-    expect(storage.storage).toEqual({ test: "234" });
   });
 
   it("get runs executor and updates key if record tags outdated", async () => {

@@ -167,7 +167,7 @@ export class BaseStorage implements Storage {
   /**
    * set creates new record with provided options and sets it to storage using the adapter.
    */
-  public async set<R>(key: string, value: R, options: WriteOptions = {}): Promise<Record<R>> {
+  public async set<R>(key: string, value: R, options: WriteOptions<R> = {}): Promise<Record<R>> {
     let tags: string[] = [];
 
     if (isFunction(options.tags)) {

@@ -61,12 +61,4 @@ describe("WaitForResultLockedKeyRetrieveStrategy", () => {
     await expect(instance.get({ key: "test" })).rejects.toThrow("Exceeded maximum timeout of 100");
     keyLockCheckFnMock.mockReset();
   });
-
-  it("get returns undefined if record value is undefined", async () => {
-    keyLockCheckFnMock.mockReturnValue(false);
-    getRecordMock.mockReturnValue({ value: undefined });
-
-    expect(await instance.get({ key: "test" })).toEqual(undefined);
-    getRecordMock.mockReset();
-  });
 });

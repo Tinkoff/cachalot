@@ -1,9 +1,5 @@
 import { Tag, WriteOptions } from "./Storage";
 
-export interface RecordWithValue<R> extends Record<R> {
-  value: R;
-}
-
 export class Record<R> {
   /**
    * Checks if provided value is valid Record.
@@ -30,13 +26,13 @@ export class Record<R> {
   /**
    * Key value
    */
-  value?: R;
+  value: R;
   /**
    * Cache tags Array with pairs of tag name and version. The version is stored as unixtime.
    */
   tags: Tag[];
 
-  constructor(key: string, value: R, tags: Tag[], options: WriteOptions = {}) {
+  constructor(key: string, value: R, tags: Tag[], options: WriteOptions<R> = {}) {
     const { expiresIn = 0 } = options;
 
     this.key = key;

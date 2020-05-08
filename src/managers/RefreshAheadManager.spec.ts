@@ -232,13 +232,6 @@ describe("RefreshAheadManager", () => {
       }
     ));
 
-  it("get runs executor and updates key if storage has record with undefined value", async () => {
-    await manager.set("test", undefined);
-
-    expect(await manager.get("test", () => "234")).toEqual("234");
-    expect(storage.storage).toEqual({ test: "234" });
-  });
-
   it("get throws if executor throws", async () => {
     await expect(
       manager.get("test3", async () => {

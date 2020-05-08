@@ -94,13 +94,6 @@ describe("WriteThroughManager", () => {
     Date.now = realNow;
   });
 
-  it("get runs executor and updates key if storage has record with undefined value", async () => {
-    await manager.set("test", undefined);
-
-    expect(await manager.get("test", () => "234")).toEqual("234");
-    expect(storage.storage).toEqual({ test: "234" });
-  });
-
   it("get don't run executor when tags outdated, and returns old result", async () => {
     storage.getTags.mockResolvedValueOnce([{ name: "tag1", version: 2 }]);
     storage.get.mockResolvedValueOnce({

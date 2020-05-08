@@ -1,5 +1,5 @@
 import { LockedKeyRetrieveStrategy } from "../LockedKeyRetrieveStrategy";
-import { ExecutorContext } from "../Executor";
+import { ExecutorContext, runExecutor } from "../Executor";
 
 /**
  * This locked key retrieve strategy is default and suitable for most cases. It just
@@ -10,7 +10,7 @@ export class RunExecutorLockedKeyRetrieveStrategy implements LockedKeyRetrieveSt
     return "runExecutor";
   }
 
-  async get<R>(context: ExecutorContext<R>): Promise<R | undefined> {
-    return context.executor();
+  async get<R>(context: ExecutorContext<R>): Promise<R> {
+    return runExecutor(context.executor);
   }
 }
