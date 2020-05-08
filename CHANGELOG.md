@@ -1,3 +1,25 @@
+# [3.0.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v2.0.0...v3.0.0) (2020-05-08)
+
+
+### Performance Improvements
+
+* Base storage only touches and get tags if tag list is not empty ([22b8d3a](https://github.com/TinkoffCreditSystems/cachalot/commit/22b8d3a))
+
+
+### BREAKING CHANGES
+
+* fixed typings for get/set and managers. Throw errors if executor returns undefined. Executor should always return value or null - for emptiness
+
+fix: Remove undefined as get return type.
+
+Also removed `E extends Executor<R>` type parameter.
+
+`Record.value` is always defined.
+
+WriteOptions now has type parameter used in getTags signature.
+
+Throw an error if executor returns undefined.
+
 # [2.0.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v1.6.0...v2.0.0) (2020-03-17)
 
 
