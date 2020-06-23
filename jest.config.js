@@ -1,47 +1,33 @@
 module.exports = {
-  "collectCoverageFrom": [
-    "src/**/*.{js,ts}"
-  ],
-  "testMatch": [
+  moduleFileExtensions: ["ts", "js"],
+  testMatch: [
     "<rootDir>/src/**/__tests__/**/*.ts",
-    "<rootDir>/src/**/?(*.)spec.ts"
+    "<rootDir>/src/*.spec.ts",
+    "<rootDir>/src/**/*.spec.ts"
   ],
-  "testEnvironment": "node",
-  "testURL": "http://localhost",
-  "transform": {
+  testEnvironment: "node",
+  collectCoverageFrom: [
+    "<rootDir>/src/*.ts",
+    "<rootDir>/src/**/*.ts",
+    "!<rootDir>/src/RedisStorageAdapter.ts",
+    "!<rootDir>/src/constants.ts",
+    "!<rootDir>/src/errors.ts",
+    "!<rootDir>/src/index.ts",
+    "!<rootDir>/src/ConnectionStatus.ts",
+    "!<rootDir>/src/LockedKeyRetrieveStrategy.ts",
+    "!<rootDir>/src/adapters/TestStorageAdapter.ts",
+  ],
+  transform: {
     "^.+\\.ts$": "ts-jest",
   },
-  "transformIgnorePatterns": [
-    "[/\\\\]node_modules[/\\\\].+\\.(js|ts)$"
-  ],
-  "coveragePathIgnorePatterns": [
-    "<rootDir>/dist/",
-    "<rootDir>/node_modules/",
-    "<rootDir>/src/RedisStorageAdapter.ts",
-    "<rootDir>/src/constants.ts",
-    "<rootDir>/src/errors.ts",
-    "<rootDir>/src/index.ts",
-    "<rootDir>/src/ConnectionStatus.ts",
-    "<rootDir>/src/LockedKeyRetrieveStrategy.ts",
-    "<rootDir>/src/adapters/TestStorageAdapter.ts",
-  ],
-  "coverageThreshold": {
-    "global": {
-      "branches": 90,
-      "functions": 90,
-      "lines": 90,
-      "statements": 90
+  coverageReporters: ["text", "text-summary"],
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
     }
   },
-  "moduleFileExtensions": [
-    "ts",
-    "js",
-    "json",
-    "node"
-  ],
-  "coverageReporters": [
-    "text",
-    "text-summary"
-  ]
 };
 
