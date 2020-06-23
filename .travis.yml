@@ -27,3 +27,6 @@ jobs:
         skip_cleanup: true
         script:
           - npx semantic-release
+
+notifications:
+  webhooks: https://coveralls.io/webhook
