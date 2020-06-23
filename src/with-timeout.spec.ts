@@ -13,6 +13,15 @@ describe("withTimeout", () => {
     const PROMISE_TIMEOUT = 100;
     const OPERATION_TIMEOUT = 1000;
 
-    await expect(withTimeout(timeout(PROMISE_TIMEOUT), OPERATION_TIMEOUT)).resolves.not.toThrow();
+    jest.useFakeTimers();
+
+    const promise = withTimeout(timeout(PROMISE_TIMEOUT), OPERATION_TIMEOUT);
+
+    jest.advanceTimersByTime(PROMISE_TIMEOUT);
+
+    await expect(promise).resolves.not.toThrow();
+
+    jest.advanceTimersByTime(OPERATION_TIMEOUT);
+    jest.clearAllTimers();
   });
 });
