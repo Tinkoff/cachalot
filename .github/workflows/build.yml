@@ -17,6 +17,23 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    services:
+      redis:
+        image: redis:5
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          --entrypoint redis-server
+
+      memcached:
+        image: memcached
+        ports:
+          - 11211:11211
+
     strategy:
       matrix:
         node-version: [8.x, 10.x, 12.x]
@@ -25,15 +42,6 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
-    - name: Redis Server in GitHub Actions
-      uses: supercharge/redis-github-action@1.1.0
-      with:
-        # Redis version to use
-        redis-version: 5 # optional, default is latest
-
-    - name: Memcached Service
-      uses: niden/actions-memcached@v7
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1.4.2
