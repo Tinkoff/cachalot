@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-import _, { partial } from "lodash";
 import { ConnectionStatus } from "../ConnectionStatus";
 import { StorageAdapter } from "../StorageAdapter";
 import { withTimeout } from "../with-timeout";
@@ -53,7 +52,7 @@ export class RedisStorageAdapter implements StorageAdapter {
     this.redisInstance.on("reconnecting", () => this.setConnectionStatus(ConnectionStatus.CONNECTING));
     this.redisInstance.on("end", () => this.setConnectionStatus(ConnectionStatus.DISCONNECTED));
 
-    this.withTimeout = partial(withTimeout, _, this.options.operationTimeout);
+    this.withTimeout = <T>(promise: Promise<T>) => withTimeout(promise, this.options.operationTimeout);
   }
 
   /**

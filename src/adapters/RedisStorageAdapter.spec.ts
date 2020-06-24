@@ -120,6 +120,17 @@ describe("Redis adapter", () => {
     expect(mock.set).toBeCalledWith("some_lock", "", "PX", DEFAULT_LOCK_EXPIRES, "NX");
   });
 
+  it("acquireLock use passed lockExpireTimeout", async () => {
+    mock.set = jest.fn().mockImplementation(() => "OK");
+
+    const lockExpireTimeout = 12345;
+    const lockResult = await adapter.acquireLock("some", lockExpireTimeout);
+
+    expect(lockResult).toEqual(true);
+    expect(mock.set).toBeCalledTimes(1);
+    expect(mock.set).toBeCalledWith("some_lock", "", "PX", lockExpireTimeout, "NX");
+  });
+
   it("releaseLock delete lock record with appropriate key, and returns true on success", async () => {
     mock.del = jest.fn().mockImplementation(() => 1);
 

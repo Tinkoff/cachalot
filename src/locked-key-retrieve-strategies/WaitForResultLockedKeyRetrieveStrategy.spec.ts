@@ -4,7 +4,7 @@ import {
   WaitForResultLockedKeyRetrieveStrategy,
 } from "./WaitForResultLockedKeyRetrieveStrategy";
 
-let instance;
+let instance: any;
 
 const loggerMock: any = {
   error: jest.fn(),

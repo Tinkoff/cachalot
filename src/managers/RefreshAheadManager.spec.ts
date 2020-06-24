@@ -9,8 +9,8 @@ const logger = {
   error: jest.fn(),
 };
 let internalStorage = {};
-let storage;
-let manager;
+let storage: TestStorage;
+let manager: RefreshAheadManager;
 
 describe("RefreshAheadManager", () => {
   beforeEach(() => {
@@ -72,7 +72,7 @@ describe("RefreshAheadManager", () => {
   });
 
   it("getLockedKeyRetrieveStrategy throws if cannot get strategy", () => {
-    expect(() => manager.getLockedKeyRetrieveStrategy("unknown")).toThrow();
+    expect(() => (manager as any).getLockedKeyRetrieveStrategy("unknown")).toThrow();
   });
 
   it("get returns result from executor if key lock throws error", async () => {
@@ -137,9 +137,9 @@ describe("RefreshAheadManager", () => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
         const realNow = Date.now;
-        const instanceRefresh = manager.refresh;
+        const instanceRefresh = (manager as any).refresh;
 
-        manager.refresh = async (...args): Promise<any> => {
+        (manager as any).refresh = async (...args: any[]): Promise<any> => {
           await instanceRefresh.call(manager, ...args);
           expect(await storage.get("test")).toMatchObject({ key: "test", value: '"234"' });
           resolve();
@@ -169,9 +169,9 @@ describe("RefreshAheadManager", () => {
         const DATE = 1550082589000;
         const DATE_ADVANCED = 1550082589405;
         const realNow = Date.now;
-        const instanceRefresh = manager.refresh;
+        const instanceRefresh = (manager as any).refresh;
 
-        manager.refresh = async (...args): Promise<any> => {
+        (manager as any).refresh = async (...args: any[]): Promise<any> => {
           await instanceRefresh.call(manager, ...args);
           resolve();
         };
@@ -206,7 +206,7 @@ describe("RefreshAheadManager", () => {
         const realNow = Date.now;
         const realCatch = Promise.prototype.catch;
 
-        manager.refresh = jest.fn().mockImplementation(async () => {
+        (manager as any).refresh = jest.fn().mockImplementation(async () => {
           throw new Error("Operation timeout");
         });
         Promise.prototype.catch = function(...args: any[]): any {
@@ -268,6 +268,6 @@ describe("RefreshAheadManager", () => {
   });
 
   it("isRecordExpireSoon returns false if record is null", () => {
-    expect(manager.isRecordExpireSoon(null)).toEqual(false);
+    expect((manager as any).isRecordExpireSoon(null)).toEqual(false);
   });
 });

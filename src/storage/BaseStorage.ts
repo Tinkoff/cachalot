@@ -1,6 +1,4 @@
 import { createHash } from "crypto";
-import isFunction from "lodash/isFunction";
-import uniq from "lodash/uniq";
 import { ConnectionStatus } from "../ConnectionStatus";
 import deserialize from "../deserialize";
 import { isOperationTimeoutError } from "../errors/errors";
@@ -10,6 +8,10 @@ import { Record } from "./Record";
 import differenceWith from "lodash/differenceWith";
 
 export const TAGS_VERSIONS_ALIAS = "cache-tags-versions";
+
+function uniq<T>(arr: T[]): T[] {
+  return [...new Set(arr)];
+}
 
 export type BaseStorageOptions = {
   adapter: StorageAdapter;
@@ -33,7 +35,8 @@ export interface Command {
  * CommandFn is a function (usually a Storage method bind to its context) which is stored in
  * Command object for further execution.
  */
-export type CommandFn = (...args: unknown[]) => unknown;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type CommandFn = (...args: any[]) => unknown;
 
 /**
  * BaseStorage is the default Storage implementation for Manager.
@@ -48,11 +51,11 @@ export class BaseStorage implements Storage {
     this.prefix = options.prefix || "";
     this.hashKeys = options.hashKeys || false;
 
-    if (isFunction(this.adapter.setOptions)) {
-      this.adapter.setOptions(options);
-    }
+    this.adapter.setOptions?.(options);
 
     this.adapter.onConnect(async () => this.executeCommandsFromQueue());
+
+    this.setTagVersions = this.setTagVersions.bind(this);
   }
 
   /**
@@ -170,13 +173,13 @@ export class BaseStorage implements Storage {
   public async set<R>(key: string, value: R, options: WriteOptions<R> = {}): Promise<Record<R>> {
     let tags: string[] = [];
 
-    if (isFunction(options.tags)) {
-      tags = options.tags();
-    } else if (options.tags !== undefined) {
+    if (Array.isArray(options.tags)) {
       tags = options.tags;
+    } else if (options.tags !== undefined) {
+      tags = options.tags();
     }
 
-    const dynamicTags = isFunction(options.getTags) ? options.getTags(value) : [];
+    const dynamicTags = options.getTags?.(value) ?? [];
 
     if (!Array.isArray(dynamicTags)) {
       throw new TypeError(`getTags should return an array of strings, got ${typeof dynamicTags}`);

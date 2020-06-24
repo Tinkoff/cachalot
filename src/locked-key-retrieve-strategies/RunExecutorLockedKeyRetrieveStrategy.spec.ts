@@ -1,6 +1,6 @@
 import { RunExecutorLockedKeyRetrieveStrategy } from "./RunExecutorLockedKeyRetrieveStrategy";
 
-let instance;
+let instance: RunExecutorLockedKeyRetrieveStrategy;
 
 describe("RunExecutorLockedKeyRetrieveStrategy", () => {
   beforeEach(() => {
@@ -14,6 +14,6 @@ describe("RunExecutorLockedKeyRetrieveStrategy", () => {
   it("get calls context executor", async () => {
     const executorMock = jest.fn().mockResolvedValue(true);
 
-    await expect(instance.get({ executor: executorMock })).resolves.toEqual(true);
+    await expect(instance.get({ executor: executorMock } as any)).resolves.toEqual(true);
   });
 });

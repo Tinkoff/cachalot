@@ -9,8 +9,8 @@ const logger = {
   error: jest.fn(),
 };
 let internalStorage = {};
-let storage;
-let manager;
+let storage: TestStorage;
+let manager: WriteThroughManager;
 
 describe("WriteThroughManager", () => {
   beforeEach(() => {
@@ -44,7 +44,7 @@ describe("WriteThroughManager", () => {
   });
 
   it("getLockedKeyRetrieveStrategy throws if cannot get strategy", () => {
-    expect(() => manager.getLockedKeyRetrieveStrategy("unknown")).toThrow();
+    expect(() => (manager as any).getLockedKeyRetrieveStrategy("unknown")).toThrow();
   });
 
   it("get returns result from executor if key lock throws error", async () => {
