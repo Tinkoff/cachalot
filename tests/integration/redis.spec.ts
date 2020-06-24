@@ -3,7 +3,7 @@ import RedisStorageAdapter from "../../src/adapters/RedisStorageAdapter";
 import { runAdapterTests } from "./adapter-agnostic";
 
 const redis = new Redis();
-const adapter = new RedisStorageAdapter(redis, { lockExpireTimeout: 50, operationTimeout: 4000 });
+const adapter = new RedisStorageAdapter(redis, { lockExpireTimeout: 50, operationTimeout: 9000 });
 
 describe("Redis adapter", () => {
   beforeEach(() => {
