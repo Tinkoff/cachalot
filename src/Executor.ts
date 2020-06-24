@@ -9,6 +9,8 @@ export interface ExecutorContext<R> {
   record?: Record<R>;
 }
 
+type NonUndefined<T> = T extends undefined ? never : T;
+
 export async function runExecutor<R>(executor: Executor<R>): Promise<R> {
   const result = await executor();
 
@@ -19,4 +21,4 @@ export async function runExecutor<R>(executor: Executor<R>): Promise<R> {
   return result;
 }
 
-export type Executor<R> = (...args: unknown[]) => Promise<R> | R;
+export type Executor<R> = (...args: unknown[]) => Promise<NonUndefined<R>> | NonUndefined<R>;
