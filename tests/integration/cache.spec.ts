@@ -17,9 +17,11 @@ const redis = new Redis({
   autoResendUnfulfilledCommands: false,
 });
 const cache = new Cache({
-  adapter: new RedisStorageAdapter(redis),
+  adapter: new RedisStorageAdapter(redis, { operationTimeout: 9000 }),
   logger,
 });
+
+const REDIS_OPERATION_DELAY = 1000;
 
 describe("Cache", () => {
   beforeEach(
@@ -58,7 +60,7 @@ describe("Cache", () => {
     const key = uuid();
 
     await expect(cache.get(key, () => struct)).resolves.toEqual(struct);
-    await timeout(100);
+    await timeout(REDIS_OPERATION_DELAY);
     await expect(cache.get(key, jest.fn)).resolves.toEqual(struct);
   });
 
@@ -68,7 +70,7 @@ describe("Cache", () => {
 
     await cache.set(key, struct);
     redis.disconnect();
-    await timeout(100);
+    await timeout(REDIS_OPERATION_DELAY);
     await expect(cache.get(key, async () => struct)).resolves.toEqual(struct);
   });
 
@@ -81,7 +83,7 @@ describe("Cache", () => {
 
     await cache.set(key, struct);
     redis.disconnect();
-    await timeout(100);
+    await timeout(REDIS_OPERATION_DELAY);
     await expect(cache.get(key, executor)).rejects.toThrowErrorMatchingInlineSnapshot(
       `"connection timed out"`
     );
@@ -93,7 +95,7 @@ describe("Cache", () => {
     const key = uuid();
 
     await expect(cache.get(key, () => struct, { tags })).resolves.toEqual(struct);
-    await timeout(100);
+    await timeout(REDIS_OPERATION_DELAY);
     await expect(cache.get(key, jest.fn, { tags })).resolves.toEqual(struct);
   });
 
@@ -104,10 +106,10 @@ describe("Cache", () => {
     const key = uuid();
 
     await expect(cache.get(key, executor, { tags })).resolves.toEqual(struct);
-    await timeout(100);
+    await timeout(REDIS_OPERATION_DELAY);
     await expect(cache.get(key, jest.fn, { tags })).resolves.toEqual(struct);
     await cache.touch(tags);
-    await timeout(50);
+    await timeout(REDIS_OPERATION_DELAY);
 
     struct.a = 5;
 
