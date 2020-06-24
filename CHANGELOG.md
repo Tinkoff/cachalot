@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.1...v3.0.2) (2020-06-24)
+
+
+### Bug Fixes
+
+* Executor cannot return `undefined`. The only valid result for emptiness is `null`. ([ed8a701](https://github.com/TinkoffCreditSystems/cachalot/commit/ed8a701))
+
 ## [3.0.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.0...v3.0.1) (2020-05-08)
 
 
