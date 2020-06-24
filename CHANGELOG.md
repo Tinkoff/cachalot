@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.2...v3.0.3) (2020-06-24)
+
+
+### Bug Fixes
+
+* less lodash in project ([#31](https://github.com/TinkoffCreditSystems/cachalot/issues/31)) ([5b4d99d](https://github.com/TinkoffCreditSystems/cachalot/commit/5b4d99d))
+
 ## [3.0.2](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.1...v3.0.2) (2020-06-24)
 
 
