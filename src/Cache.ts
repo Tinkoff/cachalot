@@ -30,10 +30,10 @@ export type CacheOptions = (CacheWithCustomStorageOptions | CacheWithBaseStorage
   hashKeys?: boolean;
 };
 
-export const isCustomStorageOptions = (options: object): options is CacheWithCustomStorageOptions =>
+export const isCustomStorageOptions = (options: unknown): options is CacheWithCustomStorageOptions =>
   Object.prototype.hasOwnProperty.call(options, "storage");
 
-export const isBaseStorageOptions = (options: object): options is CacheWithBaseStorageOptions =>
+export const isBaseStorageOptions = (options: unknown): options is CacheWithBaseStorageOptions =>
   Object.prototype.hasOwnProperty.call(options, "adapter");
 
 export interface ManagerSelectorOptions {
@@ -67,18 +67,14 @@ class Cache {
   constructor(options: CacheOptions) {
     if (isCustomStorageOptions(options)) {
       this.storage = options.storage;
-    }
-
-    if (isBaseStorageOptions(options)) {
+    } else if (isBaseStorageOptions(options)) {
       this.storage = new BaseStorage({
         adapter: options.adapter,
         tagsAdapter: options.tagsAdapter,
         prefix: options.prefix,
         hashKeys: options.hashKeys,
       });
-    }
-
-    if (!this.storage) {
+    } else {
       throw new Error("Either custom storage or storage adapter must be passed in options.");
     }
 

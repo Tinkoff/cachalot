@@ -5,16 +5,18 @@ import timeout from "../timeout";
 import { BaseStorage, TAGS_VERSIONS_ALIAS } from "./BaseStorage";
 import { Record } from "./Record";
 
-const testInterface = {
-  internalStorage: {},
-};
-let testAdapter;
-let storage;
+interface TestStorage {
+  [key: string]: string;
+}
+
+let testStorage: TestStorage;
+let testAdapter: TestStorageAdapter;
+let storage: BaseStorage;
 
 describe("BaseStorage", () => {
   beforeEach(() => {
-    testAdapter = new TestStorageAdapter(testInterface, true);
-    testInterface.internalStorage = {};
+    testStorage = {};
+    testAdapter = new TestStorageAdapter(testStorage, true);
     storage = new BaseStorage({
       adapter: testAdapter,
       prefix: "cache",
@@ -26,7 +28,7 @@ describe("BaseStorage", () => {
   it("set creates record without value and tags if value === undefined", async () => {
     await storage.set("test", undefined, { tags: ["tag"] });
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -44,7 +46,7 @@ describe("BaseStorage", () => {
 
     await storage.set("test", "123");
 
-    expect((testInterface.internalStorage as any).test).toEqual(expect.any(String));
+    expect((testStorage as any).test).toEqual(expect.any(String));
   });
 
   it("creates hashed by md5 keys if hashKeys set to true", async () => {
@@ -56,7 +58,7 @@ describe("BaseStorage", () => {
 
     await storage.set("test", "123");
 
-    expect(testInterface.internalStorage as any).toMatchObject({
+    expect(testStorage as any).toMatchObject({
       "098f6bcd4621d373cade4e832627b4f6": expect.any(String),
     });
   });
@@ -77,7 +79,7 @@ describe("BaseStorage", () => {
   it("set sets key to storage adapter", async () => {
     await storage.set("test", "123");
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -91,7 +93,7 @@ describe("BaseStorage", () => {
   it("set sets key to storage adapter with dynamic tags", async () => {
     await storage.set("test", "123", { getTags: result => [result] });
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -105,7 +107,7 @@ describe("BaseStorage", () => {
   it("set sets key to storage adapter with uniq array of concatenated dynamic tags and simple tags", async () => {
     await storage.set("test", "123", { tags: ["tag1", "123"], getTags: result => [result] });
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -117,13 +119,13 @@ describe("BaseStorage", () => {
   });
 
   it("set throws if dynamic tags Fn returns non-array value", async () => {
-    await expect(storage.set("test", "123", { getTags: result => result })).rejects.toThrow();
+    await expect(storage.set("test", "123", { getTags: () => false } as any)).rejects.toThrow();
   });
 
   it("set sets object key to storage adapter with dynamic tags", async () => {
     await storage.set("test", { id: "uuid" }, { getTags: ({ id }) => [id] });
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -137,7 +139,7 @@ describe("BaseStorage", () => {
   it("set sets key to storage adapter with given options", async () => {
     await storage.set("test", "123", { expiresIn: 0 });
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -164,38 +166,34 @@ describe("BaseStorage", () => {
     await storage.set("test", "123", { expiresIn: 0, tags: ["sometag"] });
 
     const TIMEOUT = 10;
-    const tagsBefore = testInterface.internalStorage["cache-cache-tags-versions:sometag"];
+    const tagsBefore = testStorage["cache-cache-tags-versions:sometag"];
 
     await timeout(TIMEOUT);
     await storage.touch(["sometag"]);
 
-    expect(testInterface.internalStorage["cache-cache-tags-versions:sometag"]).not.toEqual(tagsBefore);
+    expect(testStorage["cache-cache-tags-versions:sometag"]).not.toEqual(tagsBefore);
   });
 
   it("touch does nothing if tag list is empty", async () => {
     await storage.set("test", "123", { expiresIn: 0, tags: ["sometag"] });
 
     const TIMEOUT = 10;
-    const tagsBefore = testInterface.internalStorage["cache-cache-tags-versions:sometag"];
+    const tagsBefore = testStorage["cache-cache-tags-versions:sometag"];
 
     await timeout(TIMEOUT);
     await storage.touch([]);
 
-    expect(testInterface.internalStorage["cache-cache-tags-versions:sometag"]).toEqual(tagsBefore);
+    expect(testStorage["cache-cache-tags-versions:sometag"]).toEqual(tagsBefore);
   });
 
   it("getLockedKeyRetrieveStrategy throws if cannot get strategy", () => {
-    expect(() => storage.getLockedKeyRetrieveStrategy("unknown")).toThrow();
+    expect(() => (storage as any).getLockedKeyRetrieveStrategy("unknown")).toThrow();
   });
 
   it("get returns result if value exists in storage", async () => {
     await storage.set("test", "123", { expiresIn: 100 });
 
-    expect(
-      await storage.get("test", () => {
-        /* empty */
-      })
-    ).toMatchObject({ value: '"123"' });
+    expect(await storage.get("test")).toMatchObject({ value: '"123"' });
   });
 
   it("get returns null if value not exists in storage", async () => {
@@ -203,7 +201,7 @@ describe("BaseStorage", () => {
   });
 
   it("get throws if storage returns invalid record", async () => {
-    (testInterface.internalStorage as any)["cache-test"] = `{"a":1}`;
+    (testStorage as any)["cache-test"] = `{"a":1}`;
 
     expect(await storage.get("test")).toBeNull();
   });
@@ -223,21 +221,21 @@ describe("BaseStorage", () => {
     const tag2 = { name: "tag2", version: 1537176259572 };
     const tag3 = { name: "tag3", version: 1537176259922 };
 
-    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version;
-    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag2.name}`] = tag2.version;
-    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag3.name}`] = tag3.version;
+    testStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version.toString();
+    testStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag2.name}`] = tag2.version.toString();
+    testStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag3.name}`] = tag3.version.toString();
 
-    expect(await (storage as any).getTags(["tag2", "tag3"])).toEqual([tag2, tag3]);
-    expect(await (storage as any).getTags(["tag1", "tag3"])).toEqual([tag1, tag3]);
-    expect(await (storage as any).getTags(["tag3", "tag2"])).toEqual([tag3, tag2]);
+    expect(await storage.getTags(["tag2", "tag3"])).toEqual([tag2, tag3]);
+    expect(await storage.getTags(["tag1", "tag3"])).toEqual([tag1, tag3]);
+    expect(await storage.getTags(["tag3", "tag2"])).toEqual([tag3, tag2]);
   });
 
   it("getTags creates tag with zero version if it not exists", async () => {
     const tag1 = { name: "tag1", version: 1537176259547 };
 
-    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version;
+    testStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version.toString();
 
-    expect(await (storage as any).getTags(["tag1", "tag3"])).toEqual([
+    expect(await storage.getTags(["tag1", "tag3"])).toEqual([
       tag1,
       {
         name: "tag3",
@@ -249,7 +247,7 @@ describe("BaseStorage", () => {
   it("getTags does nothing if tag list is empty", async () => {
     const tag1 = { name: "tag1", version: 1537176259547 };
 
-    testInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version;
+    testStorage[`cache-${TAGS_VERSIONS_ALIAS}:${tag1.name}`] = tag1.version.toString();
 
     expect(await (storage as any).getTags([])).toEqual([]);
   });
@@ -258,36 +256,28 @@ describe("BaseStorage", () => {
     await storage.set("test", "123", { expiresIn: 0 });
 
     expect(await (storage as any).lockKey("test")).toEqual(true);
-    expect(testInterface.internalStorage["cache-test_lock"]).toEqual("");
+    expect(testStorage["cache-test_lock"]).toEqual("");
   });
 
   it("lockKey returns false if lock exists", async () => {
     await storage.set("test", "123", { expiresIn: 0 });
 
-    testAdapter.acquireLock = (): boolean => false;
+    testAdapter.acquireLock = async () => false;
 
     expect(await (storage as any).lockKey("test")).toEqual(false);
-    expect(testInterface.internalStorage["cache-test_lock"]).toEqual(undefined);
+    expect(testStorage["cache-test_lock"]).toEqual(undefined);
   });
 
   it("releaseLock releases lock", async () => {
-    (testInterface.internalStorage as any)["cache-test_lock"] = '{"key":"cache-test_lock"}';
+    (testStorage as any)["cache-test_lock"] = '{"key":"cache-test_lock"}';
 
-    expect(
-      await storage.get("test_lock", () => {
-        /* empty */
-      })
-    ).toMatchObject({ key: "cache-test_lock" });
+    expect(await storage.get("test_lock")).toMatchObject({ key: "cache-test_lock" });
     await storage.releaseKey("test");
-    expect(
-      await storage.get("test_lock", () => {
-        /* empty */
-      })
-    ).toBeNull();
+    expect(await storage.get("test_lock")).toBeNull();
   });
 
   it("keyIsLocked returns true if lock exists", async () => {
-    (testInterface.internalStorage as any)["cache-test_lock"] = '{"key":"cache-test_lock"}';
+    (testStorage as any)["cache-test_lock"] = '{"key":"cache-test_lock"}';
     expect(await storage.keyIsLocked("test")).toEqual(true);
   });
 
@@ -304,7 +294,7 @@ describe("BaseStorage", () => {
     testAdapter.getConnectionStatus = (): ConnectionStatus => ConnectionStatus.DISCONNECTED;
 
     await expect((storage as any).cachedCommand(command, 1, "hello")).resolves.toEqual(undefined);
-    expect(storage.commandsQueue).toEqual([{ fn: command, params: [1, "hello"] }]);
+    expect((storage as any).commandsQueue).toEqual([{ fn: command, params: [1, "hello"] }]);
   });
 
   it("cachedCommand pushes command to command queue if execution timed out", async () => {
@@ -312,7 +302,7 @@ describe("BaseStorage", () => {
     const command = jest.fn().mockRejectedValue(error);
 
     await expect((storage as any).cachedCommand(command, 1, "hello")).resolves.toEqual(undefined);
-    expect(storage.commandsQueue).toEqual([{ fn: command, params: [1, "hello"] }]);
+    expect((storage as any).commandsQueue).toEqual([{ fn: command, params: [1, "hello"] }]);
   });
 
   it("cachedCommand throws if command execution fails and not timed out", async () => {
@@ -320,7 +310,7 @@ describe("BaseStorage", () => {
     const command = jest.fn().mockRejectedValue(error);
 
     await expect((storage as any).cachedCommand(command, 1, "hello")).rejects.toThrowError(error);
-    expect(storage.commandsQueue.length).toEqual(0);
+    expect((storage as any).commandsQueue.length).toEqual(0);
   });
 
   it("executeCommandsFromQueue does nothing if queue is empty", async () => {
@@ -359,7 +349,7 @@ describe("BaseStorage", () => {
   it("set creates record with static tags calculated by function", async () => {
     await storage.set("test", "test", { tags: () => ["tag"] });
 
-    const value = JSON.parse(testInterface.internalStorage["cache-test"]);
+    const value = JSON.parse(testStorage["cache-test"]);
 
     expect(value).toMatchObject({
       key: "test",
@@ -373,11 +363,9 @@ describe("BaseStorage", () => {
 
   it("uses separate adapter for tags", async () => {
     const tag1 = { name: "tag1", version: 1 };
-    const tagsTestInterface = {
-      internalStorage: {},
-    };
-    const tagsTestAdapter = new TestStorageAdapter(tagsTestInterface, true);
-    tagsTestInterface.internalStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`] = tag1.version;
+    const tagsTestStorage: TestStorage = {};
+    const tagsTestAdapter = new TestStorageAdapter(tagsTestStorage, true);
+    tagsTestStorage[`cache-${TAGS_VERSIONS_ALIAS}:tag1`] = tag1.version.toString();
     storage = new BaseStorage({
       adapter: testAdapter,
       tagsAdapter: tagsTestAdapter,

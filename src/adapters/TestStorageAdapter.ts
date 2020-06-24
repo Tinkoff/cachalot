@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConnectionStatus } from "../ConnectionStatus";
-import { StorageAdapter, StorageAdapterOptions } from "../StorageAdapter";
+import { StorageAdapter } from "../StorageAdapter";
 
 class TestStorageAdapter implements StorageAdapter {
-  options: StorageAdapterOptions;
-  testInterface: any;
+  internalStorage: Record<string, string>;
   isConnected: boolean;
-  internalStorage: any;
 
-  constructor(testInstance: any, isConnected = true) {
-    this.testInterface = testInstance;
-    this.testInterface.internalStorage = {};
+  constructor(storage: Record<string, string> = {}, isConnected = true) {
+    this.internalStorage = storage;
     this.isConnected = isConnected;
   }
 
@@ -30,7 +26,7 @@ class TestStorageAdapter implements StorageAdapter {
 
   async set(key: string, value: string): Promise<boolean> {
     this.checkConnection();
-    this.testInterface.internalStorage[key] = value;
+    this.internalStorage[key] = value;
 
     return true;
   }
@@ -38,14 +34,14 @@ class TestStorageAdapter implements StorageAdapter {
   async get(key: string): Promise<string> {
     this.checkConnection();
 
-    return this.testInterface.internalStorage[key];
+    return this.internalStorage[key];
   }
 
   async del(key: string): Promise<boolean> {
     this.checkConnection();
 
-    if (this.testInterface.internalStorage[key]) {
-      delete this.testInterface.internalStorage[key];
+    if (this.internalStorage[key]) {
+      delete this.internalStorage[key];
 
       return true;
     }
@@ -68,20 +64,24 @@ class TestStorageAdapter implements StorageAdapter {
   async isLockExists(key: string): Promise<boolean> {
     this.checkConnection();
 
-    return !!this.testInterface.internalStorage[`${key}_lock`];
+    return !!this.internalStorage[`${key}_lock`];
   }
 
-  async mset(values: Map<string, any>): Promise<void> {
+  async mset(values: Map<string, string>): Promise<void> {
     this.checkConnection();
     values.forEach((value, key) => {
-      this.testInterface.internalStorage[key] = value;
+      this.internalStorage[key] = value;
     });
   }
 
   async mget(keys: string[]): Promise<(string | null)[]> {
     this.checkConnection();
 
-    return keys.map(key => this.testInterface.internalStorage[key] || null);
+    return keys.map(key => this.internalStorage[key] || null);
+  }
+
+  setOptions(): void {
+    return undefined;
   }
 }
 

@@ -16,7 +16,7 @@ export default class TestStorage implements Storage {
   getConnectionStatus: any = jest.fn().mockReturnValue(ConnectionStatus.CONNECTED);
   isOutdated = jest.fn().mockReturnValue(false);
 
-  constructor(storage: any) {
+  constructor(storage: unknown) {
     this.storage = storage;
   }
 }

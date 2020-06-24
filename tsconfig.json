@@ -15,7 +15,12 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
-    "strictNullChecks": true
+    "strict": true,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src/**/*"
