@@ -1,6 +1,6 @@
 # Cachalot
 
-[![Build status](https://img.shields.io/travis/TinkoffCreditSystems/cachalot/master.svg?style=flat-square)](https://travis-ci.org/TinkoffCreditSystems/cachalot)
+[![Build status](https://img.shields.io/github/workflow/status/TinkoffCreditSystems/cachalot/CI?style=flat-square)](https://github.com/TinkoffCreditSystems/cachalot/actions?query=branch%3Amaster+workflow%3ACI)
 [![Coveralls github](https://img.shields.io/coveralls/github/TinkoffCreditSystems/cachalot.svg?style=flat-square)](https://coveralls.io/github/TinkoffCreditSystems/cachalot)
 [![Written in typescript](https://img.shields.io/badge/written_in-typescript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![npm](https://img.shields.io/npm/v/cachalot.svg?style=flat-square)](https://www.npmjs.com/package/cachalot)
