@@ -1,5 +1,4 @@
 import { createHash } from "crypto";
-import uniq from "lodash/uniq";
 import { ConnectionStatus } from "../ConnectionStatus";
 import deserialize from "../deserialize";
 import { isOperationTimeoutError } from "../errors/errors";
@@ -9,6 +8,10 @@ import { Record } from "./Record";
 import differenceWith from "lodash/differenceWith";
 
 export const TAGS_VERSIONS_ALIAS = "cache-tags-versions";
+
+function uniq<T>(arr: T[]): T[] {
+  return [...new Set(arr)];
+}
 
 export type BaseStorageOptions = {
   adapter: StorageAdapter;
@@ -51,6 +54,8 @@ export class BaseStorage implements Storage {
     this.adapter.setOptions?.(options);
 
     this.adapter.onConnect(async () => this.executeCommandsFromQueue());
+
+    this.setTagVersions = this.setTagVersions.bind(this);
   }
 
   /**
@@ -278,8 +283,7 @@ export class BaseStorage implements Storage {
    * the response will be sent immediately and the command will be executed later when the connection is restored
    * or current execution timed out.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async cachedCommand(fn: CommandFn, ...args: any[]): Promise<void> {
+  private async cachedCommand(fn: CommandFn, ...args: unknown[]): Promise<void> {
     if (!fn) {
       throw new Error("Cached function is required");
     }
