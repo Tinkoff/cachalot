@@ -58,9 +58,10 @@ jobs:
 
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@master
+      env:
+        COVERALLS_FLAG_NAME: run-${{ matrix.node-version }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.test_number }}
         parallel: true
 
   finish:
