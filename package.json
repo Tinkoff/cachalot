@@ -37,15 +37,12 @@
     "prepublishOnly": "npm run build",
     "semantic-release": "semantic-release"
   },
-  "dependencies": {
-    "lodash": "^4.17.15"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
     "@semantic-release/git": "^7.0.16",
     "@types/ioredis": "^4.16.7",
     "@types/jest": "^25.2.3",
-    "@types/lodash": "^4.14.157",
     "@types/memcached": "^2.2.6",
     "@types/node": "^8.10.61",
     "@types/uuid": "^8.0.0",
@@ -61,7 +58,7 @@
     "prettier": "^1.19.1",
     "semantic-release": "^15.13.24",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.9.5",
+    "typescript": "^3.9.7",
     "uuid": "^8.2.0"
   },
   "config": {

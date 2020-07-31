@@ -428,4 +428,18 @@ describe("BaseStorage", () => {
     const record = new Record("test", "value", []);
     await expect(storage.isOutdated(record)).resolves.toEqual(false);
   });
+
+  it("isOutdated returns false if no actual tags", async () => {
+    storage.getTags = jest.fn().mockResolvedValue([]);
+
+    const record = new Record("test", "value", [{ name: "tag1", version: 1 }]);
+    await expect(storage.isOutdated(record)).resolves.toEqual(false);
+  });
+
+  it("isOutdated returns true if there is new actual tag", async () => {
+    storage.getTags = jest.fn().mockResolvedValue([]);
+
+    const record = new Record("test", "value", [{ name: "tag1", version: 1 }]);
+    await expect(storage.isOutdated(record)).resolves.toEqual(false);
+  });
 });
