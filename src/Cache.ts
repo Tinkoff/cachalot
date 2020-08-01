@@ -1,4 +1,3 @@
-import defaultsDeep from "lodash/defaultsDeep";
 import { ConnectionStatus } from "./ConnectionStatus";
 import { Executor, runExecutor } from "./Executor";
 import { Logger } from "./Logger";
@@ -113,8 +112,8 @@ class Cache {
       return runExecutor(executor);
     }
 
-    const { manager: managerName = RefreshAheadManager.getName() } = options;
-    const computedOptions = defaultsDeep({}, options, { expiresIn: this.expiresIn });
+    const { manager: managerName = RefreshAheadManager.getName(), expiresIn = this.expiresIn } = options;
+    const computedOptions = { ...options, expiresIn };
     const manager = this.getManager(managerName);
 
     return manager.get(key, executor, computedOptions);
@@ -128,8 +127,8 @@ class Cache {
     value: R,
     options: WriteOptions<R> & ManagerSelectorOptions = {}
   ): Promise<Record<R>> {
-    const { manager: managerName = RefreshAheadManager.getName() } = options;
-    const computedOptions = defaultsDeep({}, options, { expiresIn: this.expiresIn });
+    const { manager: managerName = RefreshAheadManager.getName(), expiresIn = this.expiresIn } = options;
+    const computedOptions = { ...options, expiresIn };
     const manager = this.getManager(managerName);
 
     return manager.set(key, value, computedOptions);

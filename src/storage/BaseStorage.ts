@@ -5,12 +5,18 @@ import { isOperationTimeoutError } from "../errors/errors";
 import { Storage, Tag, WriteOptions } from "./Storage";
 import { StorageAdapter } from "../StorageAdapter";
 import { Record } from "./Record";
-import differenceWith from "lodash/differenceWith";
 
 export const TAGS_VERSIONS_ALIAS = "cache-tags-versions";
 
 function uniq<T>(arr: T[]): T[] {
   return [...new Set(arr)];
+}
+
+function tagVersionByName(tags: Tag[]): { [key: string]: number } {
+  return tags.reduce<{ [key: string]: number }>((acc, tag) => {
+    acc[tag.name] = tag.version;
+    return acc;
+  }, {});
 }
 
 export type BaseStorageOptions = {
@@ -211,12 +217,15 @@ export class BaseStorage implements Storage {
         return true;
       }
 
-      const isTagOutdatedComparator = (recordTag: Tag, actualTag: Tag): boolean =>
-        recordTag.name === actualTag.name && recordTag.version >= actualTag.version;
+      // if no tag touched, record is not outdated
+      if (actualTags.length === 0) {
+        return false;
+      }
 
-      const diff = differenceWith(record.tags, actualTags, isTagOutdatedComparator);
+      const recordTags = tagVersionByName(record.tags);
 
-      return diff.length !== 0;
+      // at least one actualTag should have greater version
+      return actualTags.some(actualTag => actualTag.version > recordTags[actualTag.name]);
     }
 
     return false;
