@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.3...v3.1.0) (2020-08-01)
+
+
+### Features
+
+* make cachalot free from dependencies ([fc54e6c](https://github.com/TinkoffCreditSystems/cachalot/commit/fc54e6c))
+
 ## [3.0.3](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.2...v3.0.3) (2020-06-24)
 
 
