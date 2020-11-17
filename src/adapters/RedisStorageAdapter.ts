@@ -22,7 +22,7 @@ interface Redis extends EventEmitter {
     expiryMode?: string,
     time?: number | string,
     setMode?: number | string
-  ): Promise<string>;
+  ): Promise<"OK" | null>;
 
   mget(...keys: string[]): Promise<Array<string | null>>;
 
