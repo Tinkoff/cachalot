@@ -44,7 +44,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1.4.2
+      uses: actions/setup-node@v1.4.4
       with:
         node-version: ${{ matrix.node-version }}
         # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
@@ -87,7 +87,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1.4.2
+        uses: actions/setup-node@v1.4.4
         with:
           node-version: 10.x
 
