@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.1.0...v3.1.1) (2020-11-17)
+
+
+### Bug Fixes
+
+* redis: allow null return from set ([12a93dd](https://github.com/TinkoffCreditSystems/cachalot/commit/12a93dd))
+
 # [3.1.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.0.3...v3.1.0) (2020-08-01)
 
 
