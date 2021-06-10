@@ -1,3 +1,15 @@
+# [3.2.0](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.1.1...v3.2.0) (2021-06-10)
+
+
+### Bug Fixes
+
+* undefined into resolved ([e68a642](https://github.com/TinkoffCreditSystems/cachalot/commit/e68a642af56a757ceaa713ef36e6e584d8028cac))
+
+
+### Features
+
+* update typescript version, added logo, updated core dev dependencies ([81480a5](https://github.com/TinkoffCreditSystems/cachalot/commit/81480a5b2c6a4c97b3f1ce91500e32e01f2fcdd6))
+
 ## [3.1.1](https://github.com/TinkoffCreditSystems/cachalot/compare/v3.1.0...v3.1.1) (2020-11-17)
 
 
