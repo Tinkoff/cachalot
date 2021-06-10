@@ -142,7 +142,7 @@ describe("RefreshAheadManager", () => {
         (manager as any).refresh = async (...args: any[]): Promise<any> => {
           await instanceRefresh.call(manager, ...args);
           expect(await storage.get("test")).toMatchObject({ key: "test", value: '"234"' });
-          resolve();
+          resolve(undefined);
         };
         Date.now = jest.fn().mockReturnValue(DATE);
 
@@ -173,7 +173,7 @@ describe("RefreshAheadManager", () => {
 
         (manager as any).refresh = async (...args: any[]): Promise<any> => {
           await instanceRefresh.call(manager, ...args);
-          resolve();
+          resolve(undefined);
         };
         Date.now = jest.fn().mockReturnValue(DATE);
 
@@ -209,8 +209,8 @@ describe("RefreshAheadManager", () => {
         (manager as any).refresh = jest.fn().mockImplementation(async () => {
           throw new Error("Operation timeout");
         });
-        Promise.prototype.catch = function(...args: any[]): any {
-          resolve();
+        Promise.prototype.catch = function (...args: any[]): any {
+          resolve(undefined);
 
           return realCatch.call(this, ...args);
         };

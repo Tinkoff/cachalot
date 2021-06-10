@@ -132,7 +132,7 @@ export class MemcachedStorageAdapter implements StorageAdapter {
         }
 
         resolve(
-          keys.map(key => {
+          keys.map((key) => {
             if (result[key] === undefined) {
               return null;
             }

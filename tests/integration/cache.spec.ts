@@ -26,18 +26,18 @@ const REDIS_OPERATION_DELAY = 1000;
 describe("Cache", () => {
   beforeEach(
     () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         redis.connect().catch(() => {
           /* ignore */
         });
 
         if (redis.status === "ready") {
           redis.flushall();
-          return resolve();
+          return resolve(undefined);
         }
 
         redis.on("ready", () => {
-          resolve();
+          resolve(undefined);
           redis.flushall();
         });
       })
