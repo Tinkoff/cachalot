@@ -115,7 +115,7 @@ export class BaseStorage implements Storage {
    * Creates new set of tag records and updates them.
    */
   public async setTagVersions(tags: Tag[]): Promise<void> {
-    const values = new Map(tags.map(tag => [this.createTagKey(tag.name), `${tag.version}`]));
+    const values = new Map(tags.map((tag) => [this.createTagKey(tag.name), `${tag.version}`]));
     return this.tagsAdapter.mset(values);
   }
 
@@ -165,7 +165,7 @@ export class BaseStorage implements Storage {
       return [];
     }
 
-    const existingTags = await this.tagsAdapter.mget(tagNames.map(tagName => this.createTagKey(tagName)));
+    const existingTags = await this.tagsAdapter.mget(tagNames.map((tagName) => this.createTagKey(tagName)));
 
     return tagNames.map((tagName, index) => ({
       name: tagName,
@@ -212,7 +212,7 @@ export class BaseStorage implements Storage {
       let actualTags: Tag[] = [];
 
       try {
-        actualTags = await this.getTags(record.tags.map(tag => tag.name));
+        actualTags = await this.getTags(record.tags.map((tag) => tag.name));
       } catch (err) {
         return true;
       }
@@ -225,7 +225,7 @@ export class BaseStorage implements Storage {
       const recordTags = tagVersionByName(record.tags);
 
       // at least one actualTag should have greater version
-      return actualTags.some(actualTag => actualTag.version > recordTags[actualTag.name]);
+      return actualTags.some((actualTag) => actualTag.version > recordTags[actualTag.name]);
     }
 
     return false;
@@ -246,11 +246,7 @@ export class BaseStorage implements Storage {
   private createKey(key: string): string {
     const rawKey = this.prefix ? `${this.prefix}-${key}` : key;
 
-    return this.hashKeys
-      ? createHash("md5")
-          .update(rawKey)
-          .digest("hex")
-      : rawKey;
+    return this.hashKeys ? createHash("md5").update(rawKey).digest("hex") : rawKey;
   }
 
   private createTagKey(tagName: string): string {

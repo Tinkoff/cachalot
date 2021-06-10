@@ -50,7 +50,7 @@ class RefreshAheadManager extends BaseManager {
       const result = deserialize<R>(record.value);
 
       if (this.isRecordExpireSoon(record)) {
-        this.refresh(key, executorContext, options).catch(err => this.logger.error(err));
+        this.refresh(key, executorContext, options).catch((err) => this.logger.error(err));
       }
 
       return result;

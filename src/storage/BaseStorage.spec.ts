@@ -91,7 +91,7 @@ describe("BaseStorage", () => {
   });
 
   it("set sets key to storage adapter with dynamic tags", async () => {
-    await storage.set("test", "123", { getTags: result => [result] });
+    await storage.set("test", "123", { getTags: (result) => [result] });
 
     const value = JSON.parse(testStorage["cache-test"]);
 
@@ -105,7 +105,7 @@ describe("BaseStorage", () => {
   });
 
   it("set sets key to storage adapter with uniq array of concatenated dynamic tags and simple tags", async () => {
-    await storage.set("test", "123", { tags: ["tag1", "123"], getTags: result => [result] });
+    await storage.set("test", "123", { tags: ["tag1", "123"], getTags: (result) => [result] });
 
     const value = JSON.parse(testStorage["cache-test"]);
 

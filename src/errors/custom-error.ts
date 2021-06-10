@@ -1,4 +1,4 @@
-export default function<P>(name: string, message: string, payload: Partial<P> = {}): Error {
+export default function <P>(name: string, message: string, payload: Partial<P> = {}): Error {
   class CacheManagerError extends Error {
     payload: Partial<P>;
 

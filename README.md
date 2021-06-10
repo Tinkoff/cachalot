@@ -1,11 +1,11 @@
-# Cachalot
+# <img src="assets/logo.svg" alt="cachalot logo" height="48px"> Cachalot
 
 [![Build status](https://img.shields.io/github/workflow/status/TinkoffCreditSystems/cachalot/CI?style=flat-square)](https://github.com/TinkoffCreditSystems/cachalot/actions?query=branch%3Amaster+workflow%3ACI)
 [![Coveralls github](https://img.shields.io/coveralls/github/TinkoffCreditSystems/cachalot.svg?style=flat-square)](https://coveralls.io/github/TinkoffCreditSystems/cachalot)
 [![Written in typescript](https://img.shields.io/badge/written_in-typescript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![npm](https://img.shields.io/npm/v/cachalot.svg?style=flat-square)](https://www.npmjs.com/package/cachalot)
 
-The library is designed to cache query results. Features:
+Zero-dependency library designed to cache query results. Features:
 * Implements popular caching strategies (Read-Through, Write-Through, Refresh-Ahead), and also allows them to be combined
 * Defines an adapter interface that allows you to use it with any key-value storage for which the corresponding adapter is written
 * Comes with adapter for redis, memcached

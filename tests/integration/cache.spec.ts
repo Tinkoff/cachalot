@@ -26,7 +26,7 @@ const REDIS_OPERATION_DELAY = 1000;
 describe("Cache", () => {
   beforeEach(
     () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         redis.connect().catch(() => {
           /* ignore */
         });

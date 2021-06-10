@@ -77,7 +77,7 @@ class TestStorageAdapter implements StorageAdapter {
   async mget(keys: string[]): Promise<(string | null)[]> {
     this.checkConnection();
 
-    return keys.map(key => this.internalStorage[key] || null);
+    return keys.map((key) => this.internalStorage[key] || null);
   }
 
   setOptions(): void {

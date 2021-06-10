@@ -10,7 +10,7 @@ export interface Setter<K = string> {
 }
 
 function delay(duration: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, duration + 1));
+  return new Promise((resolve) => setTimeout(resolve, duration + 1));
 }
 
 export const runAdapterTests = (get: Getter, set: Setter, adapter: StorageAdapter): void => {
