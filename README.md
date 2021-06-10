@@ -1,4 +1,4 @@
-# <img src="assets/logo.svg" alt="cachalot logo" height="48px"> Cachalot
+# <img src="assets/logo.svg" alt="cachalot logo" height="100px">
 
 [![Build status](https://img.shields.io/github/workflow/status/TinkoffCreditSystems/cachalot/CI?style=flat-square)](https://github.com/TinkoffCreditSystems/cachalot/actions?query=branch%3Amaster+workflow%3ACI)
 [![Coveralls github](https://img.shields.io/coveralls/github/TinkoffCreditSystems/cachalot.svg?style=flat-square)](https://coveralls.io/github/TinkoffCreditSystems/cachalot)
