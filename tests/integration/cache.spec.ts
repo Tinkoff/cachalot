@@ -33,11 +33,11 @@ describe("Cache", () => {
 
         if (redis.status === "ready") {
           redis.flushall();
-          return resolve();
+          return resolve(undefined);
         }
 
         redis.on("ready", () => {
-          resolve();
+          resolve(undefined);
           redis.flushall();
         });
       })
