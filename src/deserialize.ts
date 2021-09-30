@@ -4,6 +4,6 @@ export default function <R>(value: string): R {
   try {
     return JSON.parse(value);
   } catch (error) {
-    throw errors.parseError(error);
+    throw errors.parseError(error as Error);
   }
 }

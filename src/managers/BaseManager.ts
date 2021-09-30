@@ -63,9 +63,11 @@ export abstract class BaseManager {
 
     try {
       isKeySuccessfullyLocked = await this.storage.lockKey(context.key);
-    } catch (keyLockError) {
+    } catch (keyLockError: unknown) {
       this.logger.error(
-        `Error occurred while trying to lock key "${context.key}". Reason: ${keyLockError.message}. Running executor`
+        `Error occurred while trying to lock key "${context.key}". Reason: ${
+          (keyLockError as Error).message
+        }. Running executor`
       );
 
       return runExecutor(context.executor);
