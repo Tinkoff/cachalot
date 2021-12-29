@@ -1,3 +1,16 @@
+# [3.3.0](https://github.com/Tinkoff/cachalot/compare/v3.2.0...v3.3.0) (2021-12-29)
+
+
+### Bug Fixes
+
+* prettier ([acd94be](https://github.com/Tinkoff/cachalot/commit/acd94bee08fb7795ef01b83bef1c3104f3a5ec52))
+* remove obsolete check for error ([141c242](https://github.com/Tinkoff/cachalot/commit/141c242c8dc1292122b9705ec16c4d8247bb8fcb))
+
+
+### Features
+
+* **deps:** updated dependencies, type lib versions, solved security alerts ([5512749](https://github.com/Tinkoff/cachalot/commit/5512749eb64a43ae9eb81015d5719e0e187bdb8e))
+
 # [3.2.0](https://github.com/Tinkoff/cachalot/compare/v3.1.1...v3.2.0) (2021-06-10)
 
 
