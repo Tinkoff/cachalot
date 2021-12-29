@@ -1,7 +1,7 @@
 # <img src="assets/logo.svg" alt="cachalot logo" height="100px">
 
-[![Build status](https://img.shields.io/github/workflow/status/TinkoffCreditSystems/cachalot/CI?style=flat-square)](https://github.com/TinkoffCreditSystems/cachalot/actions?query=branch%3Amaster+workflow%3ACI)
-[![Coveralls github](https://img.shields.io/coveralls/github/TinkoffCreditSystems/cachalot.svg?style=flat-square)](https://coveralls.io/github/TinkoffCreditSystems/cachalot)
+[![Build status](https://img.shields.io/github/workflow/status/Tinkoff/cachalot/CI?style=flat-square)](https://github.com/Tinkoff/cachalot/actions?query=branch%3Amaster+workflow%3ACI)
+[![Coveralls github](https://img.shields.io/coveralls/github/Tinkoff/cachalot.svg?style=flat-square)](https://coveralls.io/github/Tinkoff/cachalot)
 [![Written in typescript](https://img.shields.io/badge/written_in-typescript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![npm](https://img.shields.io/npm/v/cachalot.svg?style=flat-square)](https://www.npmjs.com/package/cachalot)
 
