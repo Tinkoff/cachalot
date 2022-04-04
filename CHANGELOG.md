@@ -1,3 +1,11 @@
+## [3.3.1](https://github.com/Tinkoff/cachalot/compare/v3.3.0...v3.3.1) (2022-04-04)
+
+
+### Bug Fixes
+
+* lower log level in case when lock acquiring fails ([a03e77a](https://github.com/Tinkoff/cachalot/commit/a03e77a68f52a2f10325fc6ef96d74b127b0a64b))
+* using correct binding when using 'waitForResult' strategy ([1aef8cc](https://github.com/Tinkoff/cachalot/commit/1aef8ccec89751dae6c6cc4be869d79e5151755a))
+
 # [3.3.0](https://github.com/Tinkoff/cachalot/compare/v3.2.0...v3.3.0) (2021-12-29)
 
 
