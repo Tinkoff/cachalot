@@ -23,8 +23,8 @@ export abstract class BaseManager {
       [
         LockedKeyRetrieveStrategyTypes.waitForResult,
         new WaitForResultLockedKeyRetrieveStrategy({
-          keyLockCheckFn: this.storage.keyIsLocked.bind(this),
-          getRecord: this.storage.get.bind(this),
+          keyLockCheckFn: this.storage.keyIsLocked.bind(this.storage),
+          getRecord: this.storage.get.bind(this.storage),
           logger: this.logger,
         }),
       ],
@@ -69,10 +69,7 @@ export abstract class BaseManager {
           (keyLockError as Error).message
         }. Running executor`
       );
-
-      return runExecutor(context.executor);
     }
-
     if (!isKeySuccessfullyLocked) {
       return lockedKeyRetrieveStrategy.get(context);
     }

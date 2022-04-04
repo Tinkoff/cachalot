@@ -2,7 +2,9 @@ import Redis from "ioredis";
 import { v4 as uuid } from "uuid";
 import Cache from "../../src/Cache";
 import RedisStorageAdapter from "../../src/adapters/RedisStorageAdapter";
+import MemcachedStorageAdapter from "../../src/adapters/MemcachedStorageAdapter";
 import timeout from "../../src/timeout";
+import Memcached from "memcached";
 
 const logger = {
   info: jest.fn(),
@@ -16,8 +18,13 @@ const redis = new Redis({
   enableReadyCheck: true,
   autoResendUnfulfilledCommands: false,
 });
+const memcached = new Memcached("localhost:11211");
 const cache = new Cache({
   adapter: new RedisStorageAdapter(redis, { operationTimeout: 9000 }),
+  logger,
+});
+const memcache = new Cache({
+  adapter: new MemcachedStorageAdapter(memcached),
   logger,
 });
 
@@ -115,4 +122,24 @@ describe("Cache", () => {
 
     await expect(cache.get(key, executor, { tags })).resolves.toEqual(struct);
   });
+
+  it("Redis concurrent test", async () => {
+    const tasks = [];
+    const executor = async () => new Date().toISOString();
+
+    for (let j = 0; j < 500; j++) {
+      tasks.push(cache.get("TEST", executor, { lockedKeyRetrieveStrategyType: "waitForResult" }));
+    }
+    expect(new Set(await Promise.all(tasks)).size).toEqual(1);
+  }, 3000);
+
+  it("Memcached concurrent test", async () => {
+    const tasks = [];
+    const executor = async () => new Date().toISOString();
+
+    for (let j = 0; j < 500; j++) {
+      tasks.push(memcache.get("TEST", executor, { lockedKeyRetrieveStrategyType: "waitForResult" }));
+    }
+    expect(new Set(await Promise.all(tasks)).size).toEqual(1);
+  }, 3000);
 });
