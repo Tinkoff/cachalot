@@ -31,7 +31,7 @@
     "lint": "prettier -c tests/**/*.ts src/*.ts src/**/*.ts && eslint src tests --ext .ts --max-warnings 0",
     "test": "npm run test:unit",
     "test:unit": "jest --coverage --verbose --passWithNoTests",
-    "test:ci": "npm run test:unit -- --coverageReporters=lcovonly",
+    "test:ci": "jest --coverage --verbose --passWithNoTests --coverageReporters=lcovonly",
     "test:integration": "jest --config tests/jest.config.js --forceExit --detectOpenHandles --verbose",
     "test:unit:watch": "jest --watch",
     "prepublishOnly": "npm run build",
