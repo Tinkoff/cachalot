@@ -36,19 +36,18 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x]
+        node: [ 10, 12, 14, 16 ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1.4.4
+      uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
-        # registry-url: # optional
+        node-version: ${{ matrix.node }}
+        cache: 'npm'
     - name: Install dependencies
       run: npm ci
     - run: npm run lint
@@ -82,12 +81,12 @@ jobs:
     needs: [finish]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1.4.4
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
 
